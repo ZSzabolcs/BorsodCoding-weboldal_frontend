@@ -3,7 +3,7 @@ body{
 }
 
 header{
-    background-image: url(hatter.png);
+    background-image: url(kepek/hatter.png);
     position: relative;
     overflow: hidden;
     height: 300px;
@@ -179,6 +179,10 @@ b{
 
 .cikk a{
     color: black;
+}
+
+.card-text{
+    text-align: left;
 }
 
 @media only screen and (max-width: 600px){
