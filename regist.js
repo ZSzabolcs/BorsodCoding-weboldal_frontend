@@ -50,6 +50,7 @@ function regisztracio(event) {
                     else {
                         users.push(user)
                         localStorage.setItem("users", JSON.stringify(users))
+                        location.assign("index.html")
                     }
                 }
             } else {
@@ -108,7 +109,7 @@ function bejelentkezes(event) {
                         i++;
                     }
                     if (vane) {
-                        console.log("Már van ilyen felhasználó")
+                        location.assign("index.html")
                     }
                    
                 }
