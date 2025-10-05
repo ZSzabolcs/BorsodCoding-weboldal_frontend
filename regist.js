@@ -50,6 +50,7 @@ function regisztracio(event) {
                     else {
                         users.push(user)
                         localStorage.setItem("users", JSON.stringify(users))
+                        sessionStorage.setItem("username", username)
                         location.assign("index.html")
                     }
                 }
@@ -109,6 +110,7 @@ function bejelentkezes(event) {
                         i++;
                     }
                     if (vane) {
+                        sessionStorage.setItem("username", username)
                         location.assign("index.html")
                     }
                    
