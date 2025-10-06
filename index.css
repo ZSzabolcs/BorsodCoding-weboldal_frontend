@@ -141,11 +141,16 @@ b{
 }
 
 .footer{
-    display: flex;  
+    position: fixed;
+    /*display: flex;*/  
     left: 0;
     bottom: 0;
     background-color:skyblue;
     border: 1px solid rgb(15, 145, 196);
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    width: 100%;
+    text-align: center;
 }
 
 .footer-text p{
