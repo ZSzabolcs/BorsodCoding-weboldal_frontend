@@ -17,12 +17,16 @@ createRoot(document.getElementById('root')).render(
 function HeaderModule() {
   return(
     <header>
-        <h1 class="text-center">
+        <h1 className="text-center">
             For the potato
         </h1>
-        <h3 class="mx-2">
+        <h3 className="mx-2">
             A Borsod Coding csapatától
         </h3>
     </header>
   )
+}
+
+function name(params) {
+  
 }
