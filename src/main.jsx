@@ -7,7 +7,8 @@ import Header from './Header.jsx'
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.min.js"
 
-createRoot(document.getElementById('root')).render(
+if (document.getElementById("root")) {
+    createRoot(document.getElementById('root')).render(
     <>
     <StrictMode>
     <Header />
@@ -15,7 +16,9 @@ createRoot(document.getElementById('root')).render(
     <Index />
     </StrictMode>
     </>
-)
+    )
+}
+
 
 
 
