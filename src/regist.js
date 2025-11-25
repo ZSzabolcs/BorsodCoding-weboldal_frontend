@@ -1,4 +1,4 @@
-function regisztracio(event) {
+export function regisztracio(event) {
         event.preventDefault()
         const form = event.target.elements
         const username = form.userName.value
@@ -67,7 +67,7 @@ function regisztracio(event) {
     }
 }
 
-function bejelentkezes(event) {
+export function bejelentkezes(event) {
      event.preventDefault()
         const form = event.target.elements
         const username = form.userName.value
@@ -125,7 +125,7 @@ function bejelentkezes(event) {
         console.error("Hiba")
     }
 }
-
+/*
 document.getElementById("form").addEventListener("submit", regisztracio);
 
 document.getElementById("bejelentkezes").addEventListener("click", (event) => {
@@ -146,3 +146,4 @@ document.getElementById("bejelentkezes").addEventListener("click", (event) => {
     
 
 })
+*/

@@ -1,8 +1,24 @@
+const Hir = ({cim, szoveg } ) => {
+    return(
+        <div className="col-md-6 border">
+            <h3>{cim}</h3>
+            <p>
+                {szoveg}
+            </p>
+        </div>
+    )
+}
+
 function Index() {
   const username = sessionStorage.getItem("username")
+  if (username === "" || username === null) {
+    document.location.assign("registration.html")
+  }
+  else
   return (
     <>
     <h1>Üdvözöljük <span>{username}!</span></h1>
+    <br />
     <h2>Híreink</h2>
     <div className="row">
         <div className="col-md-6 border">

@@ -59,4 +59,14 @@ else if(document.getElementById("rolunk")){
     )
 }
 
+else if (document.getElementById("registration")){
+    createRoot(document.getElementById("registration")).render(
+        <>
+        <StrictMode>
+            <Registration/>
+        </StrictMode>
+        </>
+    )
+}
+
 
