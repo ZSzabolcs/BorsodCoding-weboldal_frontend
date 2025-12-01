@@ -1,4 +1,4 @@
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import AJatekrol from './pages/Ajatekrol.jsx'
 import { RegistrationPage, LoginPage } from './pages/RegistrationAndLogin.jsx'
 import Rolunk from './pages/Rolunk.jsx'

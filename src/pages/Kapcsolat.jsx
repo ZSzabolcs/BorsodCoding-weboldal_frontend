@@ -1,8 +1,7 @@
+import { CheckUserName } from "../App"
+
 function Kapcsolat() {
-    const username = sessionStorage.getItem("username")
-     if (username === "" || username === null) {
-        document.location.assign("/")
-    }
+    CheckUserName()
     return (
     <div className="text-center">
         <h3>Email:</h3><span>borsodcoding@gmail.com</span>
