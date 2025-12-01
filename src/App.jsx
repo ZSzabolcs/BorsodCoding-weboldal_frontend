@@ -23,7 +23,35 @@ return (
 export const CheckUserName = () => {
   const username = sessionStorage.getItem("username")
   if (username === "" || username === null) {
-    document.location.assign("/")
+      location.assign("/")
   }
   return username;
+}
+
+export async function POSTToMainPage(url, data) {
+const myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+const {name} = data;
+const raw = JSON.stringify(data);
+
+const requestOptions = {
+  method: "POST",
+  headers: myHeaders,
+  body: raw,
+  redirect: "follow"
+};
+
+try {
+  const response = await fetch(url, requestOptions);
+  const result = await response.text();
+  console.log(response.body)
+  console.log(result)
+  if (response.ok) {
+        sessionStorage.setItem("username", name)
+        location.assign("index")
+  }
+} catch (error) {
+  console.error(error);
+};
 }

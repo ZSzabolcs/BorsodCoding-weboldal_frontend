@@ -1,30 +1,4 @@
-async function POST(url, data) {
-const myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/json");
-
-const {name} = data;
-const raw = JSON.stringify(data);
-
-const requestOptions = {
-  method: "POST",
-  headers: myHeaders,
-  body: raw,
-  redirect: "follow"
-};
-
-try {
-  const response = await fetch(url, requestOptions);
-  const result = await response.text();
-  console.log(response.body)
-  console.log(result)
-  if (response.ok) {
-        sessionStorage.setItem("username", name)
-        location.assign("index")
-  }
-} catch (error) {
-  console.error(error);
-};
-}
+import { POSTToMainPage } from "./App.jsx"
 
 export function regisztracio() {
         event.preventDefault()
@@ -60,18 +34,18 @@ export function regisztracio() {
                 "email" : email,
                 "password" : password
                 }
-                POST(url, user)
-
+                POSTToMainPage(url, user)
+        
             } else {
-                console.error("Hiba")
+                console.error("Hiba: Password")
             }
         }
         else{
-            console.error("Hiba")
+            console.error("Hiba: Email")
         }
     }
     else {
-        console.error("Hiba")
+        console.error("Hiba: Username nem tartalmazhat számot")
     }
 }
 
@@ -108,16 +82,16 @@ export function bejelentkezes() {
                     "name": username,
                     "password" : password
                 }
-                POST(url, user)
-                
+                POSTToMainPage(url, user)
+
             } else {
-                console.error("Hiba")
+                console.error("Hiba: Password")
             }
         } else{
-            console.error("Hiba")
+            console.error("Hiba: Email")
         }
     } else {
-        console.error("Hiba")
+        console.error("Hiba: Username nem tartalmazhat számot")
     }
 }
 /*
