@@ -1,9 +1,37 @@
-export function regisztracio(event) {
+async function POST(url, data) {
+const myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+const {name} = data;
+const raw = JSON.stringify(data);
+
+const requestOptions = {
+  method: "POST",
+  headers: myHeaders,
+  body: raw,
+  redirect: "follow"
+};
+
+try {
+  const response = await fetch(url, requestOptions);
+  const result = await response.text();
+  console.log(response.body)
+  console.log(result)
+  if (response.ok) {
+        sessionStorage.setItem("username", name)
+        location.assign("index")
+  }
+} catch (error) {
+  console.error(error);
+};
+}
+
+export function regisztracio() {
         event.preventDefault()
-        const form = event.target.elements
-        const username = form.userName.value
-        const email = form.userEmail.value
-        const password = form.userPassword.value
+        const url = "http://localhost:5233/api/User/Registration"
+        const username = document.getElementById("userName").value
+        const email =  document.getElementById("userEmail").value
+        const password = document.getElementById("userPassword").value
         const typeEmails = [
             {
                 expression : /.@/
@@ -28,32 +56,12 @@ export function regisztracio(event) {
             
             if (password.search(/./) > -1) {
                 const user = {
-                username : username,
-                email : email,
-                password : password
-            }
-                if(localStorage.getItem("users") == null){
-                    localStorage.setItem("users", JSON.stringify(user))
-                } else {
-                    let users = JSON.parse(localStorage.getItem("users"))
-                    let vane = false;
-                    let i = 0;
-                    while (users.length > i && !vane) {
-                        if (users[i].username === username) {
-                            vane = true
-                        }
-                        i++;
-                    }
-                    if (vane) {
-                        console.log("Már van ilyen felhasználó")
-                    }
-                    else {
-                        users.push(user)
-                        localStorage.setItem("users", JSON.stringify(users))
-                        sessionStorage.setItem("username", username)
-                        location.assign("index.html")
-                    }
+                "name" : username,
+                "email" : email,
+                "password" : password
                 }
+                POST(url, user)
+
             } else {
                 console.error("Hiba")
             }
@@ -67,12 +75,11 @@ export function regisztracio(event) {
     }
 }
 
-export function bejelentkezes(event) {
-     event.preventDefault()
-        const form = event.target.elements
-        const username = form.userName.value
-        const email = form.userEmail.value
-        const password = form.userPassword.value
+export function bejelentkezes() {
+        event.preventDefault()
+        const username = document.getElementById("userName").value
+        const email = document.getElementById("userEmail").value
+        const password = document.getElementById("userPassword").value
         const typeEmails = [
             {
                 expression : /.@/
@@ -96,7 +103,6 @@ export function bejelentkezes(event) {
             console.log("Az email cím helyes");
             
             if (password.search(/./) > -1) {
-                
                 if(localStorage.getItem("users") == null){
                     console.error("Nincsen adat")
                 } else {
@@ -111,7 +117,7 @@ export function bejelentkezes(event) {
                     }
                     if (vane) {
                         sessionStorage.setItem("username", username)
-                        location.assign("index.html")
+                        location.assign("index")
                     }
                    
                 }
