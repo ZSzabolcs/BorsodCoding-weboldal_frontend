@@ -77,6 +77,7 @@ export function regisztracio() {
 
 export function bejelentkezes() {
         event.preventDefault()
+        const url = "http://localhost:5233/api/User/Login"
         const username = document.getElementById("userName").value
         const email = document.getElementById("userEmail").value
         const password = document.getElementById("userPassword").value
@@ -99,28 +100,16 @@ export function bejelentkezes() {
             }
         }
 
-        if (siker == typeEmails.length) {
+        if (siker == typeEmails.length || document.getElementById("userEmail").disabled) {
             console.log("Az email cím helyes");
             
             if (password.search(/./) > -1) {
-                if(localStorage.getItem("users") == null){
-                    console.error("Nincsen adat")
-                } else {
-                    let users = JSON.parse(localStorage.getItem("users"))
-                    let vane = false;
-                    let i = 0;
-                    while (users.length > i && !vane) {
-                        if (users[i].username === username && users[i].email === email && users[i].password === password) {
-                            vane = true
-                        }
-                        i++;
-                    }
-                    if (vane) {
-                        sessionStorage.setItem("username", username)
-                        location.assign("index")
-                    }
-                   
+                const user = {
+                    "name": username,
+                    "password" : password
                 }
+                POST(url, user)
+                
             } else {
                 console.error("Hiba")
             }

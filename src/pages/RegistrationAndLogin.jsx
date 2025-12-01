@@ -21,9 +21,9 @@ export function LoginPage(){
     return (
         <div className="container">
         <form method="post" id="form">
-            <input className="mb-3 form-control" type="text" name="userName"/><br/>
-            <input className="mb-3 form-control" type="email" name="userEmail"/><br/>
-            <input className="mb-3 form-control" type="password" name="userPassword"/>
+            <input className="mb-3 form-control" type="text" id="userName"/><br/>
+            <input className="mb-3 form-control" type="email" disabled={true} id="userEmail"/><br/>
+            <input className="mb-3 form-control" type="password" id="userPassword"/>
             <button type="submit" className="btn btn-primary" onClick={ () => { bejelentkezes() }} id="gomb">Bejelentkezés</button>
             <Link to="/">Még nincs fiókod?</Link>
         </form>
