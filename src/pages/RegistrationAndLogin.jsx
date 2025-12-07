@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { bejelentkezes, regisztracio } from "../regist";
+import { bejelentkezes, regisztracio } from "../regist.js";
 
 
-export function RegistrationPage() {
+export function Registration() {
     return (
         <div className="container">
         <form method="post" id="form">
@@ -17,7 +17,7 @@ export function RegistrationPage() {
 }
 
 
-export function LoginPage(){
+export function Login(){
     return (
         <div className="container">
         <form method="post" id="form">

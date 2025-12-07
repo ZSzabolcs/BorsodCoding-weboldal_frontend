@@ -1,8 +1,11 @@
-import { CheckUserName } from "../App"
+import { CheckUserName } from "../App.jsx"
+import Felsoresz from "../modules/Felsoresz.jsx"
 
 function Kapcsolat() {
     CheckUserName()
     return (
+    <>
+    <Felsoresz/>
     <div className="text-center">
         <h3>Email:</h3><span>borsodcoding@gmail.com</span>
         <h2>Munkahely helye:</h2>
@@ -15,6 +18,7 @@ function Kapcsolat() {
             referrerPolicy="no-referrer-when-downgrade"></iframe>
         </p>
     </div>
+    </>
     )
 }
 

@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom'
 
 function Navigation() {
@@ -6,7 +5,7 @@ function Navigation() {
     <div className="container-fluid navigation">
         <div className="row justify-content-center text-center">
             <div className="col-xxl-1 col-md-3 col-sm-4 p-2 mx-4">
-                <Link to="/index">Kezdőlap</Link>
+                <Link to="/fooldal">Kezdőlap</Link>
             </div>
             <div className="col-xxl-1 col-md-3 col-sm-4 p-2 mx-4">
                 <Link to="/ajatekrol">A játékról</Link>                       
@@ -24,4 +23,4 @@ function Navigation() {
   )
 }
 
-export default Navigation
+export default Navigation;

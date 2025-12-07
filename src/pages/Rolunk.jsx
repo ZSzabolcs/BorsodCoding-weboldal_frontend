@@ -1,8 +1,11 @@
-import { CheckUserName } from "../App"
+import { CheckUserName } from "../App.jsx"
+import Felsoresz from "../modules/Felsoresz.jsx"
 
 function Rolunk() {
     CheckUserName()
     return (
+        <>
+        <Felsoresz/>
         <div className="container">
         <h1 className="text-center my-4">
             Rólunk
@@ -39,6 +42,7 @@ function Rolunk() {
             </div>
         </div>
     </div>
+    </>
     )
 }
 

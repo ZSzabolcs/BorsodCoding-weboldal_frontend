@@ -1,4 +1,5 @@
 import { CheckUserName } from "../App"
+import Felsoresz from "../modules/Felsoresz"
 
 const Hir = ({cim, szoveg } ) => {
     return(
@@ -15,6 +16,7 @@ function Index() {
   const username = CheckUserName()
   return (
     <>
+    <Felsoresz/>
     <h1>Üdvözöljük <span>{username}!</span></h1>
     <br />
     <h2>Híreink</h2>

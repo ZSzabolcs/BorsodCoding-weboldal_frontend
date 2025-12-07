@@ -1,8 +1,11 @@
-import { CheckUserName } from "../App"
+import { CheckUserName } from "../App.jsx"
+import Felsoresz from "../modules/Felsoresz.jsx"
 
 function AJatekrol() {
     CheckUserName()
     return (
+    <>
+    <Felsoresz/>
     <div className="container">
         <h1 className="text-center my-4">
             A játékról
@@ -31,6 +34,7 @@ function AJatekrol() {
             </li>
         </ul>
     </div>
+    </>
     )
 }
 
