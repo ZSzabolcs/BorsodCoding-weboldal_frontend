@@ -1,0 +1,207 @@
+body{
+    background-color: white;
+}
+
+header{
+    background-image: url("../kepek/hatter.png");
+    position: relative;
+    overflow: hidden;
+    height: 300px;
+    padding-top: 100px;
+    color: white;
+}
+
+header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url(./kepek/1706639783068.jpg);
+    background-size: cover;
+    filter: blur(0px);
+    z-index: 1;
+}
+
+header::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Halvány fekete háttérréteg */
+    z-index: 2;
+}
+
+header h1{
+    position: relative;
+    z-index: 3; /* Szöveg a háttér előtt */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    text-align: center;
+    font-size: 70px;
+}
+
+header h3{
+    margin-top: 60px;
+    position: relative;
+    z-index: 3; /* Szöveg a háttér előtt */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+a{
+    text-decoration: none;
+    color: darkolivegreen
+}
+
+p{
+    font-family: 'Open Sans', sans-serif;
+    font-size: x-large;
+    text-align: justify;
+}
+
+h1{
+    font-family: 'Varela Round', sans-serif;
+}
+
+h2{
+    margin-top: 35px;
+    padding-bottom: 20px;
+    font-family: 'Merriweather Sans', sans-serif;
+}
+
+h3{
+    margin-top: 35px;
+    padding-bottom: 20px;
+    font-family: 'Merriweather Sans', sans-serif;
+}
+
+li{
+    font-family: 'Open Sans', sans-serif;
+    font-size: x-large;
+    text-align: justify;
+    margin-top: 15px;
+    list-style: circle;
+}
+
+b{
+    color: #d14e08;
+}
+
+.navigation{
+    background-color: skyblue;
+    border: 1px solid rgb(15, 145, 196);
+    font-size: larger;
+}
+
+.navigation a{
+    text-decoration: none;
+    color: rgb(5, 78, 107);
+    font-family: 'Alfa Slab One', cursive;
+}
+
+.navigation a:hover{
+    color: rgb(7, 119, 163);
+    font-weight: normal;
+}
+
+.title{
+    margin-top: 50px;
+    padding-bottom: 50px;
+    margin-left: 9%;
+    margin-right: 9%;
+    width: 82%;
+    text-align: center;
+}
+
+.paragraph{
+    padding-left: 20px;
+    border-left: 3px dotted rgb(5, 78, 107);
+}
+
+.megjegyzes{
+    padding-left: 30px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-left: 3px solid rgb(173, 171, 171);
+    font-style: italic;
+    color: rgb(75, 73, 73);
+}
+
+.important{
+    padding-left: 30px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    width: 1220px;
+    text-align: left;
+    font-style: italic;
+    font-weight: bold;
+    color: #d14e08;
+}
+
+.footer{
+    position: fixed;
+    /*display: flex;*/  
+    left: 0;
+    bottom: 0;
+    background-color:skyblue;
+    border: 1px solid rgb(15, 145, 196);
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    width: 100%;
+    text-align: center;
+}
+
+.footer-text p{
+    margin-left: 330px;
+    text-align: center;
+    font-family: 'Suez One', serif;
+}
+
+.date{
+    margin-right: 15px;
+    margin-left: auto;
+    font-family: 'Cinzel', serif;
+    font-weight: bold;
+}
+
+.footer p{
+    font-size: xx-large;
+}
+
+.cikk{
+    border: 1px solid black;
+    font-size: x-large;
+    width: 300px;
+    height: 150px;
+    margin: 10px;
+}
+
+.cikk:hover{
+    background-color: skyblue;
+}
+
+.cikk a{
+    color: black;
+}
+
+.card-text{
+    text-align: left;
+}
+
+@media only screen and (max-width: 600px){
+    p, li{
+        text-align: left;
+    }
+}
+
+@media only screen and (max-width: 1800px){
+    .footer-text p{
+        text-align: left;
+        margin-left: 0px;
+    }
+    .important{
+        width: fit-content;
+    }
+}
