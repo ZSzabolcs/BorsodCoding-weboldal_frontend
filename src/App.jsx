@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import AJatekrol from './pages/Ajatekrol.jsx'
 import { Registration, Login } from './pages/RegistrationAndLogin.jsx'
 import Rolunk from './pages/Rolunk.jsx'
@@ -21,9 +21,10 @@ return (
 }
 
 export const CheckUserName = () => {
+  const navigate = useNavigate()
   const username = sessionStorage.getItem("username")
   if (username === "" || username === null) {
-      location.assign("/")
+      navigate("/")
   }
   return username;
 }
@@ -49,7 +50,7 @@ try {
   console.log(result)
   if (response.ok) {
         sessionStorage.setItem("username", name)
-        location.assign("index")
+        location.assign("fooldal")
   }
 } catch (error) {
   console.error(error);
