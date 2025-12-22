@@ -16,6 +16,9 @@ function Navigation() {
             <div className="col-xxl-1 col-md-3 col-sm-4 p-2 mx-4">
                 <Link to="/kapcsolat">Kapcsolat</Link>                         
             </div>
+            <div className="col-xxl-1 col-md-3 col-sm-4 p-2 mx-4">
+                <Link to="/statisztika">Statisztika</Link>                         
+            </div>
         </div>
         
 
