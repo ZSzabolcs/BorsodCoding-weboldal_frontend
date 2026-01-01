@@ -5,6 +5,7 @@ import Rolunk from './pages/Rolunk.jsx'
 import Kapcsolat from './pages/Kapcsolat.jsx'
 import Index from "./pages/Index.jsx"
 import Statisztika from "./pages/Statisztika.jsx";
+import Fiok from "./pages/Fiok.jsx";
 
 export const App = () => {
 return (
@@ -17,6 +18,7 @@ return (
     <Route path="/ajatekrol" element={<AJatekrol />} />
     <Route path="/fooldal" element={<Index />} />
     <Route path="/statisztika" element={<Statisztika />} />
+    <Route path="/fiok" element={<Fiok />} />
 </Routes>
 </>
 );
@@ -71,6 +73,6 @@ try {
   }
 } catch (error) {
   
-  console.error(error);
+  alert(error)
 };
 }

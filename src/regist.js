@@ -17,7 +17,6 @@ export async function regisztracio() {
                 expression : /(\.hu|\.com)/
             }];
         let siker = 0;
-    if (username.search(/[0-9]/) == -1) {
             
         for (let i = 0; i < typeEmails.length; i++) {
             if (email.search(typeEmails[i].expression) > -1) {
@@ -43,10 +42,6 @@ export async function regisztracio() {
         else{
             console.error("Hiba: Email")
         }
-    }
-    else {
-        console.error("Hiba: Username nem tartalmazhat számot")
-    }
 }
 
 export async function bejelentkezes() {
@@ -65,9 +60,8 @@ export async function bejelentkezes() {
             {
                 expression : /(\.hu|\.com)/
             }];
+
         let siker = 0;
-    if (username.search(/[0-9]/) == -1) {
-            
         for (let i = 0; i < typeEmails.length; i++) {
             if (email.search(typeEmails[i].expression) > -1) {
                 siker++;
@@ -91,7 +85,5 @@ export async function bejelentkezes() {
         } else{
             console.error("Hiba: Email")
         }
-    } else {
-        console.error("Hiba: Username nem tartalmazhat számot")
-    }
+    
 }
