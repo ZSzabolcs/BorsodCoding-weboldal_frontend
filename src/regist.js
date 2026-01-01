@@ -1,33 +1,36 @@
-import { POSTToMainPage } from "./App.jsx"
+import axios from "axios";
 
+async function POSTToMainPage(url, data) {
+    try{
+    const response = await axios.post(url, data)
+    alert(response.data.message)
+    sessionStorage.setItem("username", response.data.value.name)
+    location.assign("/fooldal")
+    }
+    catch(error){
+        alert(error.response.data.message)
+    }
+
+
+}
 export async function regisztracio() {
         event.preventDefault()
         const url = "http://localhost:5233/api/User/Registration"
         const username = document.getElementById("userName").value
         const email =  document.getElementById("userEmail").value
         const password = document.getElementById("userPassword").value
-        const typeEmails = [
-            {
-                expression : /.@/
-            },
-            {
-                expression : /@./
-            },
-            {
-                expression : /(\.hu|\.com)/
-            }];
-        let siker = 0;
+        const typeEmail = /^[a-zA-Z0-9_%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/
+        let siker = false;
             
-        for (let i = 0; i < typeEmails.length; i++) {
-            if (email.search(typeEmails[i].expression) > -1) {
-                siker++;
-            }
+        
+        if (email.search(typeEmail) > -1) {
+                siker = true
         }
+        
 
-        if (siker == typeEmails.length) {
-            console.log("Az email cím helyes");
-            
-            if (password.search(/./) > -1) {
+        if (siker) {
+            console.log(password.search(/[\s]/))
+            if (password.search(/[\s]/) == -1) {
                 const user = {
                 "name" : username,
                 "email" : email,
@@ -50,28 +53,16 @@ export async function bejelentkezes() {
         const username = document.getElementById("userName").value
         const email = document.getElementById("userEmail").value
         const password = document.getElementById("userPassword").value
-        const typeEmails = [
-            {
-                expression : /.@/
-            },
-            {
-                expression : /@./
-            },
-            {
-                expression : /(\.hu|\.com)/
-            }];
-
-        let siker = 0;
-        for (let i = 0; i < typeEmails.length; i++) {
-            if (email.search(typeEmails[i].expression) > -1) {
-                siker++;
-            }
-        }
-
-        if (siker == typeEmails.length || document.getElementById("userEmail").disabled) {
-            console.log("Az email cím helyes");
+        const typeEmail = /^[a-zA-Z0-9_%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/
+        let siker = false;
             
-            if (password.search(/./) > -1) {
+        
+        if (email.search(typeEmail) > -1) {
+            siker = true
+        }
+        if (siker || document.getElementById("userEmail").disabled) {
+            console.log(password.search(/[\s]/))
+            if (password.search(/[\s]/) == -1) {
                 const user = {
                     "name": username,
                     "password" : password,
