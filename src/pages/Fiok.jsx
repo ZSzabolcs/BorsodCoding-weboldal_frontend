@@ -47,7 +47,7 @@ function Fiok() {
                     password: newPassword === oldPassword ? newPassword : password,
                     email: email !== newEmail ? newEmail : adatok.email
                 }
-                
+
                 console.log(frissitettAdatok)
                 axios
                     .put(
@@ -64,12 +64,12 @@ function Fiok() {
                     .catch((error) => { console.log(error) })
 
             }}>
-                <label>Jelszó:</label>
-                <input type="password" name="oldpassword" defaultValue={password} />
-                <label>jelszó újra:</label>
-                <input type="password" name="newpassword" />
-                <label>Email:</label>
-                <input type="email" name="newemail" defaultValue={email} />
+                <label htmlFor="oldpassword">Jelszó:</label>
+                <input type="password" name="oldpassword" id="oldpassword" defaultValue={password} />
+                <label htmlFor="newpassword">jelszó újra:</label>
+                <input type="password" name="newpassword" id="newpassword"/>
+                <label htmlFor="newemail">Email:</label>
+                <input type="email" name="newemail" id="newemail" defaultValue={email} />
                 <input type="submit" />
             </form>
         </>
