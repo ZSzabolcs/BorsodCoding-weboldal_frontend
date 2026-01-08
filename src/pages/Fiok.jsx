@@ -25,7 +25,7 @@ function Fiok() {
         return (
             <>
                 <Felsoresz />
-                <h1>...Betöltés</h1>
+                <h1>Betöltés...</h1>
             </>
         )
     }
