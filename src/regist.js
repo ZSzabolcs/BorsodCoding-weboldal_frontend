@@ -4,22 +4,31 @@ async function POSTToMainPage(url, data) {
     try{
     const response = await axios.post(url, data)
     alert(response.data.message)
-    sessionStorage.setItem("username", response.data.value.name)
-    location.assign("/fooldal")
+    
+    if (response.status == 200 || response.status == 201) {
+        sessionStorage.setItem("username", response.data.value)
+        localStorage.setItem("jwt", response.data.token)
+        location.assign("/fooldal")
+    }
+
     }
     catch(error){
-        alert(error.response.data.message)
+        alert(error)
     }
 
 
 }
+
+const typeEmail = /^[a-zA-Z0-9_%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/
+const typePassword = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/
+
 export async function regisztracio() {
         event.preventDefault()
-        const url = "http://localhost:5233/api/User/Registration"
+        const url = "https://localhost:7159/auth/register"
         const username = document.getElementById("userName").value
         const email =  document.getElementById("userEmail").value
         const password = document.getElementById("userPassword").value
-        const typeEmail = /^[a-zA-Z0-9_%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/
+
         let siker = false;
             
         
@@ -29,10 +38,9 @@ export async function regisztracio() {
         
 
         if (siker) {
-            console.log(password.search(/[\s]/))
-            if (password.search(/[\s]/) == -1) {
+            if (password.search(/[\s]/) == -1 && password.search(typePassword) > -1) {
                 const user = {
-                "name" : username,
+                "userName" : username,
                 "email" : email,
                 "password" : password
                 }
@@ -49,11 +57,10 @@ export async function regisztracio() {
 
 export async function bejelentkezes() {
         event.preventDefault()
-        const url = "http://localhost:5233/api/User/Login"
+        const url = "https://localhost:7159/auth/login"
         const username = document.getElementById("userName").value
         const email = document.getElementById("userEmail").value
         const password = document.getElementById("userPassword").value
-        const typeEmail = /^[a-zA-Z0-9_%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/
         let siker = false;
             
         
@@ -62,11 +69,10 @@ export async function bejelentkezes() {
         }
         if (siker || document.getElementById("userEmail").disabled) {
             console.log(password.search(/[\s]/))
-            if (password.search(/[\s]/) == -1) {
+            if (password.search(/[\s]/) == -1 && password.search(typeEmail) > -1) {
                 const user = {
-                    "name": username,
-                    "password" : password,
-                    "email" : email
+                    "userName": username,
+                    "password" : password
                 }
                 await POSTToMainPage(url, user)
 

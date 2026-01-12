@@ -14,7 +14,7 @@ function Fiok() {
         setPending(true);
         axios
             .get(
-                `http://localhost:5233/api/User/Fiok/${userName}`
+                `https://localhost:7159/auth/Fiok/${userName}`
             )
             .then((tartalom) => { setAdatok(tartalom.data) })
             .catch((error) => { console.log(error) })
@@ -29,13 +29,13 @@ function Fiok() {
             </>
         )
     }
-    const { regDate, modDate, password, email } = adatok.value
+    const { birthdate, modDate, password, email } = adatok.value
     return (
         <>
             <Felsoresz />
             <h1>{userName}</h1>
-            <h2>A fiók létrejött ekkor: {regDate}</h2>
-            <h2>A fiók adatai utoljára módosítva ekkor: {modDate}</h2>
+            <h2>A fiók létrejött ekkor: {birthdate}</h2>
+            <h2>A fiók adatai utoljára módosítva ekkor: {modDate == "0001-01-01T00:00:00" ? <span>{birthdate}</span> : modDate}</h2>
             <form method="post" onSubmit={(event) => {
                 event.preventDefault()
                 const newPassword = event.target.newpassword.value
@@ -43,21 +43,22 @@ function Fiok() {
                 const newEmail = event.target.newemail.value
 
                 const frissitettAdatok = {
-                    ...adatok,
+                    userName : userName,
                     password: newPassword === oldPassword ? newPassword : password,
-                    email: email !== newEmail ? newEmail : adatok.email
+                    email: email !== newEmail ? newEmail : email,
+                    birthdate: new Date().toJSON()
                 }
 
                 console.log(frissitettAdatok)
                 axios
                     .put(
-                        "http://localhost:5233/api/User",
+                        "https://localhost:7159/auth/Modositas",
                         frissitettAdatok
                     )
                     .then((tartalom) => {
                         alert(tartalom.data.message);
                         axios
-                            .get(`http://localhost:5233/api/User/Fiok/${userName}`)
+                            .get(`https://localhost:7159/auth/Fiok/${userName}`)
                             .then((tartalom) => { setAdatok(tartalom.data.value); event.target.newpassword.value = "" })
                             .catch((error) => { console.log(error) })
                     })
