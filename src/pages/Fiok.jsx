@@ -30,12 +30,13 @@ function Fiok() {
         )
     }
     const { birthdate, modDate, password, email } = adatok.value
+    const modositva = (modDate == "0001-01-01T00:00:00" ? "Nem történt módosítás azóta." : `A fiók adatai utoljára módosítva ekkor: ${modDate}`)
     return (
         <>
             <Felsoresz />
             <h1>{userName}</h1>
             <h2>A fiók létrejött ekkor: {birthdate}</h2>
-            <h2>A fiók adatai utoljára módosítva ekkor: {modDate == "0001-01-01T00:00:00" ? <span>{birthdate}</span> : modDate}</h2>
+            <h2>{modositva}</h2>
             <form method="post" onSubmit={(event) => {
                 event.preventDefault()
                 const newPassword = event.target.newpassword.value
@@ -44,9 +45,8 @@ function Fiok() {
 
                 const frissitettAdatok = {
                     userName : userName,
-                    password: newPassword === oldPassword ? newPassword : password,
-                    email: email !== newEmail ? newEmail : email,
-                    birthdate: new Date().toJSON()
+                    password: newPassword === oldPassword && newPassword.length > 1 ? newPassword : null,
+                    email: email !== newEmail ? newEmail : null,
                 }
 
                 console.log(frissitettAdatok)
@@ -57,10 +57,6 @@ function Fiok() {
                     )
                     .then((tartalom) => {
                         alert(tartalom.data.message);
-                        axios
-                            .get(`https://localhost:7159/auth/Fiok/${userName}`)
-                            .then((tartalom) => { setAdatok(tartalom.data.value); event.target.newpassword.value = "" })
-                            .catch((error) => { console.log(error) })
                     })
                     .catch((error) => { console.log(error) })
 

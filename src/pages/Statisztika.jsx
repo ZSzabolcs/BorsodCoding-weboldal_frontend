@@ -6,21 +6,21 @@ import axios from "axios";
 
 function Statisztika() {
     const userName = CheckUserName()
-    const [adatok, setAdatok] = useState([]);
+    const [adatok, setAdatok] = useState(null);
     const [pending, setPending] = useState(false);
 
     useEffect(() => {
         setPending(true);
         axios
             .get(
-                `http://localhost:5233/api/User/Statistic/${userName}`,
+                `https://localhost:7036/api/Save/Statisztika/${userName}`,
             )
             .then((tartalom) => { setAdatok(tartalom.data) })
             .catch((error) => { console.log(error); })
             .finally(() => { setPending(false) })
     }, [userName]);
 
-    if (typeof (adatok.value) === "undefined") {
+    if (adatok === null) {
         return (
             <>
                 <Felsoresz />
@@ -28,15 +28,16 @@ function Statisztika() {
             </>
         );
     }
-    else if (adatok.value === null) {
+    else if (adatok != null && typeof(adatok) === "string") {
         return (
             <>
                 <Felsoresz />
                 <h1>{userName}</h1>
-                <h1>{adatok.message}!</h1>
+                <h1>{adatok}!</h1>
             </>
         );
     }
+
     const {
         regDate,
         points,
@@ -48,17 +49,21 @@ function Statisztika() {
     } = adatok.value
 
 
+    const nyelv = (language === "hu" ? "magyar" : "angol")
+    const pontAranySzoveg = (pontArany < 100 ? `Ön mint a játékosok ${pontArany}%-a van ennyi ponja.` : "Önnek van csak ennyi pontja.")
+    const szintAranySzoveg = (szintArany < 100 ? `Ön mint a játékosok ${szintArany}%-a van ezen a szinten.` : "Ön van csak ezen a szinten.")
+    const nyelvAranySzoveg = (nyelvArany < 100 ? `Ön mint a játékosok ${nyelvArany}%-a ${nyelv} nyelven játszik.` : `Ön játszik csak ezen a nyelven.`)
     return (
         <>
             <Felsoresz />
             <h1>{userName}</h1>
             <h2>A játékot elkezdte: {regDate}</h2>
             <h2>Pontszám: {points}</h2>
-            <h2>Ön és a játékosok {pontArany.szazalek}%-a van ennyi pontja.</h2>
+            <h2>{pontAranySzoveg}</h2>
             <h2>Szint: {level}</h2>
-            <h2>Ön és a játékosok {szintArany.szazalek}%-a van ezen a szinten.</h2>
-            <h2>Nyelv: {(language === "hu" ? "magyar" : "angol")}</h2>
-            <h2>Ön és a játékosok {nyelvArany.szazalek}%-a {(language === "hu" ? "magyar" : "angol")} nyelven játszik.</h2>
+            <h2>{szintAranySzoveg}</h2>
+            <h2>Nyelv: {nyelv}</h2>
+            <h2>{nyelvAranySzoveg}</h2>
         </>
     );
 

@@ -1,6 +1,8 @@
 import {By, Builder, Browser} from "selenium-webdriver"
 import assert from "assert"
 
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 (async function Test() {
   let driver;
   
@@ -11,7 +13,9 @@ import assert from "assert"
     let title = await driver.getTitle();
     assert.equal("For the potato", title);
   
-    await driver.manage().setTimeouts({implicit: 500});
+    //await driver.manage().setTimeouts({implicit: 500});
+
+    await sleep(5000)
   
     let linkToLogin = await driver.findElement(By.linkText("Már van fiókod?"));
 

@@ -20,7 +20,6 @@ async function POSTToMainPage(url, data) {
 }
 
 const typeEmail = /^[a-zA-Z0-9_%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/
-const typePassword = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/
 
 export async function regisztracio() {
         event.preventDefault()
@@ -38,7 +37,8 @@ export async function regisztracio() {
         
 
         if (siker) {
-            if (password.search(/[\s]/) == -1 && password.search(typePassword) > -1) {
+            console.log(password.search(/[\s]/))
+            if (password.search(/[\s]/) == -1) {
                 const user = {
                 "userName" : username,
                 "email" : email,
@@ -69,7 +69,7 @@ export async function bejelentkezes() {
         }
         if (siker || document.getElementById("userEmail").disabled) {
             console.log(password.search(/[\s]/))
-            if (password.search(/[\s]/) == -1 && password.search(typeEmail) > -1) {
+            if (password.search(/[\s]/) == -1) {
                 const user = {
                     "userName": username,
                     "password" : password
