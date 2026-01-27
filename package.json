@@ -10,24 +10,25 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "axios": "^1.13.2",
+    "axios": "^1.13.3",
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
-    "react-router-dom": "^7.9.6",
-    "selenium-webdriver": "^4.39.0"
+    "caniuse-lite": "^1.0.30001766",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-router-dom": "^7.13.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.36.0",
-    "@types/react": "^19.1.16",
-    "@types/react-dom": "^19.1.9",
-    "@vitejs/plugin-react": "^5.0.4",
-    "eslint": "^9.36.0",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.22",
-    "globals": "^16.4.0",
-    "vite": "^7.2.6",
-    "mocha": "11.7.4"
+    "@eslint/js": "^9.39.2",
+    "@types/react": "^19.2.9",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.2",
+    "baseline-browser-mapping": "^2.9.18",
+    "eslint": "^9.39.2",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.26",
+    "globals": "^17.1.0",
+    "update-browserslist-db": "^1.2.3",
+    "vite": "^7.3.1"
   }
 }
