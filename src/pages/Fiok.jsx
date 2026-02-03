@@ -14,7 +14,12 @@ function Fiok() {
         setPending(true);
         axios
             .get(
-                `https://localhost:7159/auth/Fiok/${userName}`
+                `https://localhost:7159/auth/Fiok/${userName}`,
+                {
+                    headers: {
+                        Authorization : `Bearer ${localStorage.getItem("jwt")}`
+                    }
+                }
             )
             .then((tartalom) => { setAdatok(tartalom.data) })
             .catch((error) => { console.log(error) })
@@ -53,7 +58,14 @@ function Fiok() {
                 axios
                     .put(
                         "https://localhost:7159/auth/Modositas",
-                        frissitettAdatok
+                        frissitettAdatok,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${localStorage.getItem("jwt")}`
+                            }
+                        },
+
+
                     )
                     .then((tartalom) => {
                         alert(tartalom.data.message);

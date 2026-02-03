@@ -14,6 +14,11 @@ function Statisztika() {
         axios
             .get(
                 `https://localhost:7036/api/Save/Statisztika/${userName}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("jwt")}`
+                    }
+                }
             )
             .then((tartalom) => { setAdatok(tartalom.data) })
             .catch((error) => { console.log(error); })
@@ -33,7 +38,7 @@ function Statisztika() {
             <>
                 <Felsoresz />
                 <h1>{userName}</h1>
-                <h1>{adatok}!</h1>
+                <h1>{adatok}</h1>
             </>
         );
     }

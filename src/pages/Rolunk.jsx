@@ -1,5 +1,7 @@
 import { CheckUserName } from "../App.jsx"
 import Felsoresz from "../modules/Felsoresz.jsx"
+import Csiger from "../kepek/csigerkep.jpeg"
+import Zelenak from "../kepek/szabolcskep.jpg"
 
 function Rolunk() {
     CheckUserName()
@@ -22,7 +24,7 @@ function Rolunk() {
         <div className="row">
             <div className="col-xxl-6">
                 <div className="card" style={{width:"400px"}}>
-                    <img className="card-img-top" src="src/kepek/szabolcskep.jpg"/>
+                    <img className="card-img-top" src={Zelenak}/>
                     <div className="card-body">
                       <h4 className="card-title">Zelenák Szabolcs</h4>
                       <p className="card-text">Ötletgazda, tervező</p>
@@ -32,7 +34,7 @@ function Rolunk() {
             </div>
             <div className="col-xxl-6">
                 <div className="card" style={{width:"400px"}}>
-                    <img className="card-img-top" src="src/kepek/csigerkep.jpeg"/>
+                    <img className="card-img-top" src={Csiger}/>
                     <div className="card-body">
                       <h4 className="card-title">Csiger Imre Krisztián</h4>
                       <p className="card-text">Háttérfolyamatokért felelős programozó</p>
