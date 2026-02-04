@@ -24,13 +24,13 @@ function Index() {
         <div className="col-md-6 border">
             <h3>Történetünk első játéka</h3>
             <p>
-                Elkészült a <strong>For The Potatoe</strong> című <strong>legelső játékunk!</strong>  Kattintson a játékról nevű gombra, ha érdekli.
+                Elkészült a <strong>For The Potato</strong> című <strong>legelső játékunk!</strong>  Kattintson a játékról nevű gombra, ha érdekli.
             </p>
         </div>
         <div className="col-md-6 border">
-            <h3>Mikor lesz For The Potatoe 2?</h3>
+            <h3>Mikor lesz For The Potato 2?</h3>
             <p>
-                A legelső játék készítése alatt már a folytatásai is kirajzolódott. A For The Potatoe 2 játékot 2026-ban vagy 2027-ben tervezzük elkezdeni a pénz függvényében.
+                A legelső játék készítése alatt már a folytatásai is kirajzolódott. A For The Potato 2 játékot 2026-ban vagy 2027-ben tervezzük elkezdeni a pénz függvényében.
             </p>
         </div>
     </div>
