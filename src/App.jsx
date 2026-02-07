@@ -6,6 +6,7 @@ import Kapcsolat from './pages/Kapcsolat.jsx'
 import Index from "./pages/Index.jsx"
 import Statisztika from "./pages/Statisztika.jsx";
 import Fiok from "./pages/Fiok.jsx";
+import Velemeny from "./pages/Velemeny.jsx";
 
 export const App = () => {
 return (
@@ -19,6 +20,7 @@ return (
     <Route path="/fooldal" element={<Index />} />
     <Route path="/statisztika" element={<Statisztika />} />
     <Route path="/fiok" element={<Fiok />} />
+    <Route path="/velemeny" element={<Velemeny/>} />
 </Routes>
 </>
 );

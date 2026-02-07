@@ -1,7 +1,7 @@
 import { CheckUserName } from "../App"
 import Felsoresz from "../modules/Felsoresz"
 
-const Hir = ({cim, szoveg } ) => {
+const Hir = ({cim, szoveg}) => {
     return(
         <div className="col-md-6 border">
             <h3>{cim}</h3>
@@ -21,18 +21,16 @@ function Index() {
     <br />
     <h2>Híreink</h2>
     <div className="row">
-        <div className="col-md-6 border">
-            <h3>Történetünk első játéka</h3>
-            <p>
-                Elkészült a <strong>For The Potato</strong> című <strong>legelső játékunk!</strong>  Kattintson a játékról nevű gombra, ha érdekli.
-            </p>
-        </div>
-        <div className="col-md-6 border">
-            <h3>Mikor lesz For The Potato 2?</h3>
-            <p>
-                A legelső játék készítése alatt már a folytatásai is kirajzolódott. A For The Potato 2 játékot 2026-ban vagy 2027-ben tervezzük elkezdeni a pénz függvényében.
-            </p>
-        </div>
+        <Hir cim="Történetünk első játéka" szoveg={
+            <>
+                Elkészült a <strong>For The Potato</strong> című <strong>Legelső játékunk!</strong> Katttintson a játékról nevű gomba, ha érdekli.
+            </>
+        }/>
+        <Hir cim="Mikor lesz For The Potato 2?" szoveg={
+            <>
+                A legelső játék készítése alatt már a folytatásai is kirajzolódott. A For The Potato 2 játékot 2026-ban vagy 2027-ben tervezzzük 
+            </>
+        }/>
     </div>
     </>
   )
