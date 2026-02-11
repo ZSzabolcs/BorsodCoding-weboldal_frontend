@@ -9,9 +9,10 @@ function Statisztika() {
     const [adatok, setAdatok] = useState(null);
     const [pending, setPending] = useState(false);
 
-    useEffect(() => {
+    const getStatisztika = async () => {
+        try {
         setPending(true);
-        axios
+        const tartalom = await axios
             .get(
                 `https://localhost:7036/api/Save/Statisztika/${userName}`,
                 {
@@ -20,10 +21,17 @@ function Statisztika() {
                     }
                 }
             )
-            .then((tartalom) => { setAdatok(tartalom.data) })
-            .catch((error) => { console.log(error); })
-            .finally(() => { setPending(false) })
-    }, [userName]);
+        setAdatok(tartalom.data)
+        } catch (error) {
+            console.log(error)
+        }
+        finally{
+            setPending(false)
+        }
+        
+    }
+
+    useEffect(() => { getStatisztika(); }, [userName]);
 
     if (adatok === null) {
         return (

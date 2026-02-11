@@ -4,15 +4,16 @@ import { CheckUserName } from "../App";
 import axios from "axios";
 
 
-
 function Fiok() {
     const userName = CheckUserName()
     const [adatok, setAdatok] = useState({});
     const [pending, setPending] = useState(false);
 
-    useEffect(() => {
+    const getFiok = async () => {
+    try {
         setPending(true);
-        axios
+
+        const response = await axios
             .get(
                 `https://localhost:7159/auth/Fiok/${userName}`,
                 {
@@ -21,10 +22,17 @@ function Fiok() {
                     }
                 }
             )
-            .then((tartalom) => { setAdatok(tartalom.data) })
-            .catch((error) => { console.log(error) })
-            .finally(() => { setPending(false) })
-    }, [userName]);
+            setAdatok(response.data)
+            } catch (error) {
+                console.log(error)
+            }
+            finally{
+                setPending(false)
+            }
+    }
+
+    useEffect(() => { getFiok();}, [userName])
+        
 
     if (typeof (adatok.value) === "undefined") {
         return (
@@ -36,6 +44,30 @@ function Fiok() {
     }
     const { birthdate, modDate, password, email } = adatok.value
     const modositva = (modDate == "0001-01-01T00:00:00" ? "Nem történt módosítás azóta." : `A fiók adatai utoljára módosítva ekkor: ${modDate}`)
+
+    const putFiok = async (frissitettAdatok) => {
+        try {
+            setPending(true)
+            const tartalom = await axios
+                    .put("https://localhost:7159/auth/Modositas",
+                        frissitettAdatok,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${localStorage.getItem("jwt")}`
+                            }
+                        },
+                    )
+            setAdatok(tartalom.data)
+            alert(adatok.message)
+        } catch (error) {
+            console.log(error)
+        }
+        finally{
+            setPending(false)
+        }
+                
+    }
+
     return (
         <>
             <Felsoresz />
@@ -44,6 +76,7 @@ function Fiok() {
             <h2>{modositva}</h2>
             <form method="post" onSubmit={(event) => {
                 event.preventDefault()
+                event.persist()
                 const newPassword = event.target.newpassword.value
                 const oldPassword = event.target.oldpassword.value
                 const newEmail = event.target.newemail.value
@@ -54,23 +87,7 @@ function Fiok() {
                     email: email !== newEmail ? newEmail : null,
                 }
 
-                console.log(frissitettAdatok)
-                axios
-                    .put(
-                        "https://localhost:7159/auth/Modositas",
-                        frissitettAdatok,
-                        {
-                            headers: {
-                                Authorization: `Bearer ${localStorage.getItem("jwt")}`
-                            }
-                        },
-
-
-                    )
-                    .then((tartalom) => {
-                        alert(tartalom.data.message);
-                    })
-                    .catch((error) => { console.log(error) })
+                putFiok(frissitettAdatok)
 
             }}>
                 <label htmlFor="oldpassword">Jelszó:</label>
