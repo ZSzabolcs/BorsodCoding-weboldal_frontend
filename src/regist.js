@@ -68,7 +68,6 @@ export async function bejelentkezes() {
             siker = true
         }
         if (siker || document.getElementById("userEmail").disabled) {
-            console.log(password.search(/[\s]/))
             if (password.search(/[\s]/) == -1) {
                 const user = {
                     "userName": username,

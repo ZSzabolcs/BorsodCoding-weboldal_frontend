@@ -3,6 +3,21 @@ import Felsoresz from "../modules/Felsoresz.jsx"
 import Csiger from "../kepek/csigerkep.jpeg"
 import Zelenak from "../kepek/szabolcskep.jpg"
 
+const Kartya = ({kep, nev, foglalkozas, monolog}) => {
+    return (
+        <div className="col-xxl-6">
+            <div className="card" style={{width:"400px"}}>
+                <img className="card-img-top" src={kep}/>
+                <div className="card-body">
+                    <h4 className="card-title">{nev}</h4>
+                    <p className="card-text">{foglalkozas}</p>
+                    <p className="card-text">{monolog}</p>
+                </div>
+            </div>
+        </div>
+    )
+}
+
 function Rolunk() {
     CheckUserName()
     return (

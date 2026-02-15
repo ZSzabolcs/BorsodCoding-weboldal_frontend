@@ -14,7 +14,7 @@ function Statisztika() {
         setPending(true);
         const tartalom = await axios
             .get(
-                `https://localhost:7036/api/Save/Statisztika/${userName}`,
+                `https://localhost:7159/api/Save/Statisztika/${userName}`,
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("jwt")}`
