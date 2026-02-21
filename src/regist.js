@@ -7,8 +7,10 @@ async function POSTToMainPage(url, data) {
     
     if (response.status == 200 || response.status == 201) {
         sessionStorage.setItem("username", response.data.value)
+        localStorage.removeItem("jwt")
         localStorage.setItem("jwt", response.data.token)
         location.assign("/fooldal")
+
     }
 
     }
@@ -19,6 +21,7 @@ async function POSTToMainPage(url, data) {
 
 }
 
+const typePassword = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+=\[\]{};':"\\|,.<>\/?-])(?=\S+$).{6,}$/
 const typeEmail = /^[a-zA-Z0-9_%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/
 
 export async function regisztracio() {
@@ -37,15 +40,22 @@ export async function regisztracio() {
         
 
         if (siker) {
-            console.log(password.search(/[\s]/))
-            if (password.search(/[\s]/) == -1) {
+            if (password.search(typePassword) != -1) {
                 const user = {
                 "userName" : username,
                 "email" : email,
                 "password" : password
                 }
                 await POSTToMainPage(url, user)
-        
+                const body = {
+                    to: email,
+                    subject: "Sikeres regisztráció",
+                    body: 
+                        `<h1>Üdvözöljük {username}!</h1>
+                        <p>Sikeresen beregisztrált az oldalunkra</p>
+                        `
+                }
+                const valasz = await axios.post("https://localhost:7159/api/SendMail", body)
             } else {
                 console.error("Hiba: Password")
             }
@@ -68,7 +78,7 @@ export async function bejelentkezes() {
             siker = true
         }
         if (siker || document.getElementById("userEmail").disabled) {
-            if (password.search(/[\s]/) == -1) {
+            if (password.search(typePassword) != -1) {
                 const user = {
                     "userName": username,
                     "password" : password

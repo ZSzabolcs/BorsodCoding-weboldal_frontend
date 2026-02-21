@@ -14,9 +14,6 @@ const postErtekeles = async (body) => {
     } catch (error) {
         console.log(error)
     }
-    finally {
-        
-    }
 }
 
 const putErtekeles = async (body) => {
@@ -32,11 +29,24 @@ const putErtekeles = async (body) => {
     }
 }
 
+const deleteErtekeles = async (userName) => {
+    try {
+        const tartalom = await axios.delete(`https://localhost:7159/api/Velemeny?userName=${userName}`, {
+            headers: {
+                Authorization : `Bearer ${localStorage.getItem("jwt")}`
+            }
+        })
+        alert(tartalom.data.message)
+    } catch (error) {
+        console.log(error)
+    }
+    
+}
+
 
 function CsillagErtekelo() {
     const userName = CheckUserName()
     const [pending, setPending] = useState(false)
-    const [uzenet, setUzenet] = useState(null)
     const [adat, setAdat] = useState({
         ertekeles: 0,
         megjegyzes: ""
@@ -54,7 +64,6 @@ function CsillagErtekelo() {
             })
             if (typeof (tartalom.data) === "string") {
                 setvaneVelemeny(false)
-                setUzenet(tartalom.data)
             }
             else {
                 setErtekeles(Number(tartalom.data.value.ertekeles))
@@ -77,7 +86,7 @@ function CsillagErtekelo() {
 
     return (
         <>
-            {vaneVelemeny ? <></> : <><h2>{uzenet}</h2></>}
+            {vaneVelemeny ? <></> : <><h2>Még nem adtál véleményt!</h2></>}
             <form method="post" onSubmit={(event) => {
                 event.preventDefault()
                 event.persist()
@@ -98,6 +107,7 @@ function CsillagErtekelo() {
                     putErtekeles(body)
                 }else{
                     postErtekeles(body)
+                    setvaneVelemeny(true)
                 }
 
             }}>
@@ -112,6 +122,18 @@ function CsillagErtekelo() {
                 </div>
                 <input type="text" name="megjegyzes" defaultValue={adat.megjegyzes} /><br />
                 <input type="submit" />
+                {(vaneVelemeny) ?
+                <button onClick={() => {
+                    deleteErtekeles(userName);
+                    setErtekeles(0)
+                    setAdat({
+                        ertekeles: 0,
+                        megjegyzes: ""
+                    })
+                    setvaneVelemeny(false)
+                }}>Törlés</button>
+                : <></>
+                }
             </form>
         </>
     );
