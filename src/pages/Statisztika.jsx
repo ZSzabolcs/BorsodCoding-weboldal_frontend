@@ -63,7 +63,7 @@ function Statisztika() {
 
 
     const nyelv = (language === "hu" ? "magyar" : "angol")
-    const pontAranySzoveg = (pontArany < 100 ? `Ön mint a játékosok ${pontArany}%-a van ennyi ponja.` : "Önnek van csak ennyi pontja.")
+    const pontAranySzoveg = (pontArany < 100 ? `Ön mint a játékosok ${pontArany}%-a van ennyi pontja.` : "Önnek van csak ennyi pontja.")
     const szintAranySzoveg = (szintArany < 100 ? `Ön mint a játékosok ${szintArany}%-a van ezen a szinten.` : "Ön van csak ezen a szinten.")
     const nyelvAranySzoveg = (nyelvArany < 100 ? `Ön mint a játékosok ${nyelvArany}%-a ${nyelv} nyelven játszik.` : `Ön játszik csak ezen a nyelven.`)
     return (

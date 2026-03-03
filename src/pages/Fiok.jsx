@@ -57,8 +57,7 @@ function Fiok() {
                             }
                         },
                     )
-            setAdatok(tartalom.data)
-            alert(adatok.message)
+            alert(tartalom.data.message)
         } catch (error) {
             console.log(error)
         }
@@ -91,12 +90,12 @@ function Fiok() {
 
             }}>
                 <label htmlFor="oldpassword">Jelszó:</label>
-                <input type="password" name="oldpassword" id="oldpassword" defaultValue={password} />
+                <input type="password" name="oldpassword" id="oldpassword" />
                 <label htmlFor="newpassword">jelszó újra:</label>
                 <input type="password" name="newpassword" id="newpassword"/>
                 <label htmlFor="newemail">Email:</label>
                 <input type="email" name="newemail" id="newemail" defaultValue={email} />
-                <input type="submit" />
+                <button type="submit">Módosítás</button>
             </form>
         </>
     )

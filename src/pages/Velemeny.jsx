@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Felsoresz from "../modules/Felsoresz";
-import { CheckUserName } from "../App";
+import { CheckUserName, } from "../App";
 import axios from "axios";
 
 const postErtekeles = async (body) => {
