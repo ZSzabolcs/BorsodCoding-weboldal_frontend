@@ -11,24 +11,24 @@ function Statisztika() {
 
     const getStatisztika = async () => {
         try {
-        setPending(true);
-        const tartalom = await axios
-            .get(
-                `https://localhost:7159/api/Save/Statisztika/${userName}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem("jwt")}`
+            setPending(true);
+            const tartalom = await axios
+                .get(
+                    `https://localhost:7159/api/Save/Statisztika/${userName}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem("jwt")}`
+                        }
                     }
-                }
-            )
-        setAdatok(tartalom.data)
+                )
+            setAdatok(tartalom.data)
         } catch (error) {
             console.log(error)
         }
-        finally{
+        finally {
             setPending(false)
         }
-        
+
     }
 
     useEffect(() => { getStatisztika(); }, [userName]);
@@ -41,7 +41,7 @@ function Statisztika() {
             </>
         );
     }
-    else if (adatok != null && typeof(adatok) === "string") {
+    else if (adatok != null && typeof (adatok) === "string") {
         return (
             <>
                 <Felsoresz />
