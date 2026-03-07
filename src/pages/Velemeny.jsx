@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import Felsoresz from "../modules/Felsoresz";
-import { catchErrors, CheckUserName, } from "../App";
+import { catchErrors, checkUserName, } from "../App";
 import axios from "axios";
+import { data } from "react-router-dom";
 
 const postErtekeles = async (body) => {
     try {
@@ -45,28 +46,30 @@ const deleteErtekeles = async (userName) => {
 
 
 function Velemeny() {
-    const userName = CheckUserName()
+    const userName = checkUserName()
     const [pending, setPending] = useState(false)
     const [adat, setAdat] = useState({ ertekeles: 0, megjegyzes: "" })
     const [vaneVelemeny, setvaneVelemeny] = useState(false)
-    const [ertekeles, setErtekeles] = useState(0)
+    const [ertekelesJelenleg, setErtekelesJelenleg] = useState(0)
+    const [megjegyzesJelenleg, setMegjegyzesJelenleg] = useState("")
 
     const getErtekeles = async () => {
         try {
             setPending(true)
-            const tartalom = await axios.get(`https://localhost:7159/api/Velemeny/${userName}`, {
+            const { data } = await axios.get(`https://localhost:7159/api/Velemeny/${userName}`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("jwt")}`
                 }
             })
-            if (typeof (tartalom.data) === "string") {
+            if (typeof (data) === "string") {
                 setvaneVelemeny(false)
             }
             else {
-                setErtekeles(Number(tartalom.data.value.ertekeles))
+                setErtekelesJelenleg(Number(data.value.ertekeles))
+                setMegjegyzesJelenleg(data.value.megjegyzes)
                 setAdat({
-                    ertekeles: Number(tartalom.data.value.ertekeles),
-                    megjegyzes: tartalom.data.value.megjegyzes
+                    ertekeles: Number(data.value.ertekeles),
+                    megjegyzes: data.value.megjegyzes
                 })
                 setvaneVelemeny(true)
             }
@@ -85,13 +88,10 @@ function Velemeny() {
 
         const ujMegjegyzes = event.target.megjegyzes.value
 
-        if (ertekeles == adat?.ertekeles && ujMegjegyzes == adat?.megjegyzes) {
-            return
-        }
 
         const body = {
             userName: userName,
-            ertekeles: String(ertekeles),
+            ertekeles: String(ertekelesJelenleg),
             megjegyzes: ujMegjegyzes
         }
 
@@ -105,7 +105,7 @@ function Velemeny() {
 
     const torolVelemeny = () => {
         deleteErtekeles(userName);
-        setErtekeles(0)
+        setErtekelesJelenleg(0)
         setAdat({
             ertekeles: 0,
             megjegyzes: ""
@@ -113,7 +113,28 @@ function Velemeny() {
         setvaneVelemeny(false)
     }
 
+    const megjegyzesValtozas = (getMegjegyzes) => {
+        setMegjegyzesJelenleg(getMegjegyzes)
+    }
+
+    const CheckDataStatus = (status) => {
+        for (const key in status) {
+            if(status[key] === true){
+                return false;
+            }
+        
+        }
+        return true;
+    }
+
     useEffect(() => { getErtekeles() }, [])
+
+    const isSendDisabled = {
+        isMegjegyzesChanged: (megjegyzesJelenleg !== adat.megjegyzes ? true : false),
+        isErtekelesChanged: (ertekelesJelenleg !== adat.ertekeles ? true : false)
+
+    }
+
 
     return (
         <>
@@ -127,13 +148,13 @@ function Velemeny() {
                     {[1, 2, 3, 4, 5].map((num) => (
                         <i
                             key={num}
-                            className={num <= ertekeles ? "bi bi-star-fill m-3" : "bi bi-star m-3"}
-                            onClick={() => setErtekeles(num)}
+                            className={num <= ertekelesJelenleg ? "bi bi-star-fill m-3" : "bi bi-star m-3"}
+                            onClick={() => setErtekelesJelenleg(num)}
                         ></i>
                     ))}
                 </div>
-                <input type="text" name="megjegyzes" defaultValue={adat.megjegyzes} /><br />
-                <input type="submit" />
+                <input type="text" name="megjegyzes" defaultValue={adat.megjegyzes} onChange={(event) => { megjegyzesValtozas(event.target.value) }} /><br />
+                <input type="submit" disabled={CheckDataStatus(isSendDisabled)} />
                 {(vaneVelemeny) ?
                     <button onClick={() => torolVelemeny()}>Törlés</button>
                     : <></>

@@ -9,11 +9,11 @@ import "./css/index.css"
 
 createRoot(document.getElementById('root')).render(
     <>
-    <StrictMode>
-        <BrowserRouter>
-            <App></App>
-        </BrowserRouter>
-    </StrictMode>
+        <StrictMode>
+            <BrowserRouter>
+                <App></App>
+            </BrowserRouter>
+        </StrictMode>
     </>
 )
 

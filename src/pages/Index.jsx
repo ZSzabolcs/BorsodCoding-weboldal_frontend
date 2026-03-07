@@ -1,4 +1,4 @@
-import { CheckUserName } from "../App"
+import { checkUserName } from "../App"
 import Felsoresz from "../modules/Felsoresz"
 
 const Hir = ({ cim, szoveg }) => {
@@ -13,7 +13,7 @@ const Hir = ({ cim, szoveg }) => {
 }
 
 function Index() {
-    const username = CheckUserName()
+    const username = checkUserName()
     return (
         <>
             <Felsoresz />

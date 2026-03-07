@@ -26,13 +26,28 @@ export const App = () => {
   );
 }
 
-export const CheckUserName = () => {
+export const checkUserName = () => {
   const username = sessionStorage.getItem("username")
   if (username === "" || username === null || username === undefined) {
     sessionStorage.removeItem("username")
     location.assign("/")
   }
   return username;
+}
+
+export const checkStates = (states) => {
+  for (const state in states) {
+    for (const key in states[state]) {
+      if (states[state][key] === false) {
+        return true;
+      }
+    }
+    if (states[state] === false) {
+      return true;
+    }
+
+  }
+  return false;
 }
 
 export function catchErrors(error) {

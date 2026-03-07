@@ -1,11 +1,11 @@
 import Felsoresz from "../modules/Felsoresz";
-import { CheckUserName } from "../App";
+import { checkUserName } from "../App";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
 
 function Statisztika() {
-    const userName = CheckUserName()
+    const userName = checkUserName()
     const [adatok, setAdatok] = useState(null);
     const [pending, setPending] = useState(false);
 
@@ -58,7 +58,8 @@ function Statisztika() {
         level,
         szintArany,
         language,
-        nyelvArany
+        nyelvArany,
+        jatekosDb
     } = adatok.value
 
 
@@ -77,6 +78,7 @@ function Statisztika() {
             <h2>{szintAranySzoveg}</h2>
             <h2>Nyelv: {nyelv}</h2>
             <h2>{nyelvAranySzoveg}</h2>
+            <h2>Játékosok száma: {jatekosDb}</h2>
         </>
     );
 

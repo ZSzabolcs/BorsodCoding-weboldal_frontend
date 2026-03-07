@@ -1,24 +1,23 @@
 import Felsoresz from "../modules/Felsoresz";
 import { useState, useEffect } from "react";
-import { catchErrors, CheckUserName } from "../App";
+import { catchErrors, checkUserName, checkStates } from "../App";
 import axios from "axios";
 import { PasswordState } from "../App";
 import { checkEmail, CheckPassword } from "./RegistrationAndLogin";
 
 function Fiok() {
-    const userName = CheckUserName()
+    const userName = checkUserName()
     const [adatok, setAdatok] = useState({});
     const [pending, setPending] = useState(false);
-    const [newPasswordState, setNewPasswordState] = useState(new PasswordState())
-    const [oldPasswordState, setOldPasswordState] = useState(new PasswordState())
-    const [emailState, setEmailState] = useState(true)
+    const [firstPasswordState, setFirstPasswordState] = useState(new PasswordState())
+    const [secondPasswordState, setSecondPasswordState] = useState(new PasswordState())
+    const [emailState, setEmailState] = useState(false)
+
     const getFiok = async () => {
         try {
             setPending(true);
 
-            const response = await axios
-                .get(
-                    `https://localhost:7159/auth/Fiok/${userName}`,
+            const response = await axios.get(`https://localhost:7159/auth/Fiok/${userName}`,
                     {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem("jwt")}`
@@ -26,6 +25,7 @@ function Fiok() {
                     }
                 )
             setAdatok(response.data)
+            setEmailState(checkEmail(response.data.value.email))
         } catch (error) {
             catchErrors(error)
         }
@@ -86,6 +86,8 @@ function Fiok() {
         putFiok(frissitettAdatok)
     }
 
+    const states = {firstPasswordState, secondPasswordState, emailState}
+
     return (
         <>
             <Felsoresz />
@@ -94,21 +96,21 @@ function Fiok() {
             <h2>{modositva}</h2>
             <form method="post" onSubmit={(event) => { submitVelemeny(event) }}>
                 <label htmlFor="oldpassword">Jelszó:</label>
-                <input type="password" name="oldpassword" id="oldpassword" onChange={(event) => { setOldPasswordState(CheckPassword(event.target.value)) }} />
-                <p className={oldPasswordState.isMinLength ? "text-success" : "text-danger"}><i className={oldPasswordState.isMinLength ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 6 karakter hosszú</p>
-                <p className={oldPasswordState.isOneBigChar ? "text-success" : "text-danger"}><i className={oldPasswordState.isOneBigChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 nagy karakter</p>
-                <p className={oldPasswordState.isOneNumber ? "text-success" : "text-danger"}><i className={oldPasswordState.isOneNumber ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 szám</p>
-                <p className={oldPasswordState.isOneSpecChar ? "text-success" : "text-danger"}><i className={oldPasswordState.isOneSpecChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 speciális karakter</p>
+                <input type="password" name="oldpassword" id="oldpassword" onChange={(event) => { setFirstPasswordState(CheckPassword(event.target.value)) }} />
+                <p className={firstPasswordState.isMinLength ? "text-success" : "text-danger"}><i className={firstPasswordState.isMinLength ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 6 karakter hosszú</p>
+                <p className={firstPasswordState.isOneBigChar ? "text-success" : "text-danger"}><i className={firstPasswordState.isOneBigChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 nagy karakter</p>
+                <p className={firstPasswordState.isOneNumber ? "text-success" : "text-danger"}><i className={firstPasswordState.isOneNumber ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 szám</p>
+                <p className={firstPasswordState.isOneSpecChar ? "text-success" : "text-danger"}><i className={firstPasswordState.isOneSpecChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 speciális karakter</p>
                 <label htmlFor="newpassword">Jelszó újra:</label>
-                <input type="password" name="newpassword" id="newpassword" onChange={(event) => { setNewPasswordState(CheckPassword(event.target.value)) }} />
-                <p className={newPasswordState.isMinLength ? "text-success" : "text-danger"}><i className={newPasswordState.isMinLength ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 6 karakter hosszú</p>
-                <p className={newPasswordState.isOneBigChar ? "text-success" : "text-danger"}><i className={newPasswordState.isOneBigChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 nagy karakter</p>
-                <p className={newPasswordState.isOneNumber ? "text-success" : "text-danger"}><i className={newPasswordState.isOneNumber ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 szám</p>
-                <p className={newPasswordState.isOneSpecChar ? "text-success" : "text-danger"}><i className={newPasswordState.isOneSpecChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 speciális karakter</p>
+                <input type="password" name="newpassword" id="newpassword" onChange={(event) => { setSecondPasswordState(CheckPassword(event.target.value)) }} />
+                <p className={secondPasswordState.isMinLength ? "text-success" : "text-danger"}><i className={secondPasswordState.isMinLength ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 6 karakter hosszú</p>
+                <p className={secondPasswordState.isOneBigChar ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneBigChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 nagy karakter</p>
+                <p className={secondPasswordState.isOneNumber ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneNumber ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 szám</p>
+                <p className={secondPasswordState.isOneSpecChar ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneSpecChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 speciális karakter</p>
                 <label htmlFor="newemail">Email:</label>
                 <input type="email" name="newemail" id="newemail" defaultValue={email} onChange={(event) => { setEmailState(checkEmail(event.target.value)) }} />
                 <p><i className={emailState ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Helyes e-mail cím</p>
-                <button type="submit">Módosítás</button>
+                <button type="submit" disabled={checkStates(states)}>Módosítás</button>
             </form>
         </>
     )
