@@ -58,7 +58,7 @@ export const checkIsOneSpecChar = (getPassword) => {
     }
 }
 
-export const CheckPassword = (getPassword) => {
+export const checkPassword = (getPassword) => {
     const currentpasswordState = new PasswordState()
     currentpasswordState.isMinLengthReached = checkIsMinLengthReached(getPassword);
     currentpasswordState.isOneNumber = checkIsOneNumber(getPassword)
@@ -74,7 +74,7 @@ export function RegistrationOrLoginForm() {
     const [userNameState, setUserNameState] = useState({ isNoSpace: false, isNotEkezetes: false })
     const [emailState, setEmailState] = useState(null)
 
-    const CheckUserName = (getUserName) => {
+    const checkUserName = (getUserName) => {
         const currentUserNameState = {
             isNoSpace: (getUserName.search(typeUserName) == -1 ? true : false),
             isNotEkezetes: (getUserName.search(ekezetes) == -1 ? true : false)
@@ -82,7 +82,7 @@ export function RegistrationOrLoginForm() {
         setUserNameState(currentUserNameState)
     }
 
-    const ChangeForm = () => {
+    const changeForm = () => {
         if (isLogin) {
             setLogin(false)
             setEmailState(false)
@@ -94,7 +94,7 @@ export function RegistrationOrLoginForm() {
         }
     }
 
-    const POSTToMainPage = async (url, adatok) => {
+    const postToMainPage = async (url, adatok) => {
         try {
             const { status, data } = await axios.post(url, adatok)
             alert(data.message)
@@ -117,7 +117,7 @@ export function RegistrationOrLoginForm() {
 
     }
 
-    const RegistOrLogin = (getInputs) => {
+    const registOrLogin = (getInputs) => {
         let url = ""
         let body = null
         if (isLogin) {
@@ -139,11 +139,11 @@ export function RegistrationOrLoginForm() {
 
         }
 
-        POSTToMainPage(url, body)
+        postToMainPage(url, body)
 
     }
 
-    const SubmitEvent = (event) => {
+    const submitEvent = (event) => {
         event.preventDefault()
         event.persist()
 
@@ -157,7 +157,7 @@ export function RegistrationOrLoginForm() {
             password: password1
         }
 
-        RegistOrLogin(inputs)
+        registOrLogin(inputs)
     }
 
     const states = { userNameState, emailState, firstPasswordState, secondPasswordState }
@@ -168,9 +168,9 @@ export function RegistrationOrLoginForm() {
             <Header />
             <div className="container reg">
                 <h1>{isLogin ? "Bejelentkezés" : "Regisztráció"}</h1>
-                <form method="post" id="form" onSubmit={(event) => { SubmitEvent(event, isLogin) }}>
+                <form method="post" id="form" onSubmit={(event) => { submitEvent(event, isLogin) }}>
                     <label>Felhasználónév</label>
-                    <input className="mb-3 form-control" type="text" name="userName" placeholder='Felhasználónév' id="userName" onChange={(event) => { CheckUserName(event.target.value) }} /><br />
+                    <input className="mb-3 form-control" type="text" name="userName" placeholder='Felhasználónév' id="userName" onChange={(event) => { checkUserName(event.target.value) }} /><br />
                     <p><i className={isNoSpace ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Nincsen benne szóköz</p>
                     <p><i className={isNotEkezetes ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Nincsen benne ékezet</p>
                     {!isLogin ?
@@ -181,7 +181,7 @@ export function RegistrationOrLoginForm() {
                         </> : <></>}
                     <label>Jelszó</label>
                     <input className="mb-3 form-control" type="password" placeholder='Jelszó' name="passwordOne" id="userPassword"
-                        onChange={(event) => { setFirstPasswordState(CheckPassword(event.target.value)) }} />
+                        onChange={(event) => { setFirstPasswordState(checkPassword(event.target.value)) }} />
                     <p className={firstPasswordState.isMinLength ? "text-success" : "text-danger"}><i className={firstPasswordState.isMinLength ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 6 karakter hosszú</p>
                     <p className={firstPasswordState.isOneBigChar ? "text-success" : "text-danger"}><i className={firstPasswordState.isOneBigChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 nagy karakter</p>
                     <p className={firstPasswordState.isOneNumber ? "text-success" : "text-danger"}><i className={firstPasswordState.isOneNumber ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 szám</p>
@@ -190,7 +190,7 @@ export function RegistrationOrLoginForm() {
                         <>
                             <label>Jelszó ismétlése</label>
                             <input className="mb-3 form-control" type="password" placeholder='Jelszó újra' name="passwordTwo" id="userPasswordAgain"
-                                onChange={(event) => { setSecondPasswordState(CheckPassword(event.target.value)) }} />
+                                onChange={(event) => { setSecondPasswordState(checkPassword(event.target.value)) }} />
                             <p className={secondPasswordState.isMinLength ? "text-success" : "text-danger"}><i className={secondPasswordState.isMinLength ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 6 karakter hosszú</p>
                             <p className={secondPasswordState.isOneBigChar ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneBigChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 nagy karakter</p>
                             <p className={secondPasswordState.isOneNumber ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneNumber ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 szám</p>
@@ -200,7 +200,7 @@ export function RegistrationOrLoginForm() {
                         <></>}
                     <div className="regDiv">
                         <button type="submit" disabled={checkStates(states)} className="btn btn-primary regGomb" id="gomb">{isLogin ? "Bejelentkezés" : "Regisztráció"}</button>
-                        <Link to="/" onClick={() => { ChangeForm(); }} className="regLink">{isLogin ? "Még nincs fiókod?" : "Már van fiókod?"}</Link>
+                        <Link to="/" onClick={() => { changeForm(); }} className="regLink">{isLogin ? "Még nincs fiókod?" : "Már van fiókod?"}</Link>
                     </div>
                 </form>
             </div>

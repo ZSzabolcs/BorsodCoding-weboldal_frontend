@@ -117,7 +117,7 @@ function Velemeny() {
         setMegjegyzesJelenleg(getMegjegyzes)
     }
 
-    const CheckDataStatus = (status) => {
+    const checkDataStatus = (status) => {
         for (const key in status) {
             if(status[key] === true){
                 return false;
@@ -154,7 +154,7 @@ function Velemeny() {
                     ))}
                 </div>
                 <input type="text" name="megjegyzes" defaultValue={adat.megjegyzes} onChange={(event) => { megjegyzesValtozas(event.target.value) }} /><br />
-                <input type="submit" disabled={CheckDataStatus(isSendDisabled)} />
+                <input type="submit" disabled={checkDataStatus(isSendDisabled)} />
                 {(vaneVelemeny) ?
                     <button onClick={() => torolVelemeny()}>Törlés</button>
                     : <></>

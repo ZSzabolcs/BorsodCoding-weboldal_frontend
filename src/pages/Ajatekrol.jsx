@@ -6,7 +6,7 @@ import { useState } from "react"
 function AJatekrol() {
     const [pending, setPending] = useState(false)
 
-    const JatekSetupLetoltese = async () => {
+    const jatekSetupLetoltese = async () => {
         try {
             setPending(true)
             const response = await axios.get('https://localhost:7159/api/Setup/download', {
@@ -68,7 +68,7 @@ function AJatekrol() {
                     </li>
                 </ul>
                 <button onClick={() => {
-                    JatekSetupLetoltese()
+                    jatekSetupLetoltese()
                 }}>Játék letöltése</button>
 
             </div>
