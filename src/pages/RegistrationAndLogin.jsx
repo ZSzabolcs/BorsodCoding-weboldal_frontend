@@ -22,12 +22,48 @@ export const checkEmail = (getEmail) => {
     }
 }
 
+export const checkIsMinLengthReached = (getPassword) => {
+    if (getPassword.length >= 6){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+export const checkIsOneNumber = (getPassword) => {
+    if (getPassword.search(oneNumber) > -1){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+export const checkIsOneBigChar = (getPassword) => {
+    if (getPassword.search(oneBigChar) > -1){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+export const checkIsOneSpecChar = (getPassword) => {
+    if (getPassword.search(oneSpecChar) > -1){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
 export const CheckPassword = (getPassword) => {
     const currentpasswordState = new PasswordState()
-    currentpasswordState.isMinLengthReached = (getPassword.length >= 6 ? true : false)
-    currentpasswordState.isOneNumber = (getPassword.search(oneNumber) > -1 ? true : false)
-    currentpasswordState.isOneBigChar = (getPassword.search(oneBigChar) > -1 ? true : false)
-    currentpasswordState.isOneSpecChar = (getPassword.search(oneSpecChar) > -1 ? true : false)
+    currentpasswordState.isMinLengthReached = checkIsMinLengthReached(getPassword);
+    currentpasswordState.isOneNumber = checkIsOneNumber(getPassword)
+    currentpasswordState.isOneBigChar = checkIsOneBigChar(getPassword)
+    currentpasswordState.isOneSpecChar = checkIsOneBigChar(getPassword)
     return currentpasswordState;
 }
 
