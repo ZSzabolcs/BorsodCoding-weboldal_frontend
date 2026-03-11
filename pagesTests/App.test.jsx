@@ -1,9 +1,9 @@
 import { describe, test, expect } from "bun:test";
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import {App, checkStates} from "../App"
+import {App, checkStates} from "../src/App"
 
-describe('RegistrationOrLogin komponens', () => {
+describe('App komponens', () => {
       test('Ha mindegyik mező hamis, akkor igaz értéket ad vissza', () => {
         const tesztobjektum = { teszt1: false, teszt2: { teszt3: false } }
         expect(checkStates(tesztobjektum)).toBe(true)
