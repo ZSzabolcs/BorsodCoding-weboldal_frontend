@@ -134,17 +134,17 @@ export function RegistrationOrLoginForm() {
                 <h1>{isLogin ? "Bejelentkezés" : "Regisztráció"}</h1>
                 <form method="post" id="form" onSubmit={(event) => { SubmitEvent(event, isLogin) }}>
                     <label>Felhasználónév</label>
-                    <input className="mb-3 form-control" type="text" name="userName" id="userName" onChange={(event) => { CheckUserName(event.target.value) }} /><br />
+                    <input className="mb-3 form-control" type="text" name="userName" placeholder='Felhasználónév' id="userName" onChange={(event) => { CheckUserName(event.target.value) }} /><br />
                     <p><i className={isNoSpace ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Nincsen benne szóköz</p>
                     <p><i className={isNotEkezetes ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Nincsen benne ékezet</p>
                     {!isLogin ?
                         <>
                             <label>E-mail-cím</label>
-                            <input className="mb-3 form-control" type="email" name="email" id="userEmail" onChange={(event) => { setEmailState(checkEmail(event.target.value)) }} /><br />
+                            <input className="mb-3 form-control" type="email" placeholder='E-mail-cím' name="email" id="userEmail" onChange={(event) => { setEmailState(checkEmail(event.target.value)) }} /><br />
                             <p><i className={emailState ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Helyes e-mail cím</p>
                         </> : <></>}
                     <label>Jelszó</label>
-                    <input className="mb-3 form-control" type="password" name="passwordOne" id="userPassword"
+                    <input className="mb-3 form-control" type="password" placeholder='Jelszó' name="passwordOne" id="userPassword"
                         onChange={(event) => { setFirstPasswordState(CheckPassword(event.target.value)) }} />
                     <p className={firstPasswordState.isMinLength ? "text-success" : "text-danger"}><i className={firstPasswordState.isMinLength ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 6 karakter hosszú</p>
                     <p className={firstPasswordState.isOneBigChar ? "text-success" : "text-danger"}><i className={firstPasswordState.isOneBigChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 nagy karakter</p>
@@ -153,7 +153,7 @@ export function RegistrationOrLoginForm() {
                     {!isLogin ?
                         <>
                             <label>Jelszó ismétlése</label>
-                            <input className="mb-3 form-control" type="password" name="passwordTwo" id="userPasswordAgain"
+                            <input className="mb-3 form-control" type="password" placeholder='Jelszó újra' name="passwordTwo" id="userPasswordAgain"
                                 onChange={(event) => { setSecondPasswordState(CheckPassword(event.target.value)) }} />
                             <p className={secondPasswordState.isMinLength ? "text-success" : "text-danger"}><i className={secondPasswordState.isMinLength ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 6 karakter hosszú</p>
                             <p className={secondPasswordState.isOneBigChar ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneBigChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 nagy karakter</p>
