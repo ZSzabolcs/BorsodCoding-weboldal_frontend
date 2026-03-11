@@ -65,7 +65,7 @@ export function catchErrors(error) {
 
 export class PasswordState {
   constructor() {
-    this.isMinLength = false;
+    this.isMinLengthReached = false;
     this.isOneNumber = false;
     this.isOneBigChar = false;
     this.isOneSpecChar = false;

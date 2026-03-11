@@ -24,7 +24,7 @@ export const checkEmail = (getEmail) => {
 
 export const CheckPassword = (getPassword) => {
     const currentpasswordState = new PasswordState()
-    currentpasswordState.isMinLength = (getPassword.length >= 6 ? true : false)
+    currentpasswordState.isMinLengthReached = (getPassword.length >= 6 ? true : false)
     currentpasswordState.isOneNumber = (getPassword.search(oneNumber) > -1 ? true : false)
     currentpasswordState.isOneBigChar = (getPassword.search(oneBigChar) > -1 ? true : false)
     currentpasswordState.isOneSpecChar = (getPassword.search(oneSpecChar) > -1 ? true : false)
