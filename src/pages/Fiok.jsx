@@ -50,9 +50,7 @@ function Fiok() {
     const putFiok = async (frissitettAdatok) => {
         try {
             setPending(true)
-            const tartalom = await axios
-                .put("https://localhost:7159/auth/Modositas",
-                    frissitettAdatok,
+            const tartalom = await axios.put("https://localhost:7159/auth/Modositas", frissitettAdatok,
                     {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem("jwt")}`

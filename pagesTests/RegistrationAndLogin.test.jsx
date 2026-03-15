@@ -1,8 +1,8 @@
 import { describe, test, expect } from "bun:test";
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react'; // A screen-t most NE importáld itt
+import { render, fireEvent } from '@testing-library/react';
 import { RegistrationOrLoginForm, checkEmail, checkIsMinLengthReached, checkIsOneBigChar, checkIsOneNumber, checkIsOneSpecChar } from "../src/pages/RegistrationAndLogin";
-import { App, checkStates, PasswordState } from "../src/App";
+import { App, checkStates } from "../src/App";
 
 describe('RegistrationOrLogin komponens', () => {
 

@@ -66,6 +66,14 @@ export const checkIsOneSpecChar = (getPassword) => {
     }
 }
 
+export const passwordCheckers = {
+    checkIsMinLengthReached,
+    checkIsOneBigChar,
+    checkIsOneNumber,
+    checkIsOneSpecChar
+
+}
+
 export const checkPassword = (getPassword) => {
     const currentpasswordState = new PasswordState(
     checkIsMinLengthReached(getPassword),
