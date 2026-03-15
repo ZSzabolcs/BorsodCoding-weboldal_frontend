@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Felsoresz from "../modules/Felsoresz";
 import { catchErrors, checkUserName, } from "../App";
 import axios from "axios";
-import { data } from "react-router-dom";
 
 const postErtekeles = async (body) => {
     try {
@@ -50,8 +49,9 @@ function Velemeny() {
     const [pending, setPending] = useState(false)
     const [adat, setAdat] = useState({ ertekeles: 0, megjegyzes: "" })
     const [vaneVelemeny, setvaneVelemeny] = useState(false)
+    const [megjegyzesIsChanged, setmegjegyzesChanged] = useState(false)
+    const [ertekelesIsChanged, setErtekelesChanged] = useState(false)
     const [ertekelesJelenleg, setErtekelesJelenleg] = useState(0)
-    const [megjegyzesJelenleg, setMegjegyzesJelenleg] = useState("")
 
     const getErtekeles = async () => {
         try {
@@ -66,7 +66,6 @@ function Velemeny() {
             }
             else {
                 setErtekelesJelenleg(Number(data.value.ertekeles))
-                setMegjegyzesJelenleg(data.value.megjegyzes)
                 setAdat({
                     ertekeles: Number(data.value.ertekeles),
                     megjegyzes: data.value.megjegyzes
@@ -82,7 +81,7 @@ function Velemeny() {
         }
     }
 
-    const submitVelemeny = (event) => {
+    const submitVelemeny = async (event) => {
         event.preventDefault()
         event.persist()
 
@@ -96,45 +95,62 @@ function Velemeny() {
         }
 
         if (vaneVelemeny) {
-            putErtekeles(body)
+            await putErtekeles(body)
+            window.location.reload()
         } else {
-            postErtekeles(body)
+            await postErtekeles(body)
             setvaneVelemeny(true)
+            window.location.reload()
         }
     }
 
-    const torolVelemeny = () => {
-        deleteErtekeles(userName);
-        setErtekelesJelenleg(0)
+    const torolVelemeny = async () => {
+        await deleteErtekeles(userName);
         setAdat({
             ertekeles: 0,
             megjegyzes: ""
         })
         setvaneVelemeny(false)
+        setErtekelesJelenleg(0)
+        window.location.reload()
     }
 
-    const megjegyzesValtozas = (getMegjegyzes) => {
-        setMegjegyzesJelenleg(getMegjegyzes)
-    }
-
-    const checkDataStatus = (status) => {
-        for (const key in status) {
-            if(status[key] === true){
-                return false;
-            }
-        
+    const checkErtekeles = (getNumber) => {
+        if (adat.ertekeles != getNumber) {
+            return true;
         }
-        return true;
+        return false;
     }
+
+
+    const checkMegjegyzes = (getMegjegyzes) => {
+        if (adat.megjegyzes != getMegjegyzes) {
+            return true;
+        }
+        return false;
+    }
+
+
 
     useEffect(() => { getErtekeles() }, [])
 
-    const isSendDisabled = {
-        isMegjegyzesChanged: (megjegyzesJelenleg !== adat.megjegyzes ? true : false),
-        isErtekelesChanged: (ertekelesJelenleg !== adat.ertekeles ? true : false)
+    const states = { megjegyzesIsChanged, ertekelesIsChanged  }
+
+    const checkDataStatus = () => {
+        if (vaneVelemeny) {
+            if (states.megjegyzesIsChanged || states.ertekelesIsChanged) {
+                return false;
+            }
+            return true;
+        }
+        if (states.megjegyzesIsChanged && states.ertekelesIsChanged) {
+            return false;
+        }
+        return true;
 
     }
 
+    const {megjegyzes} = adat;
 
     return (
         <>
@@ -143,20 +159,20 @@ function Velemeny() {
             <h2>Mondd el a véleményed róla.</h2>
             <p>Egy teljes csillag a "Nagyon rossz" az öt teljes csillag a "Kiváló"-t jelenti.</p>
             {vaneVelemeny ? <></> : <><h2>Még nem adtál véleményt!</h2></>}
-            <form method="post" onSubmit={(event) => submitVelemeny(event)}>
+            <form method="post" onSubmit={(event) => {submitVelemeny(event);}}>
                 <div className="fs-1">
                     {[1, 2, 3, 4, 5].map((num) => (
                         <i
                             key={num}
                             className={num <= ertekelesJelenleg ? "bi bi-star-fill m-3" : "bi bi-star m-3"}
-                            onClick={() => setErtekelesJelenleg(num)}
+                            onClick={() => { setErtekelesChanged(checkErtekeles(num)); setErtekelesJelenleg(num)}}
                         ></i>
                     ))}
                 </div>
-                <input type="text" name="megjegyzes" defaultValue={adat.megjegyzes} onChange={(event) => { megjegyzesValtozas(event.target.value) }} /><br />
-                <input type="submit" disabled={checkDataStatus(isSendDisabled)} />
+                <input id="comment" type="text" name="megjegyzes" defaultValue={megjegyzes} onChange={(event) => { setmegjegyzesChanged(checkMegjegyzes(event.target.value)) }} /><br />
+                <input type="submit" disabled={checkDataStatus()} />
                 {(vaneVelemeny) ?
-                    <button onClick={() => torolVelemeny()}>Törlés</button>
+                    <button type="button" onClick={() => {torolVelemeny()}}>Törlés</button>
                     : <></>
                 }
             </form>

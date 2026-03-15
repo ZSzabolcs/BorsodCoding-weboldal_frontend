@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import Header from "../modules/Header.jsx";
 import { useState } from "react";
 import axios from "axios";
-import { catchErrors, checkStates, PasswordState } from "../App.jsx";
+import { catchErrors, checkStates } from "../App.jsx";
 
 const typePassword = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+=\[\]{};':"\\|,.<>\/?-])(?=\S+$).{6,}$/
 const oneBigChar = /(?=[A-Z])./
@@ -12,6 +12,14 @@ const typeEmail = /^[a-zA-Z0-9_%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/
 const typeUserName = /\s/
 const ekezetes = /(?=[öüóőúáűéíÍÉÁŰŐÚÖÜÓ])./
 
+export class PasswordState {
+  constructor(isMinimalLengthReached = false, isThereOneNumber = false, isThereOneBigChar = false, isThereOneSpecChar = false) {
+    this.isMinLengthReached = isMinimalLengthReached;
+    this.isOneNumber = isThereOneNumber;
+    this.isOneBigChar = isThereOneBigChar;
+    this.isOneSpecChar = isThereOneSpecChar;
+  }
+}
 
 export const checkEmail = (getEmail) => {
     if (getEmail.search(typeEmail) != -1) {
@@ -59,11 +67,12 @@ export const checkIsOneSpecChar = (getPassword) => {
 }
 
 export const checkPassword = (getPassword) => {
-    const currentpasswordState = new PasswordState()
-    currentpasswordState.isMinLengthReached = checkIsMinLengthReached(getPassword);
-    currentpasswordState.isOneNumber = checkIsOneNumber(getPassword)
-    currentpasswordState.isOneBigChar = checkIsOneBigChar(getPassword)
-    currentpasswordState.isOneSpecChar = checkIsOneBigChar(getPassword)
+    const currentpasswordState = new PasswordState(
+    checkIsMinLengthReached(getPassword),
+    checkIsOneNumber(getPassword),
+    checkIsOneBigChar(getPassword),
+    checkIsOneSpecChar(getPassword)
+    )
     return currentpasswordState;
 }
 
@@ -182,7 +191,7 @@ export function RegistrationOrLoginForm() {
                     <label>Jelszó</label>
                     <input className="mb-3 form-control" type="password" placeholder='Jelszó' name="passwordOne" id="userPassword"
                         onChange={(event) => { setFirstPasswordState(checkPassword(event.target.value)) }} />
-                    <p className={firstPasswordState.isMinLength ? "text-success" : "text-danger"}><i className={firstPasswordState.isMinLength ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 6 karakter hosszú</p>
+                    <p className={firstPasswordState.isMinLengthReached ? "text-success" : "text-danger"}><i className={firstPasswordState.isMinLengthReached ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 6 karakter hosszú</p>
                     <p className={firstPasswordState.isOneBigChar ? "text-success" : "text-danger"}><i className={firstPasswordState.isOneBigChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 nagy karakter</p>
                     <p className={firstPasswordState.isOneNumber ? "text-success" : "text-danger"}><i className={firstPasswordState.isOneNumber ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 szám</p>
                     <p className={firstPasswordState.isOneSpecChar ? "text-success" : "text-danger"}><i className={firstPasswordState.isOneSpecChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 speciális karakter</p>
@@ -191,7 +200,7 @@ export function RegistrationOrLoginForm() {
                             <label>Jelszó ismétlése</label>
                             <input className="mb-3 form-control" type="password" placeholder='Jelszó újra' name="passwordTwo" id="userPasswordAgain"
                                 onChange={(event) => { setSecondPasswordState(checkPassword(event.target.value)) }} />
-                            <p className={secondPasswordState.isMinLength ? "text-success" : "text-danger"}><i className={secondPasswordState.isMinLength ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 6 karakter hosszú</p>
+                            <p className={secondPasswordState.isMinLengthReached ? "text-success" : "text-danger"}><i className={secondPasswordState.isMinLengthReached ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 6 karakter hosszú</p>
                             <p className={secondPasswordState.isOneBigChar ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneBigChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 nagy karakter</p>
                             <p className={secondPasswordState.isOneNumber ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneNumber ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 szám</p>
                             <p className={secondPasswordState.isOneSpecChar ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneSpecChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 speciális karakter</p>

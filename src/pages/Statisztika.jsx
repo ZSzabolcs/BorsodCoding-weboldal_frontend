@@ -1,5 +1,5 @@
 import Felsoresz from "../modules/Felsoresz";
-import { checkUserName } from "../App";
+import { catchErrors, checkUserName } from "../App";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -12,9 +12,7 @@ function Statisztika() {
     const getStatisztika = async () => {
         try {
             setPending(true);
-            const tartalom = await axios
-                .get(
-                    `https://localhost:7159/api/Save/Statisztika/${userName}`,
+            const tartalom = await axios.get(`https://localhost:7159/api/Save/Statisztika/${userName}`,
                     {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem("jwt")}`
@@ -23,7 +21,7 @@ function Statisztika() {
                 )
             setAdatok(tartalom.data)
         } catch (error) {
-            console.log(error)
+            catchErrors(error)
         }
         finally {
             setPending(false)

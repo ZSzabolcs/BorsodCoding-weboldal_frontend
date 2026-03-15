@@ -2,8 +2,7 @@ import Felsoresz from "../modules/Felsoresz";
 import { useState, useEffect } from "react";
 import { catchErrors, checkUserName, checkStates } from "../App";
 import axios from "axios";
-import { PasswordState } from "../App";
-import { checkEmail, checkPassword } from "./RegistrationAndLogin";
+import { checkEmail, checkPassword, PasswordState } from "./RegistrationAndLogin";
 
 function Fiok() {
     const userName = checkUserName()
@@ -97,13 +96,13 @@ function Fiok() {
             <form method="post" onSubmit={(event) => { submitVelemeny(event) }}>
                 <label htmlFor="oldpassword">Jelszó:</label>
                 <input type="password" name="oldpassword" id="oldpassword" onChange={(event) => { setFirstPasswordState(checkPassword(event.target.value)) }} />
-                <p className={firstPasswordState.isMinLength ? "text-success" : "text-danger"}><i className={firstPasswordState.isMinLength ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 6 karakter hosszú</p>
+                <p className={firstPasswordState.isMinLengthReached ? "text-success" : "text-danger"}><i className={firstPasswordState.isMinLengthReached ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 6 karakter hosszú</p>
                 <p className={firstPasswordState.isOneBigChar ? "text-success" : "text-danger"}><i className={firstPasswordState.isOneBigChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 nagy karakter</p>
                 <p className={firstPasswordState.isOneNumber ? "text-success" : "text-danger"}><i className={firstPasswordState.isOneNumber ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 szám</p>
                 <p className={firstPasswordState.isOneSpecChar ? "text-success" : "text-danger"}><i className={firstPasswordState.isOneSpecChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 speciális karakter</p>
                 <label htmlFor="newpassword">Jelszó újra:</label>
                 <input type="password" name="newpassword" id="newpassword" onChange={(event) => { setSecondPasswordState(checkPassword(event.target.value)) }} />
-                <p className={secondPasswordState.isMinLength ? "text-success" : "text-danger"}><i className={secondPasswordState.isMinLength ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 6 karakter hosszú</p>
+                <p className={secondPasswordState.isMinLengthReached ? "text-success" : "text-danger"}><i className={secondPasswordState.isMinLengthReached ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 6 karakter hosszú</p>
                 <p className={secondPasswordState.isOneBigChar ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneBigChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 nagy karakter</p>
                 <p className={secondPasswordState.isOneNumber ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneNumber ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 szám</p>
                 <p className={secondPasswordState.isOneSpecChar ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneSpecChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 speciális karakter</p>
