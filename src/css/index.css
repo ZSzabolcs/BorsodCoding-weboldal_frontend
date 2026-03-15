@@ -18,7 +18,7 @@ header::before {
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url(../kepek/1706639783068.jpg);
+    background-image: url(./kepek/1706639783068.jpg);
     background-size: cover;
     filter: blur(0px);
     z-index: 1;
@@ -31,13 +31,13 @@ header::after {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Halvány fekete háttérréteg */
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 2;
 }
 
 header h1{
     position: relative;
-    z-index: 3; /* Szöveg a háttér előtt */
+    z-index: 3;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     text-align: center;
     font-size: 70px;
@@ -46,7 +46,7 @@ header h1{
 header h3{
     margin-top: 60px;
     position: relative;
-    z-index: 3; /* Szöveg a háttér előtt */
+    z-index: 3;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
@@ -76,7 +76,11 @@ label{
 
 a{
     text-decoration: none;
-    color: darkolivegreen;
+    color: rgb(7, 119, 163);
+}
+
+a:hover{
+    color: rgb(11, 156, 179);
 }
 
 p{
@@ -165,8 +169,7 @@ b{
 }
 
 .footer{
-    position: fixed;
-    /*display: flex;*/  
+    position: fixed; 
     left: 0;
     bottom: 0;
     background-color:skyblue;
