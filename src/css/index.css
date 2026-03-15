@@ -3,7 +3,7 @@ body{
 }
 
 header{
-    background-image: url(../kepek/hatter.png);
+    background-image: url(../kepek/hatter5.jpg);
     position: relative;
     overflow: hidden;
     height: 300px;
@@ -118,19 +118,19 @@ b{
 }
 
 .navigation{
-    background-color: skyblue;
-    border: 1px solid rgb(15, 145, 196);
+    background-color: rgba(0, 0, 0, 0.944);
+    border-bottom: 1px solid rgb(143, 90, 218);
     font-size: larger;
 }
 
 .navigation a{
     text-decoration: none;
-    color: rgb(5, 78, 107);
+    color: rgb(159, 103, 239);
     font-family: 'Alfa Slab One', cursive;
 }
 
 .navigation a:hover{
-    color: rgb(7, 119, 163);
+    color: rgb(140, 70, 238);
     font-weight: normal;
 }
 
@@ -172,8 +172,9 @@ b{
     position: fixed; 
     left: 0;
     bottom: 0;
-    background-color:skyblue;
-    border: 1px solid rgb(15, 145, 196);
+    background-color: rgba(0, 0, 0, 0.944);
+    color: rgb(159, 103, 239);
+    border-top: 1px solid rgb(143, 90, 218);
     padding-top: 2rem;
     padding-bottom: 2rem;
     width: 100%;
