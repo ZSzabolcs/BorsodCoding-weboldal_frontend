@@ -53,7 +53,7 @@ function Velemeny() {
                 }
             })
             alert(tartalom.data.message)
-
+            setVanEVelemeny(true)
         } catch (error) {
             catchErrors(error)
         }
@@ -104,7 +104,6 @@ function Velemeny() {
             await putErtekeles(body)
         } else {
             await postErtekeles(body)
-            setVanEVelemeny(true)
         }
     }
 
