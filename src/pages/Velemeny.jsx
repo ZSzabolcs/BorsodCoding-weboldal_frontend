@@ -2,56 +2,67 @@ import { useEffect, useState } from "react";
 import Felsoresz from "../modules/Felsoresz";
 import { catchErrors, checkUserName, } from "../App";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const postErtekeles = async (body) => {
-    try {
-        const tartalom = await axios.post("https://localhost:7159/api/Velemeny", body, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("jwt")}`
-            }
-        })
-        alert(tartalom.data.message)
-    } catch (error) {
-        catchErrors(error)
-    }
-}
 
-const putErtekeles = async (body) => {
-    try {
-        const tartalom = await axios.put("https://localhost:7159/api/Velemeny", body, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("jwt")}`
-            }
-        })
-        alert(tartalom.data.message)
-    } catch (error) {
-        catchErrors(error)
-    }
-}
 
-const deleteErtekeles = async (userName) => {
-    try {
-        const tartalom = await axios.delete(`https://localhost:7159/api/Velemeny?userName=${userName}`, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("jwt")}`
-            }
-        })
-        alert(tartalom.data.message)
-    } catch (error) {
-        catchErrors(error)
-    }
 
-}
+
+
 
 
 function Velemeny() {
+    const navigate = useNavigate()
     const userName = checkUserName()
     const [pending, setPending] = useState(false)
     const [adat, setAdat] = useState({ ertekeles: 0, megjegyzes: "" })
-    const [vaneVelemeny, setvaneVelemeny] = useState(false)
+    const [vaneVelemeny, setVanEVelemeny] = useState(false)
     const [megjegyzesIsChanged, setmegjegyzesChanged] = useState(false)
     const [ertekelesIsChanged, setErtekelesChanged] = useState(false)
     const [ertekelesJelenleg, setErtekelesJelenleg] = useState(0)
+
+    const putErtekeles = async (body) => {
+        try {
+            const tartalom = await axios.put("https://localhost:7159/api/Velemeny", body, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("jwt")}`
+                }
+            })
+            alert(tartalom.data.message)
+            navigate(0)
+        } catch (error) {
+            catchErrors(error)
+        }
+    }
+
+    const deleteErtekeles = async (userName) => {
+        try {
+            const tartalom = await axios.delete(`https://localhost:7159/api/Velemeny?userName=${userName}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("jwt")}`
+                }
+            })
+            alert(tartalom.data.message)
+            navigate(0)
+        } catch (error) {
+            catchErrors(error)
+        }
+
+    }
+
+    const postErtekeles = async (body) => {
+        try {
+            const tartalom = await axios.post("https://localhost:7159/api/Velemeny", body, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("jwt")}`
+                }
+            })
+            alert(tartalom.data.message)
+
+        } catch (error) {
+            catchErrors(error)
+        }
+    }
 
     const getErtekeles = async () => {
         try {
@@ -62,7 +73,7 @@ function Velemeny() {
                 }
             })
             if (typeof (data) === "string") {
-                setvaneVelemeny(false)
+                setVanEVelemeny(false)
             }
             else {
                 setErtekelesJelenleg(Number(data.value.ertekeles))
@@ -70,7 +81,7 @@ function Velemeny() {
                     ertekeles: Number(data.value.ertekeles),
                     megjegyzes: data.value.megjegyzes
                 })
-                setvaneVelemeny(true)
+                setVanEVelemeny(true)
             }
 
         } catch (error) {
@@ -96,11 +107,9 @@ function Velemeny() {
 
         if (vaneVelemeny) {
             await putErtekeles(body)
-            window.location.reload()
         } else {
             await postErtekeles(body)
-            setvaneVelemeny(true)
-            window.location.reload()
+            setVanEVelemeny(true)
         }
     }
 
@@ -110,9 +119,9 @@ function Velemeny() {
             ertekeles: 0,
             megjegyzes: ""
         })
-        setvaneVelemeny(false)
+        setVanEVelemeny(false)
         setErtekelesJelenleg(0)
-        window.location.reload()
+        navigate(0)
     }
 
     const checkErtekeles = (getNumber) => {
@@ -134,7 +143,7 @@ function Velemeny() {
 
     useEffect(() => { getErtekeles() }, [])
 
-    const states = { megjegyzesIsChanged, ertekelesIsChanged  }
+    const states = { megjegyzesIsChanged, ertekelesIsChanged }
 
     const checkDataStatus = () => {
         if (vaneVelemeny) {
@@ -150,7 +159,7 @@ function Velemeny() {
 
     }
 
-    const {megjegyzes} = adat;
+    const { megjegyzes } = adat;
 
     return (
         <>
@@ -159,20 +168,20 @@ function Velemeny() {
             <h2>Mondd el a véleményed róla.</h2>
             <p>Egy teljes csillag a "Nagyon rossz" az öt teljes csillag a "Kiváló"-t jelenti.</p>
             {vaneVelemeny ? <></> : <><h2>Még nem adtál véleményt!</h2></>}
-            <form method="post" onSubmit={(event) => {submitVelemeny(event);}}>
+            <form method="post" onSubmit={(event) => { submitVelemeny(event); }}>
                 <div className="fs-1">
                     {[1, 2, 3, 4, 5].map((num) => (
                         <i
                             key={num}
                             className={num <= ertekelesJelenleg ? "bi bi-star-fill m-3" : "bi bi-star m-3"}
-                            onClick={() => { setErtekelesChanged(checkErtekeles(num)); setErtekelesJelenleg(num)}}
+                            onClick={() => { setErtekelesChanged(checkErtekeles(num)); setErtekelesJelenleg(num) }}
                         ></i>
                     ))}
                 </div>
                 <input id="comment" type="text" name="megjegyzes" defaultValue={megjegyzes} onChange={(event) => { setmegjegyzesChanged(checkMegjegyzes(event.target.value)) }} /><br />
                 <input type="submit" disabled={checkDataStatus()} />
                 {(vaneVelemeny) ?
-                    <button type="button" onClick={() => {torolVelemeny()}}>Törlés</button>
+                    <button type="button" onClick={() => { torolVelemeny() }}>Törlés</button>
                     : <></>
                 }
             </form>

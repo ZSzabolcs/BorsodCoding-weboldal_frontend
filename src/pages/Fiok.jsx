@@ -3,8 +3,11 @@ import { useState, useEffect } from "react";
 import { catchErrors, checkUserName, checkStates } from "../App";
 import axios from "axios";
 import { checkEmail, checkPassword, PasswordState } from "./RegistrationAndLogin";
+import { useNavigate } from "react-router-dom";
+import Betoltes from "../modules/Betoltes";
 
 function Fiok() {
+    const navigate = useNavigate()
     const userName = checkUserName()
     const [adatok, setAdatok] = useState({});
     const [pending, setPending] = useState(false);
@@ -40,7 +43,7 @@ function Fiok() {
         return (
             <>
                 <Felsoresz />
-                <h1>Betöltés...</h1>
+                <Betoltes/>
             </>
         )
     }
@@ -58,6 +61,7 @@ function Fiok() {
                     },
                 )
             alert(tartalom.data.message)
+            navigate(0)
         } catch (error) {
             catchErrors(error)
         }

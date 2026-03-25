@@ -2,6 +2,7 @@ import Felsoresz from "../modules/Felsoresz";
 import { catchErrors, checkUserName } from "../App";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Betoltes from "../modules/Betoltes";
 
 
 function Statisztika() {
@@ -35,7 +36,7 @@ function Statisztika() {
         return (
             <>
                 <Felsoresz />
-                <h1>Betöltés...</h1>
+                <Betoltes/>
             </>
         );
     }
