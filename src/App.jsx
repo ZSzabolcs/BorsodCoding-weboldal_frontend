@@ -26,12 +26,11 @@ export const App = () => {
   );
 }
 
-export const checkUserName = () => {
-  const navigate = useNavigate()
+export const checkUsername = () => {
   const username = sessionStorage.getItem("username")
   if (username === "" || username === null || username === undefined) {
     sessionStorage.removeItem("username")
-    navigate("/")
+    location.assign("/")
   }
   return username;
 }

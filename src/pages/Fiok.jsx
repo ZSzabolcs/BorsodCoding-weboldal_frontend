@@ -1,6 +1,6 @@
 import Felsoresz from "../modules/Felsoresz";
 import { useState, useEffect } from "react";
-import { catchErrors, checkUserName, getDateByOwnStringFormat } from "../App";
+import { catchErrors, checkUsername, getDateByOwnStringFormat } from "../App";
 import axios from "axios";
 import { checkEmail, getCurrentPasswordState, PasswordState } from "./RegistrationAndLogin";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +8,7 @@ import Betoltes from "../modules/Betoltes";
 
 function Fiok() {
     const navigate = useNavigate()
-    const userName = checkUserName()
+    const username = checkUsername()
     const [adatok, setAdatok] = useState({});
     const [, setPending] = useState(false);
     const [firstPasswordState, setFirstPasswordState] = useState(new PasswordState())
@@ -20,7 +20,7 @@ function Fiok() {
         try {
             setPending(true);
 
-            const {data} = await axios.get(`https://localhost:7159/auth/Fiok/${userName}`,
+            const {data} = await axios.get(`https://localhost:7159/auth/Fiok/${username}`,
                     {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem("jwt")}`
@@ -37,7 +37,7 @@ function Fiok() {
         }
     }
 
-    useEffect(() => { getFiok(); }, [userName])
+    useEffect(() => { getFiok(); }, [username])
 
 
     if (typeof (adatok.value) === "undefined") {
@@ -79,7 +79,7 @@ function Fiok() {
         const newEmail = event.target.newemail.value
 
         const frissitettAdatok = {
-            userName: userName,
+            username: username,
             password: newPassword === oldPassword && newPassword.length > 1 ? newPassword : null,
             email: email !== newEmail ? newEmail : null,
         }
@@ -121,7 +121,7 @@ function Fiok() {
     return (
         <>
             <Felsoresz />
-            <h1>{userName}</h1>
+            <h1>{username}</h1>
             <h2>A fiók létrejött ekkor: {getDateByOwnStringFormat(birthdate)}</h2>
             <h2>{modositva}</h2>
             <form method="post" onSubmit={(event) => { submitVelemeny(event) }}>

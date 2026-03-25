@@ -1,19 +1,19 @@
 import Felsoresz from "../modules/Felsoresz";
-import { catchErrors, checkUserName, getDateByOwnStringFormat } from "../App";
+import { catchErrors, checkUsername, getDateByOwnStringFormat } from "../App";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Betoltes from "../modules/Betoltes";
 
 
 function Statisztika() {
-    const userName = checkUserName()
+    const username = checkUsername()
     const [adatok, setAdatok] = useState(null);
     const [pending, setPending] = useState(false);
 
     const getStatisztika = async () => {
         try {
             setPending(true);
-            const tartalom = await axios.get(`https://localhost:7159/api/Save/Statisztika/${userName}`,
+            const tartalom = await axios.get(`https://localhost:7159/api/Save/Statisztika/${username}`,
                     {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem("jwt")}`
@@ -30,7 +30,7 @@ function Statisztika() {
 
     }
 
-    useEffect(() => { getStatisztika(); }, [userName]);
+    useEffect(() => { getStatisztika(); }, [username]);
 
     if (adatok === null) {
         return (
@@ -44,7 +44,7 @@ function Statisztika() {
         return (
             <>
                 <Felsoresz />
-                <h1>{userName}</h1>
+                <h1>{username}</h1>
                 <h1>{adatok}</h1>
             </>
         );
@@ -69,7 +69,7 @@ function Statisztika() {
     return (
         <>
             <Felsoresz />
-            <h1>{userName}</h1>
+            <h1>{username}</h1>
             <h2>A játékot elkezdte: {getDateByOwnStringFormat(regDate)}</h2>
             <h2>Pontszám: {points}</h2>
             <h2>{pontAranySzoveg}</h2>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Felsoresz from "../modules/Felsoresz";
-import { catchErrors, checkUserName, } from "../App";
+import { catchErrors, checkUsername, } from "../App";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 function Velemeny() {
     const navigate = useNavigate()
-    const userName = checkUserName()
+    const username = checkUsername()
     const [, setPending] = useState(false)
     const [adat, setAdat] = useState({ ertekeles: 0, megjegyzes: "" })
     const [vanEVelemeny, setvanEVelemeny] = useState(false)
@@ -30,9 +30,9 @@ function Velemeny() {
         }
     }
 
-    const deleteErtekeles = async (userName) => {
+    const deleteErtekeles = async (username) => {
         try {
-            const tartalom = await axios.delete(`https://localhost:7159/api/Velemeny?userName=${userName}`, {
+            const tartalom = await axios.delete(`https://localhost:7159/api/Velemeny?username=${username}`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("jwt")}`
                 }
@@ -62,7 +62,7 @@ function Velemeny() {
     const getErtekeles = async () => {
         try {
             setPending(true)
-            const { data } = await axios.get(`https://localhost:7159/api/Velemeny/${userName}`, {
+            const { data } = await axios.get(`https://localhost:7159/api/Velemeny/${username}`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("jwt")}`
                 }
@@ -95,7 +95,7 @@ function Velemeny() {
 
 
         const body = {
-            userName: userName,
+            username: username,
             ertekeles: String(ertekelesJelenleg),
             megjegyzes: ujMegjegyzes
         }
@@ -108,7 +108,7 @@ function Velemeny() {
     }
 
     const torolVelemeny = async () => {
-        await deleteErtekeles(userName);
+        await deleteErtekeles(username);
         setAdat({
             ertekeles: 0,
             megjegyzes: ""

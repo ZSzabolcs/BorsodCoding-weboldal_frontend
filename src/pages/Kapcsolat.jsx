@@ -1,8 +1,8 @@
-import { checkUserName } from "../App.jsx"
+import { checkUsername } from "../App.jsx"
 import Felsoresz from "../modules/Felsoresz.jsx"
 
 function Kapcsolat() {
-    checkUserName()
+    checkUsername()
     return (
         <>
             <Felsoresz />

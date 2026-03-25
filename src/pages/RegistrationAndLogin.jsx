@@ -106,10 +106,10 @@ export function RegistrationOrLoginForm() {
     const [userNameState, setUserNameState] = useState({ isNoSpace: false, isNotEkezetes: false })
     const [emailState, setEmailState] = useState(null)
 
-    const checkUserName = (getUserName) => {
+    const checkUsername = (username) => {
         const currentUserNameState = {
-            isNoSpace: (getUserName.search(typeUserName) == -1 ? true : false),
-            isNotEkezetes: (getUserName.search(ekezetes) == -1 ? true : false)
+            isNoSpace: (username.search(typeUserName) == -1 ? true : false),
+            isNotEkezetes: (username.search(ekezetes) == -1 ? true : false)
         }
         setUserNameState(currentUserNameState)
     }
@@ -135,7 +135,7 @@ export function RegistrationOrLoginForm() {
                 localStorage.removeItem("jwt")
                 localStorage.setItem("jwt", data.token)
                 const body = {
-                    userName: data.value,
+                    username: data.value,
                     isLogin: isLogin
                 }
                 await axios.post("https://localhost:7159/api/SendMail/ByUserName", body)
@@ -155,7 +155,7 @@ export function RegistrationOrLoginForm() {
         if (isLogin) {
             url = "https://localhost:7159/auth/login"
             body = {
-                userName: inputs.userName,
+                username: inputs.username,
                 password: inputs.password
             }
 
@@ -164,7 +164,7 @@ export function RegistrationOrLoginForm() {
         else {
             url = "https://localhost:7159/auth/register"
             body = {
-                userName: inputs.userName,
+                username: inputs.username,
                 password: inputs.password,
                 email: inputs.email
             }
@@ -179,12 +179,12 @@ export function RegistrationOrLoginForm() {
         event.preventDefault()
         event.persist()
 
-        const userName = event.target.userName.value
+        const username = event.target.username.value
         const email = event?.target?.email?.value
         const password1 = event.target.passwordOne.value
 
         const inputs = {
-            userName: userName,
+            username: username,
             email: email,
             password: password1
         }
@@ -202,7 +202,7 @@ export function RegistrationOrLoginForm() {
                 <h1>{isLogin ? "Bejelentkezés" : "Regisztráció"}</h1>
                 <form method="post" id="form" onSubmit={(event) => { submitEvent(event, isLogin) }}>
                     <label>Felhasználónév</label>
-                    <input className="mb-3 form-control" type="text" name="userName" placeholder='Felhasználónév' id="userName" onChange={(event) => { checkUserName(event.target.value) }} /><br />
+                    <input className="mb-3 form-control" type="text" name="username" placeholder='Felhasználónév' id="username" onChange={(event) => { checkUsername(event.target.value) }} /><br />
                     <p><i className={isNoSpace ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Nincsen benne szóköz</p>
                     <p><i className={isNotEkezetes ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Nincsen benne ékezet</p>
                     {!isLogin ?

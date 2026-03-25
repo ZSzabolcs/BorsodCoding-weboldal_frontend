@@ -1,4 +1,4 @@
-import { checkUserName } from "../App.jsx"
+import { checkUsername } from "../App.jsx"
 import Felsoresz from "../modules/Felsoresz.jsx"
 import Csiger from "../kepek/csigerkep.jpeg"
 import Zelenak from "../kepek/szabolcskep.jpg"
@@ -19,7 +19,7 @@ const Kartya = ({ kep, nev, foglalkozas, monolog }) => {
 }
 
 function Rolunk() {
-    checkUserName()
+    checkUsername()
     return (
         <>
             <Felsoresz />
