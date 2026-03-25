@@ -6,19 +6,14 @@ import { useNavigate } from "react-router-dom";
 
 
 
-
-
-
-
-
 function Velemeny() {
     const navigate = useNavigate()
     const userName = checkUserName()
-    const [pending, setPending] = useState(false)
+    const [, setPending] = useState(false)
     const [adat, setAdat] = useState({ ertekeles: 0, megjegyzes: "" })
     const [vaneVelemeny, setVanEVelemeny] = useState(false)
-    const [megjegyzesIsChanged, setmegjegyzesChanged] = useState(false)
-    const [ertekelesIsChanged, setErtekelesChanged] = useState(false)
+    const [isMegjegyzesChanged, setMegjegyzesChanged] = useState(false)
+    const [isErtekelesChanged, setErtekelesChanged] = useState(false)
     const [ertekelesJelenleg, setErtekelesJelenleg] = useState(0)
 
     const putErtekeles = async (body) => {
@@ -124,16 +119,16 @@ function Velemeny() {
         navigate(0)
     }
 
-    const checkErtekeles = (getNumber) => {
-        if (adat.ertekeles != getNumber) {
+    const ertekelesIsChanged = (number) => {
+        if (adat.ertekeles != number) {
             return true;
         }
         return false;
     }
 
 
-    const checkMegjegyzes = (getMegjegyzes) => {
-        if (adat.megjegyzes != getMegjegyzes) {
+    const megjegyzesIsChanged = (megjegyzes) => {
+        if (adat.megjegyzes != megjegyzes) {
             return true;
         }
         return false;
@@ -143,16 +138,16 @@ function Velemeny() {
 
     useEffect(() => { getErtekeles() }, [])
 
-    const states = { megjegyzesIsChanged, ertekelesIsChanged }
+    const states = { isMegjegyzesChanged, isErtekelesChanged }
 
     const checkDataStatus = () => {
         if (vaneVelemeny) {
-            if (states.megjegyzesIsChanged || states.ertekelesIsChanged) {
+            if (states.isMegjegyzesChanged || states.isErtekelesChanged) {
                 return false;
             }
             return true;
         }
-        if (states.megjegyzesIsChanged && states.ertekelesIsChanged) {
+        if (states.isMegjegyzesChanged && states.isErtekelesChanged) {
             return false;
         }
         return true;
@@ -174,11 +169,11 @@ function Velemeny() {
                         <i
                             key={num}
                             className={num <= ertekelesJelenleg ? "bi bi-star-fill m-3" : "bi bi-star m-3"}
-                            onClick={() => { setErtekelesChanged(checkErtekeles(num)); setErtekelesJelenleg(num) }}
+                            onClick={() => { setErtekelesChanged(ertekelesIsChanged(num)); setErtekelesJelenleg(num) }}
                         ></i>
                     ))}
                 </div>
-                <input id="comment" type="text" name="megjegyzes" defaultValue={megjegyzes} onChange={(event) => { setmegjegyzesChanged(checkMegjegyzes(event.target.value)) }} /><br />
+                <input id="comment" type="text" name="megjegyzes" defaultValue={megjegyzes} onChange={(event) => { setMegjegyzesChanged(megjegyzesIsChanged(event.target.value)) }} /><br />
                 <input type="submit" disabled={checkDataStatus()} />
                 {(vaneVelemeny) ?
                     <button type="button" onClick={() => { torolVelemeny() }}>Törlés</button>

@@ -1,5 +1,5 @@
 import Felsoresz from "../modules/Felsoresz";
-import { catchErrors, checkUserName } from "../App";
+import { catchErrors, checkUserName, getDateByOwnStringFormat } from "../App";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Betoltes from "../modules/Betoltes";
@@ -70,7 +70,7 @@ function Statisztika() {
         <>
             <Felsoresz />
             <h1>{userName}</h1>
-            <h2>A játékot elkezdte: {regDate}</h2>
+            <h2>A játékot elkezdte: {getDateByOwnStringFormat(regDate)}</h2>
             <h2>Pontszám: {points}</h2>
             <h2>{pontAranySzoveg}</h2>
             <h2>Szint: {level}</h2>

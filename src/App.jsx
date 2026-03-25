@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import AJatekrol from './pages/Ajatekrol.jsx'
 import { RegistrationOrLoginForm } from './pages/RegistrationAndLogin.jsx'
 import Rolunk from './pages/Rolunk.jsx'
@@ -27,28 +27,19 @@ export const App = () => {
 }
 
 export const checkUserName = () => {
+  const navigate = useNavigate()
   const username = sessionStorage.getItem("username")
   if (username === "" || username === null || username === undefined) {
     sessionStorage.removeItem("username")
-    location.assign("/")
+    navigate("/")
   }
   return username;
 }
 
-export const checkStates = (states) => {
-  for (const state in states) {
-    for (const key in states[state]) {
-      if (states[state][key] === false) {
-        return true;
-      }
+export const getDateByOwnStringFormat = (date) => {
+        const givenDate = new Date(date)
+        return `${givenDate.toLocaleDateString()} ${givenDate.getHours()}:${givenDate.getMinutes()}:${givenDate.getSeconds()}`
     }
-    if (states[state] === false) {
-      return true;
-    }
-
-  }
-  return false;
-}
 
 export function catchErrors(error) {
   if (error.response) {

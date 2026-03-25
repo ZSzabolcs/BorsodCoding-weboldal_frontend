@@ -1,16 +1,18 @@
 import { describe, test, expect } from "bun:test";
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import { RegistrationOrLoginForm, checkEmail, checkIsMinLengthReached, checkIsOneBigChar, checkIsOneNumber, checkIsOneSpecChar } from "../src/pages/RegistrationAndLogin";
-import { App, checkStates } from "../src/App";
+import { checkEmail, passwordFormatCheckers } from "../src/pages/RegistrationAndLogin";
+import { App } from "../src/App";
 
 describe('RegistrationOrLogin komponens', () => {
 
-  test('checkPassword teszt - Ha hat karakternél rövidebb a jelszó, hamis értéket ad vissza', () => {
+  test('checkIsMinLengthReached teszt - Ha hat karakternél rövidebb a jelszó, hamis értéket ad vissza', () => {
+    const {checkIsMinLengthReached} = passwordFormatCheckers
     const jelszoTeszt = "abcde"
     expect(checkIsMinLengthReached(jelszoTeszt)).toBe(false)
   })
-  test('checkPassword teszt - Ha hat karakternél hosszabb (vagy egyenlő) a jelszó, igaz értéket ad vissza', () => {
+  test('checkIsMinLengthReached teszt - Ha hat karakternél hosszabb (vagy egyenlő) a jelszó, igaz értéket ad vissza', () => {
+    const {checkIsMinLengthReached} = passwordFormatCheckers
     const jelszoTeszt = "abcdef"
     expect(checkIsMinLengthReached(jelszoTeszt)).toBe(true)
   })

@@ -1,16 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "../modules/Header.jsx";
 import { useState } from "react";
 import axios from "axios";
-import { catchErrors, checkStates } from "../App.jsx";
+import { catchErrors } from "../App.jsx";
 
-const typePassword = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+=\[\]{};':"\\|,.<>\/?-])(?=\S+$).{6,}$/
-const oneBigChar = /(?=[A-Z])./
-const oneSpecChar = /(?=[!@#$%^&*()_+=\[\]{};':"\\|,.<>\/?-])./
-const oneNumber = /(?=\d)./
-const typeEmail = /^[a-zA-Z0-9_%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/
-const typeUserName = /\s/
-const ekezetes = /(?=[öüóőúáűéíÍÉÁŰŐÚÖÜÓ])./
 
 export class PasswordState {
   constructor(isMinimalLengthReached = false, isThereOneNumber = false, isThereOneBigChar = false, isThereOneSpecChar = false) {
@@ -21,8 +14,24 @@ export class PasswordState {
   }
 }
 
-export const checkEmail = (getEmail) => {
-    if (getEmail.search(typeEmail) != -1) {
+export const checkStatesIsContainsFalse = (states) => {
+  for (const state in states) {
+    for (const key in states[state]) {
+      if (states[state][key] === false) {
+        return true;
+      }
+    }
+    if (states[state] === false) {
+      return true;
+    }
+
+  }
+  return false;
+}
+
+export const checkEmail = (email) => {
+    const typeEmail = /^[a-zA-Z0-9_%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/
+    if (email.search(typeEmail) != -1) {
         return true;
     }
     else {
@@ -30,8 +39,8 @@ export const checkEmail = (getEmail) => {
     }
 }
 
-export const checkIsMinLengthReached = (getPassword) => {
-    if (getPassword.length >= 6){
+const checkIsMinLengthReached = (password) => {
+    if (password.length >= 6){
         return true;
     }
     else{
@@ -39,8 +48,9 @@ export const checkIsMinLengthReached = (getPassword) => {
     }
 }
 
-export const checkIsOneNumber = (getPassword) => {
-    if (getPassword.search(oneNumber) > -1){
+const checkIsOneNumber = (password) => {
+    const oneNumber = /(?=\d)./
+    if (password.search(oneNumber) > -1){
         return true;
     }
     else{
@@ -48,8 +58,9 @@ export const checkIsOneNumber = (getPassword) => {
     }
 }
 
-export const checkIsOneBigChar = (getPassword) => {
-    if (getPassword.search(oneBigChar) > -1){
+const checkIsOneBigChar = (password) => {
+    const oneBigChar = /(?=[A-Z])./
+    if (password.search(oneBigChar) > -1){
         return true;
     }
     else{
@@ -57,8 +68,9 @@ export const checkIsOneBigChar = (getPassword) => {
     }
 }
 
-export const checkIsOneSpecChar = (getPassword) => {
-    if (getPassword.search(oneSpecChar) > -1){
+const checkIsOneSpecChar = (password) => {
+    const oneSpecChar = /(?=[!@#$%^&*()_+=\[\]{};':"\\|,.<>\/?-])./
+    if (password.search(oneSpecChar) > -1){
         return true;
     }
     else{
@@ -66,7 +78,7 @@ export const checkIsOneSpecChar = (getPassword) => {
     }
 }
 
-export const passwordCheckers = {
+export const passwordFormatCheckers = {
     checkIsMinLengthReached,
     checkIsOneBigChar,
     checkIsOneNumber,
@@ -74,17 +86,20 @@ export const passwordCheckers = {
 
 }
 
-export const checkPassword = (getPassword) => {
+export const getCurrentPasswordState = (password) => {
     const currentpasswordState = new PasswordState(
-    checkIsMinLengthReached(getPassword),
-    checkIsOneNumber(getPassword),
-    checkIsOneBigChar(getPassword),
-    checkIsOneSpecChar(getPassword)
+    checkIsMinLengthReached(password),
+    checkIsOneNumber(password),
+    checkIsOneBigChar(password),
+    checkIsOneSpecChar(password)
     )
     return currentpasswordState;
 }
 
 export function RegistrationOrLoginForm() {
+    const navigate = useNavigate()
+    const typeUserName = /\s/;
+    const ekezetes = /(?=[öüóőúáűéíÍÉÁŰŐÚÖÜÓ])./;
     const [isLogin, setLogin] = useState(true)
     const [firstPasswordState, setFirstPasswordState] = useState(new PasswordState())
     const [secondPasswordState, setSecondPasswordState] = useState(null)
@@ -124,7 +139,7 @@ export function RegistrationOrLoginForm() {
                     isLogin: isLogin
                 }
                 await axios.post("https://localhost:7159/api/SendMail/ByUserName", body)
-                location.assign("/fooldal")
+                navigate("/fooldal")
             }
         }
         catch (error) {
@@ -134,14 +149,14 @@ export function RegistrationOrLoginForm() {
 
     }
 
-    const registOrLogin = (getInputs) => {
+    const registOrLoginRequest = (inputs) => {
         let url = ""
         let body = null
         if (isLogin) {
             url = "https://localhost:7159/auth/login"
             body = {
-                userName: getInputs.userName,
-                password: getInputs.password
+                userName: inputs.userName,
+                password: inputs.password
             }
 
         }
@@ -149,9 +164,9 @@ export function RegistrationOrLoginForm() {
         else {
             url = "https://localhost:7159/auth/register"
             body = {
-                userName: getInputs.userName,
-                password: getInputs.password,
-                email: getInputs.email
+                userName: inputs.userName,
+                password: inputs.password,
+                email: inputs.email
             }
 
         }
@@ -174,7 +189,7 @@ export function RegistrationOrLoginForm() {
             password: password1
         }
 
-        registOrLogin(inputs)
+        registOrLoginRequest(inputs)
     }
 
     const states = { userNameState, emailState, firstPasswordState, secondPasswordState }
@@ -198,7 +213,7 @@ export function RegistrationOrLoginForm() {
                         </> : <></>}
                     <label>Jelszó</label>
                     <input className="mb-3 form-control" type="password" placeholder='Jelszó' name="passwordOne" id="userPassword"
-                        onChange={(event) => { setFirstPasswordState(checkPassword(event.target.value)) }} />
+                        onChange={(event) => { setFirstPasswordState(getCurrentPasswordState(event.target.value)) }} />
                     <p className={firstPasswordState.isMinLengthReached ? "text-success" : "text-danger"}><i className={firstPasswordState.isMinLengthReached ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 6 karakter hosszú</p>
                     <p className={firstPasswordState.isOneBigChar ? "text-success" : "text-danger"}><i className={firstPasswordState.isOneBigChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 nagy karakter</p>
                     <p className={firstPasswordState.isOneNumber ? "text-success" : "text-danger"}><i className={firstPasswordState.isOneNumber ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 szám</p>
@@ -207,7 +222,7 @@ export function RegistrationOrLoginForm() {
                         <>
                             <label>Jelszó ismétlése</label>
                             <input className="mb-3 form-control" type="password" placeholder='Jelszó újra' name="passwordTwo" id="userPasswordAgain"
-                                onChange={(event) => { setSecondPasswordState(checkPassword(event.target.value)) }} />
+                                onChange={(event) => { setSecondPasswordState(getCurrentPasswordState(event.target.value)) }} />
                             <p className={secondPasswordState.isMinLengthReached ? "text-success" : "text-danger"}><i className={secondPasswordState.isMinLengthReached ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 6 karakter hosszú</p>
                             <p className={secondPasswordState.isOneBigChar ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneBigChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 nagy karakter</p>
                             <p className={secondPasswordState.isOneNumber ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneNumber ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 szám</p>
@@ -216,7 +231,7 @@ export function RegistrationOrLoginForm() {
                         :
                         <></>}
                     <div className="regDiv">
-                        <button type="submit" disabled={checkStates(states)} className="btn btn-primary regGomb" id="gomb">{isLogin ? "Bejelentkezés" : "Regisztráció"}</button>
+                        <button type="submit" disabled={checkStatesIsContainsFalse(states)} className="btn btn-primary regGomb" id="gomb">{isLogin ? "Bejelentkezés" : "Regisztráció"}</button>
                         <Link to="/" onClick={() => { changeForm(); }} className="regLink">{isLogin ? "Még nincs fiókod?" : "Már van fiókod?"}</Link>
                     </div>
                 </form>
