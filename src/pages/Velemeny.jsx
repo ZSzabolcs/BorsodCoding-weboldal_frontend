@@ -11,7 +11,7 @@ function Velemeny() {
     const userName = checkUserName()
     const [, setPending] = useState(false)
     const [adat, setAdat] = useState({ ertekeles: 0, megjegyzes: "" })
-    const [vaneVelemeny, setVanEVelemeny] = useState(false)
+    const [vanEVelemeny, setvanEVelemeny] = useState(false)
     const [isMegjegyzesChanged, setMegjegyzesChanged] = useState(false)
     const [isErtekelesChanged, setErtekelesChanged] = useState(false)
     const [ertekelesJelenleg, setErtekelesJelenleg] = useState(0)
@@ -53,7 +53,7 @@ function Velemeny() {
                 }
             })
             alert(tartalom.data.message)
-            setVanEVelemeny(true)
+            setvanEVelemeny(true)
         } catch (error) {
             catchErrors(error)
         }
@@ -68,7 +68,7 @@ function Velemeny() {
                 }
             })
             if (typeof (data) === "string") {
-                setVanEVelemeny(false)
+                setvanEVelemeny(false)
             }
             else {
                 setErtekelesJelenleg(Number(data.value.ertekeles))
@@ -76,7 +76,7 @@ function Velemeny() {
                     ertekeles: Number(data.value.ertekeles),
                     megjegyzes: data.value.megjegyzes
                 })
-                setVanEVelemeny(true)
+                setvanEVelemeny(true)
             }
 
         } catch (error) {
@@ -100,7 +100,7 @@ function Velemeny() {
             megjegyzes: ujMegjegyzes
         }
 
-        if (vaneVelemeny) {
+        if (vanEVelemeny) {
             await putErtekeles(body)
         } else {
             await postErtekeles(body)
@@ -113,7 +113,7 @@ function Velemeny() {
             ertekeles: 0,
             megjegyzes: ""
         })
-        setVanEVelemeny(false)
+        setvanEVelemeny(false)
         setErtekelesJelenleg(0)
         navigate(0)
     }
@@ -140,7 +140,7 @@ function Velemeny() {
     const states = { isMegjegyzesChanged, isErtekelesChanged }
 
     const checkDataStatus = () => {
-        if (vaneVelemeny) {
+        if (vanEVelemeny) {
             if (states.isMegjegyzesChanged || states.isErtekelesChanged) {
                 return false;
             }
@@ -161,7 +161,7 @@ function Velemeny() {
             <h1>Hogyan tetszett a játék?</h1>
             <h2>Mondd el a véleményed róla.</h2>
             <p>Egy teljes csillag a "Nagyon rossz" az öt teljes csillag a "Kiváló"-t jelenti.</p>
-            {vaneVelemeny ? <></> : <><h2>Még nem adtál véleményt!</h2></>}
+            {vanEVelemeny ? <></> : <><h2>Még nem adtál véleményt!</h2></>}
             <form method="post" onSubmit={(event) => { submitVelemeny(event); }}>
                 <div className="fs-1">
                     {[1, 2, 3, 4, 5].map((num) => (
@@ -174,7 +174,7 @@ function Velemeny() {
                 </div>
                 <input id="comment" type="text" name="megjegyzes" defaultValue={megjegyzes} onChange={(event) => { setMegjegyzesChanged(megjegyzesIsChanged(event.target.value)) }} /><br />
                 <input type="submit" disabled={checkDataStatus()} />
-                {(vaneVelemeny) ?
+                {(vanEVelemeny) ?
                     <button type="button" onClick={() => { torolVelemeny() }}>Törlés</button>
                     : <></>
                 }
