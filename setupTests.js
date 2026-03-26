@@ -5,7 +5,7 @@ import { cleanup } from '@testing-library/react';
 
 const dom = new JSDOM ("<!DOCTYPE html><html><body></body></html>",
     {
-        url: 'http://localhost ', // itt valójában nincs szóköz a localhost után!
+        url: 'http://localhost',
     });
 globalThis.window = dom.window;
 globalThis.document = dom.window.document;
