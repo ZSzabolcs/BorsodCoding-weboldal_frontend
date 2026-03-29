@@ -26,8 +26,6 @@ function Navigation() {
                 <Link to="/velemeny">Vélemény</Link>                         
             </div>
         </div>
-        
-
     </div>
   )
 }

@@ -54,6 +54,7 @@ function Velemeny() {
             })
             alert(tartalom.data.message)
             setvanEVelemeny(true)
+            navigate(0)
         } catch (error) {
             catchErrors(error)
         }
