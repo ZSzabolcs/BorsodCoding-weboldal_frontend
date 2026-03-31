@@ -199,48 +199,51 @@ export function RegistrationOrLoginForm() {
         <>
             <Header />
             <div className="container reg">
-                <h1>{isLogin ? "Bejelentkezés" : "Regisztráció"}</h1>
-                <form method="post" id="form" onSubmit={(event) => { submitEvent(event, isLogin) }}>
-                    <label>Felhasználónév</label>
-                    <input className="mb-3 form-control" type="text" name="username" placeholder='Felhasználónév' id="username" onChange={(event) => { checkUsername(event.target.value) }} />
-                    <div className="check">
-                        <p className={isNoSpace ? "text-success" : "text-danger"}><i className={isNoSpace ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Nincsen benne szóköz</p>
-                        <p className={isNotEkezetes ? "text-success" : "text-danger"}><i className={isNotEkezetes ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Nincsen benne ékezet</p>
-                    </div>
-                    {!isLogin ?
-                        <>
-                            <label>E-mail-cím</label>
-                            <input className="mb-3 form-control" type="email" placeholder='E-mail-cím' name="email" id="userEmail" onChange={(event) => { setEmailState(checkEmail(event.target.value)) }} />
-                            <p className={emailState ? "text-success check" : "text-danger check"}><i className={emailState ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Helyes e-mail cím</p>
-                        </> : <></>}
-                    <label>Jelszó</label>
-                    <input className="mb-3 form-control" type="password" placeholder='Jelszó' name="passwordOne" id="userPassword"
-                        onChange={(event) => { setFirstPasswordState(getCurrentPasswordState(event.target.value)) }} />
-                    <div className="check">
-                        <p className={firstPasswordState.isMinLengthReached ? "text-success" : "text-danger"}><i className={firstPasswordState.isMinLengthReached ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 6 karakter hosszú</p>
-                        <p className={firstPasswordState.isOneBigChar ? "text-success" : "text-danger"}><i className={firstPasswordState.isOneBigChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 nagy karakter</p>
-                        <p className={firstPasswordState.isOneNumber ? "text-success" : "text-danger"}><i className={firstPasswordState.isOneNumber ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 szám</p>
-                        <p className={firstPasswordState.isOneSpecChar ? "text-success" : "text-danger"}><i className={firstPasswordState.isOneSpecChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 speciális karakter</p>
-                    </div>
-                    {!isLogin ?
-                        <>
-                            <label>Jelszó ismétlése</label>
-                            <input className="mb-3 form-control" type="password" placeholder='Jelszó újra' name="passwordTwo" id="userPasswordAgain"
-                                onChange={(event) => { setSecondPasswordState(getCurrentPasswordState(event.target.value)) }} />
-                            <div className="check">
-                                <p className={secondPasswordState.isMinLengthReached ? "text-success" : "text-danger"}><i className={secondPasswordState.isMinLengthReached ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 6 karakter hosszú</p>
-                                <p className={secondPasswordState.isOneBigChar ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneBigChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 nagy karakter</p>
-                                <p className={secondPasswordState.isOneNumber ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneNumber ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 szám</p>
-                                <p className={secondPasswordState.isOneSpecChar ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneSpecChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 speciális karakter</p>
-                            </div>
-                        </>
-                        :
-                        <></>}
-                    <div className="regDiv">
-                        <button type="submit" disabled={checkStatesIsContainsFalse(states)} className="btn btn-primary regGomb" id="gomb">{isLogin ? "Bejelentkezés" : "Regisztráció"}</button>
-                        <Link to="/" onClick={() => { changeForm(); }} className="regLink">{isLogin ? "Még nincs fiókod?" : "Már van fiókod?"}</Link>
-                    </div>
-                </form>
+                <h2>{isLogin ? "Bejelentkezés" : "Regisztráció"}</h2>
+
+                <div className="mx-3">
+                    <form method="post" id="form" onSubmit={(event) => { submitEvent(event, isLogin) }}>
+                        <label>Felhasználónév</label>
+                        <input className="mb-3 form-control" type="text" name="username" placeholder='Felhasználónév' id="username" onChange={(event) => { checkUsername(event.target.value) }} />
+                        <div className="check">
+                            <p className={isNoSpace ? "text-success" : "text-danger"}><i className={isNoSpace ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Nem lehet benne szóköz</p>
+                            <p className={isNotEkezetes ? "text-success" : "text-danger"}><i className={isNotEkezetes ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Nem lehet benne ékezet</p>
+                        </div>
+                        {!isLogin ?
+                            <>
+                                <label>E-mail-cím</label>
+                                <input className="mb-3 form-control" type="email" placeholder='E-mail-cím' name="email" id="userEmail" onChange={(event) => { setEmailState(checkEmail(event.target.value)) }} />
+                                <p className={emailState ? "text-success check" : "text-danger check"}><i className={emailState ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Megfelelő formátum</p>
+                            </> : <></>}
+                        <label>Jelszó</label>
+                        <input className="mb-3 form-control" type="password" placeholder='Jelszó' name="passwordOne" id="userPassword"
+                            onChange={(event) => { setFirstPasswordState(getCurrentPasswordState(event.target.value)) }} />
+                        <div className="check">
+                            <p className={firstPasswordState.isMinLengthReached ? "text-success" : "text-danger"}><i className={firstPasswordState.isMinLengthReached ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 6 karakter hosszú</p>
+                            <p className={firstPasswordState.isOneBigChar ? "text-success" : "text-danger"}><i className={firstPasswordState.isOneBigChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 nagybetűs karakter</p>
+                            <p className={firstPasswordState.isOneNumber ? "text-success" : "text-danger"}><i className={firstPasswordState.isOneNumber ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 szám</p>
+                            <p className={firstPasswordState.isOneSpecChar ? "text-success" : "text-danger"}><i className={firstPasswordState.isOneSpecChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 speciális karakter</p>
+                        </div>
+                        {!isLogin ?
+                            <>
+                                <label>Jelszó ismétlése</label>
+                                <input className="mb-3 form-control" type="password" placeholder='Jelszó újra' name="passwordTwo" id="userPasswordAgain"
+                                    onChange={(event) => { setSecondPasswordState(getCurrentPasswordState(event.target.value)) }} />
+                                <div className="check">
+                                    <p className={secondPasswordState.isMinLengthReached ? "text-success" : "text-danger"}><i className={secondPasswordState.isMinLengthReached ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 6 karakter hosszú</p>
+                                    <p className={secondPasswordState.isOneBigChar ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneBigChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 nagybetűs karakter</p>
+                                    <p className={secondPasswordState.isOneNumber ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneNumber ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 szám</p>
+                                    <p className={secondPasswordState.isOneSpecChar ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneSpecChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 speciális karakter</p>
+                                </div>
+                            </>
+                            :
+                            <></>}
+                        <div className="regDiv">
+                            <button type="submit" disabled={checkStatesIsContainsFalse(states)} className="btn btn-primary regGomb" id="gomb">{isLogin ? "Bejelentkezés" : "Regisztráció"}</button>
+                            <Link to="/" onClick={() => { changeForm(); }} className="regLink">{isLogin ? "Még nincs fiókod?" : "Már van fiókod?"}</Link>
+                        </div>
+                    </form>
+                </div>
             </div>
         </>
     )
