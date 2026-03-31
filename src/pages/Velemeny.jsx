@@ -166,6 +166,7 @@ function Velemeny() {
                         {[1, 2, 3, 4, 5].map((num) => (
                             <i
                                 key={num}
+                                style={{color: "rgba(240, 188, 18, 1)"}}
                                 className={num <= ertekelesJelenleg ? "bi bi-star-fill m-3" : "bi bi-star m-3"}
                                 onClick={() => { setErtekelesChanged(ertekelesIsChanged(num)); setErtekelesJelenleg(num) }}
                             ></i>
@@ -174,7 +175,7 @@ function Velemeny() {
                     <textarea id="comment" className="my-3" type="text" name="megjegyzes" defaultValue={megjegyzes} onChange={(event) => { setMegjegyzesChanged(megjegyzesIsChanged(event.target.value)) }} /><br />
                     <input className="btn btn-primary" type="submit" disabled={checkDataStatus()} />
                     {(vanEVelemeny) ?
-                        <button className="btn btn-danger" type="button" onClick={() => { torolVelemeny() }}>Törlés</button>
+                        <button className="btn btn-danger mx-2" type="button" onClick={() => { torolVelemeny() }}>Törlés</button>
                         : <></>
                     }
                     {vanEVelemeny ? <></> : <><p className="text-danger">Mező kitöltése kötelező!</p></>}
