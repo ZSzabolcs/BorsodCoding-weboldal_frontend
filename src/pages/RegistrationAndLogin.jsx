@@ -6,27 +6,27 @@ import { catchErrors } from "../App.jsx";
 
 
 export class PasswordState {
-  constructor(isMinimalLengthReached = false, isThereOneNumber = false, isThereOneBigChar = false, isThereOneSpecChar = false) {
-    this.isMinLengthReached = isMinimalLengthReached;
-    this.isOneNumber = isThereOneNumber;
-    this.isOneBigChar = isThereOneBigChar;
-    this.isOneSpecChar = isThereOneSpecChar;
-  }
+    constructor(isMinimalLengthReached = false, isThereOneNumber = false, isThereOneBigChar = false, isThereOneSpecChar = false) {
+        this.isMinLengthReached = isMinimalLengthReached;
+        this.isOneNumber = isThereOneNumber;
+        this.isOneBigChar = isThereOneBigChar;
+        this.isOneSpecChar = isThereOneSpecChar;
+    }
 }
 
 export const checkStatesIsContainsFalse = (states) => {
-  for (const state in states) {
-    for (const key in states[state]) {
-      if (states[state][key] === false) {
-        return true;
-      }
-    }
-    if (states[state] === false) {
-      return true;
-    }
+    for (const state in states) {
+        for (const key in states[state]) {
+            if (states[state][key] === false) {
+                return true;
+            }
+        }
+        if (states[state] === false) {
+            return true;
+        }
 
-  }
-  return false;
+    }
+    return false;
 }
 
 export const checkEmail = (email) => {
@@ -40,40 +40,40 @@ export const checkEmail = (email) => {
 }
 
 const checkIsMinLengthReached = (password) => {
-    if (password.length >= 6){
+    if (password.length >= 6) {
         return true;
     }
-    else{
+    else {
         return false;
     }
 }
 
 const checkIsOneNumber = (password) => {
     const oneNumber = /(?=\d)./
-    if (password.search(oneNumber) > -1){
+    if (password.search(oneNumber) > -1) {
         return true;
     }
-    else{
+    else {
         return false;
     }
 }
 
 const checkIsOneBigChar = (password) => {
     const oneBigChar = /(?=[A-Z])./
-    if (password.search(oneBigChar) > -1){
+    if (password.search(oneBigChar) > -1) {
         return true;
     }
-    else{
+    else {
         return false;
     }
 }
 
 const checkIsOneSpecChar = (password) => {
     const oneSpecChar = /(?=[!@#$%^&*()_+=\[\]{};':"\\|,.<>\/?-])./
-    if (password.search(oneSpecChar) > -1){
+    if (password.search(oneSpecChar) > -1) {
         return true;
     }
-    else{
+    else {
         return false;
     }
 }
@@ -88,10 +88,10 @@ export const passwordFormatCheckers = {
 
 export const getCurrentPasswordState = (password) => {
     const currentpasswordState = new PasswordState(
-    checkIsMinLengthReached(password),
-    checkIsOneNumber(password),
-    checkIsOneBigChar(password),
-    checkIsOneSpecChar(password)
+        checkIsMinLengthReached(password),
+        checkIsOneNumber(password),
+        checkIsOneBigChar(password),
+        checkIsOneSpecChar(password)
     )
     return currentpasswordState;
 }
@@ -202,31 +202,37 @@ export function RegistrationOrLoginForm() {
                 <h1>{isLogin ? "Bejelentkezés" : "Regisztráció"}</h1>
                 <form method="post" id="form" onSubmit={(event) => { submitEvent(event, isLogin) }}>
                     <label>Felhasználónév</label>
-                    <input className="mb-3 form-control" type="text" name="username" placeholder='Felhasználónév' id="username" onChange={(event) => { checkUsername(event.target.value) }} /><br />
-                    <p><i className={isNoSpace ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Nincsen benne szóköz</p>
-                    <p><i className={isNotEkezetes ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Nincsen benne ékezet</p>
+                    <input className="mb-3 form-control" type="text" name="username" placeholder='Felhasználónév' id="username" onChange={(event) => { checkUsername(event.target.value) }} />
+                    <div className="check">
+                        <p className={isNoSpace ? "text-success" : "text-danger"}><i className={isNoSpace ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Nincsen benne szóköz</p>
+                        <p className={isNotEkezetes ? "text-success" : "text-danger"}><i className={isNotEkezetes ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Nincsen benne ékezet</p>
+                    </div>
                     {!isLogin ?
                         <>
                             <label>E-mail-cím</label>
-                            <input className="mb-3 form-control" type="email" placeholder='E-mail-cím' name="email" id="userEmail" onChange={(event) => { setEmailState(checkEmail(event.target.value)) }} /><br />
-                            <p><i className={emailState ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Helyes e-mail cím</p>
+                            <input className="mb-3 form-control" type="email" placeholder='E-mail-cím' name="email" id="userEmail" onChange={(event) => { setEmailState(checkEmail(event.target.value)) }} />
+                            <p className={emailState ? "text-success check" : "text-danger check"}><i className={emailState ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Helyes e-mail cím</p>
                         </> : <></>}
                     <label>Jelszó</label>
                     <input className="mb-3 form-control" type="password" placeholder='Jelszó' name="passwordOne" id="userPassword"
                         onChange={(event) => { setFirstPasswordState(getCurrentPasswordState(event.target.value)) }} />
-                    <p className={firstPasswordState.isMinLengthReached ? "text-success" : "text-danger"}><i className={firstPasswordState.isMinLengthReached ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 6 karakter hosszú</p>
-                    <p className={firstPasswordState.isOneBigChar ? "text-success" : "text-danger"}><i className={firstPasswordState.isOneBigChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 nagy karakter</p>
-                    <p className={firstPasswordState.isOneNumber ? "text-success" : "text-danger"}><i className={firstPasswordState.isOneNumber ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 szám</p>
-                    <p className={firstPasswordState.isOneSpecChar ? "text-success" : "text-danger"}><i className={firstPasswordState.isOneSpecChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 speciális karakter</p>
+                    <div className="check">
+                        <p className={firstPasswordState.isMinLengthReached ? "text-success" : "text-danger"}><i className={firstPasswordState.isMinLengthReached ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 6 karakter hosszú</p>
+                        <p className={firstPasswordState.isOneBigChar ? "text-success" : "text-danger"}><i className={firstPasswordState.isOneBigChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 nagy karakter</p>
+                        <p className={firstPasswordState.isOneNumber ? "text-success" : "text-danger"}><i className={firstPasswordState.isOneNumber ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 szám</p>
+                        <p className={firstPasswordState.isOneSpecChar ? "text-success" : "text-danger"}><i className={firstPasswordState.isOneSpecChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 speciális karakter</p>
+                    </div>
                     {!isLogin ?
                         <>
                             <label>Jelszó ismétlése</label>
                             <input className="mb-3 form-control" type="password" placeholder='Jelszó újra' name="passwordTwo" id="userPasswordAgain"
                                 onChange={(event) => { setSecondPasswordState(getCurrentPasswordState(event.target.value)) }} />
-                            <p className={secondPasswordState.isMinLengthReached ? "text-success" : "text-danger"}><i className={secondPasswordState.isMinLengthReached ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 6 karakter hosszú</p>
-                            <p className={secondPasswordState.isOneBigChar ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneBigChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 nagy karakter</p>
-                            <p className={secondPasswordState.isOneNumber ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneNumber ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 szám</p>
-                            <p className={secondPasswordState.isOneSpecChar ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneSpecChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 speciális karakter</p>
+                            <div className="check">
+                                <p className={secondPasswordState.isMinLengthReached ? "text-success" : "text-danger"}><i className={secondPasswordState.isMinLengthReached ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 6 karakter hosszú</p>
+                                <p className={secondPasswordState.isOneBigChar ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneBigChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 nagy karakter</p>
+                                <p className={secondPasswordState.isOneNumber ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneNumber ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 szám</p>
+                                <p className={secondPasswordState.isOneSpecChar ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneSpecChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 speciális karakter</p>
+                            </div>
                         </>
                         :
                         <></>}
