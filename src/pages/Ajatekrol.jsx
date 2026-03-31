@@ -13,9 +13,7 @@ function AJatekrol() {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("jwt")}`
                 },
-                responseType: 'blob'
             })
-
 
             const url = window.URL.createObjectURL(new Blob([response.data]));
 

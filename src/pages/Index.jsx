@@ -5,15 +5,13 @@ const Hir = ({ cim, szoveg }) => {
     return (
         <div className="col-md-6 border">
             <h3>{cim}</h3>
-            <p>
-                {szoveg}
-            </p>
+            <p>{szoveg}</p>
         </div>
     )
 }
 
 function Index() {
-    const username = checkUsername()
+    checkUsername()
     return (
         <>
             <Felsoresz />
@@ -21,10 +19,8 @@ function Index() {
             <div className="row mx-3">
                 <Hir cim="Kis lépés egy embernek, de hatalmas lépés egy krumplinak" szoveg={
                     <>
-                        <p>
-                            Elkészült első játékunk, a For The Potato! A róla szóló cikket az alábbi linken tekinthetik meg.<br />
-                            <a href="/ajatekrol">link</a>
-                        </p>
+                        Elkészült első játékunk, a For The Potato! A róla szóló cikket az alábbi linken tekinthetik meg.<br />
+                        <a href="/ajatekrol">link</a>
                     </>
                 } />
                 <Hir cim="For The Potato 2?" szoveg={

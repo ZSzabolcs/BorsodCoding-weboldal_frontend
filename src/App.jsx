@@ -36,20 +36,30 @@ export const checkUsername = () => {
 }
 
 export const getDateByOwnStringFormat = (date) => {
-        const givenDate = new Date(date)
-        return `${givenDate.toLocaleDateString()} ${givenDate.getHours()}:${givenDate.getMinutes()}:${givenDate.getSeconds()}`
-    }
+  const givenDate = new Date(date)
+  return `${givenDate.toLocaleDateString()} ${givenDate.getHours()}:${givenDate.getMinutes()}:${givenDate.getSeconds()}`
+}
 
 export function catchErrors(error) {
+  let hibatipus;
   if (error.response) {
-    console.error(`Hiba: ${error.response.data}`)
-    alert(error.response.data)
+    hibatipus = "Válasz hiba:"
+    if (typeof(error.response.data) === "string") {
+      console.error(`${hibatipus} ${error.response.data}`)
+      alert(error.response.data)
+    }
+    else{
+      console.error(`${hibatipus} ${error.response.data.message}`)
+      alert(error.response.data.message)
+    }
+
   }
   else if (error.request) {
-    console.error("Nincs kapcsolat a szerverrel: ", error.message)
+    hibatipus = "Nincs kapcsolat a szerverrel:"
+    console.error(`${hibatipus} ${error.message}`)
   }
   else {
-    console.error("Hiba történt: ", error.message)
+    console.error(`Hiba történt: ${error.message}` )
   }
 }
 
