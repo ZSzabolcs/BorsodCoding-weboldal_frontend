@@ -17,18 +17,19 @@ function Index() {
     return (
         <>
             <Felsoresz />
-            <h1>Üdvözöljük <span>{username}!</span></h1>
-            <br />
-            <h2>Híreink</h2>
-            <div className="row">
-                <Hir cim="Történetünk első játéka" szoveg={
+            <h2 className="mx-3">Híreink</h2>
+            <div className="row mx-3">
+                <Hir cim="Kis lépés egy embernek, de hatalmas lépés egy krumplinak" szoveg={
                     <>
-                        Elkészült a <strong>For The Potato</strong> című <strong>Legelső játékunk!</strong> Katttintson a játékról nevű gomba, ha érdekli.
+                        <p>
+                            Elkészült első játékunk, a For The Potato! A róla szóló cikket az alábbi linken tekinthetik meg.<br />
+                            <a href="/ajatekrol">link</a>
+                        </p>
                     </>
                 } />
-                <Hir cim="Mikor lesz For The Potato 2?" szoveg={
+                <Hir cim="For The Potato 2?" szoveg={
                     <>
-                        A legelső játék készítése alatt már a folytatásai is kirajzolódott. A For The Potato 2 játékot 2026-ban vagy 2027-ben tervezzzük
+                        Igen, tervezünk folytatást a jövőben. Hogy mikor, azt egyelőre mi sem tudjuk, sok mindentől függ, de hamarosan érkezünk a legújabb fejleményekkel és részletekkel.
                     </>
                 } />
             </div>
