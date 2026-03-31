@@ -111,6 +111,14 @@ h3{
     font-family: 'Merriweather Sans', sans-serif;
 }
 
+.ertekeles{
+    padding-bottom: 0px;
+}
+
+#comment{
+    width: 350px;
+}
+
 li{
     font-family: 'Open Sans', sans-serif;
     font-size: x-large;

@@ -159,27 +159,27 @@ function Velemeny() {
     return (
         <>
             <Felsoresz />
-            <h1>Hogyan tetszett a játék?</h1>
-            <h2>Mondd el a véleményed róla.</h2>
-            <p>Egy teljes csillag a "Nagyon rossz" az öt teljes csillag a "Kiváló"-t jelenti.</p>
-            {vanEVelemeny ? <></> : <><h2>Még nem adtál véleményt!</h2></>}
-            <form method="post" onSubmit={(event) => { submitVelemeny(event); }}>
-                <div className="fs-1">
-                    {[1, 2, 3, 4, 5].map((num) => (
-                        <i
-                            key={num}
-                            className={num <= ertekelesJelenleg ? "bi bi-star-fill m-3" : "bi bi-star m-3"}
-                            onClick={() => { setErtekelesChanged(ertekelesIsChanged(num)); setErtekelesJelenleg(num) }}
-                        ></i>
-                    ))}
-                </div>
-                <input id="comment" type="text" name="megjegyzes" defaultValue={megjegyzes} onChange={(event) => { setMegjegyzesChanged(megjegyzesIsChanged(event.target.value)) }} /><br />
-                <input className="btn btn-primary" type="submit" disabled={checkDataStatus()} />
-                {(vanEVelemeny) ?
-                    <button className="btn btn-danger" type="button" onClick={() => { torolVelemeny() }}>Törlés</button>
-                    : <></>
-                }
-            </form>
+            <div className="m-4">
+                <h2 className="ertekeles">Értékelés</h2>
+                <form method="post" onSubmit={(event) => { submitVelemeny(event); }}>
+                    <div className="fs-1">
+                        {[1, 2, 3, 4, 5].map((num) => (
+                            <i
+                                key={num}
+                                className={num <= ertekelesJelenleg ? "bi bi-star-fill m-3" : "bi bi-star m-3"}
+                                onClick={() => { setErtekelesChanged(ertekelesIsChanged(num)); setErtekelesJelenleg(num) }}
+                            ></i>
+                        ))}
+                    </div>
+                    <textarea id="comment" className="my-3" type="text" name="megjegyzes" defaultValue={megjegyzes} onChange={(event) => { setMegjegyzesChanged(megjegyzesIsChanged(event.target.value)) }} /><br />
+                    <input className="btn btn-primary" type="submit" disabled={checkDataStatus()} />
+                    {(vanEVelemeny) ?
+                        <button className="btn btn-danger" type="button" onClick={() => { torolVelemeny() }}>Törlés</button>
+                        : <></>
+                    }
+                    {vanEVelemeny ? <></> : <><p className="text-danger">Mező kitöltése kötelező!</p></>}
+                </form>
+            </div>
         </>
     )
 }
