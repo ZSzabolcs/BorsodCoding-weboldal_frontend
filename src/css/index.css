@@ -198,6 +198,14 @@ b{
     font-size: xx-large;
 }
 
+.check{
+    font-size: large;
+}
+
+.check p{
+    font-size: large;
+}
+
 .cikk{
     border: 1px solid black;
     font-size: x-large;

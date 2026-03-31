@@ -13,22 +13,22 @@ function Fiok() {
     const [, setPending] = useState(false);
     const [firstPasswordState, setFirstPasswordState] = useState(new PasswordState())
     const [secondPasswordState, setSecondPasswordState] = useState(new PasswordState())
-    const [emailState, setEmailState] = useState({ isEmail : false, isChanged: false})
+    const [emailState, setEmailState] = useState({ isEmail: false, isChanged: false })
 
 
     const getFiok = async () => {
         try {
             setPending(true);
 
-            const {data} = await axios.get(`https://localhost:7159/auth/Fiok/${username}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${localStorage.getItem("jwt")}`
-                        }
+            const { data } = await axios.get(`https://localhost:7159/auth/Fiok/${username}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("jwt")}`
                     }
-                )
+                }
+            )
             setAdatok(data)
-            setEmailState({isEmail: checkEmail(data.value.email), isChanged: false})
+            setEmailState({ isEmail: checkEmail(data.value.email), isChanged: false })
         } catch (error) {
             catchErrors(error)
         }
@@ -44,7 +44,7 @@ function Fiok() {
         return (
             <>
                 <Felsoresz />
-                <Betoltes/>
+                <Betoltes />
             </>
         )
     }
@@ -54,12 +54,12 @@ function Fiok() {
         try {
             setPending(true)
             const tartalom = await axios.put("https://localhost:7159/auth/Modositas", frissitettAdatok,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${localStorage.getItem("jwt")}`
-                        }
-                    },
-                )
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("jwt")}`
+                    }
+                },
+            )
             alert(tartalom.data.message)
             navigate(0)
         } catch (error) {
@@ -87,7 +87,7 @@ function Fiok() {
         putFiok(frissitettAdatok)
     }
 
-    const states = {firstPasswordState, secondPasswordState, emailState}
+    const states = { firstPasswordState, secondPasswordState, emailState }
 
     const emailIsChanged = (currentEmail) => {
         if (email != currentEmail) {
@@ -105,13 +105,13 @@ function Fiok() {
 
 
     const checkDataStatus = () => {
-       if (states.emailState.isChanged && states.emailState.isEmail) {
-        return false;
-       }
-       else if (checkIsPasswordCorrect(states.firstPasswordState) && checkIsPasswordCorrect(states.secondPasswordState)) {
+        if (states.emailState.isChanged && states.emailState.isEmail) {
             return false;
-       }
-       return true;
+        }
+        else if (checkIsPasswordCorrect(states.firstPasswordState) && checkIsPasswordCorrect(states.secondPasswordState)) {
+            return false;
+        }
+        return true;
 
     }
 
@@ -121,27 +121,27 @@ function Fiok() {
     return (
         <>
             <Felsoresz />
-            <h1>{username}</h1>
-            <h2>A fiók létrejött ekkor: {getDateByOwnStringFormat(birthdate)}</h2>
-            <h2>{modositva}</h2>
-            <form method="post" onSubmit={(event) => { submitVelemeny(event) }}>
-                <label htmlFor="oldpassword">Jelszó:</label>
-                <input type="password" name="oldpassword" id="oldpassword" onChange={(event) => { setFirstPasswordState(getCurrentPasswordState(event.target.value)) }} />
-                <p className={firstPasswordState.isMinLengthReached ? "text-success" : "text-danger"}><i className={firstPasswordState.isMinLengthReached ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 6 karakter hosszú</p>
-                <p className={firstPasswordState.isOneBigChar ? "text-success" : "text-danger"}><i className={firstPasswordState.isOneBigChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 nagy karakter</p>
-                <p className={firstPasswordState.isOneNumber ? "text-success" : "text-danger"}><i className={firstPasswordState.isOneNumber ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 szám</p>
-                <p className={firstPasswordState.isOneSpecChar ? "text-success" : "text-danger"}><i className={firstPasswordState.isOneSpecChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 speciális karakter</p>
-                <label htmlFor="newpassword">Jelszó újra:</label>
-                <input type="password" name="newpassword" id="newpassword" onChange={(event) => { setSecondPasswordState(getCurrentPasswordState(event.target.value)) }} />
-                <p className={secondPasswordState.isMinLengthReached ? "text-success" : "text-danger"}><i className={secondPasswordState.isMinLengthReached ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 6 karakter hosszú</p>
-                <p className={secondPasswordState.isOneBigChar ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneBigChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 nagy karakter</p>
-                <p className={secondPasswordState.isOneNumber ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneNumber ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 szám</p>
-                <p className={secondPasswordState.isOneSpecChar ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneSpecChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 speciális karakter</p>
-                <label htmlFor="newemail">Email:</label>
-                <input type="email" name="newemail" id="newemail" defaultValue={email} onChange={(event) => { setEmailState({isEmail: checkEmail(event.target.value), isChanged: emailIsChanged(event.target.value)}) }} />
-                <p><i className={emailState.isEmail ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Helyes e-mail cím</p>
-                <button type="submit" disabled={checkDataStatus()}>Módosítás</button>
-            </form>
+            <div className="m-4">
+                <h1>{username}</h1>
+                <h2>A fiók létrejött ekkor: {getDateByOwnStringFormat(birthdate)}</h2>
+                <h2>{modositva}</h2>
+                <form method="post" onSubmit={(event) => { submitVelemeny(event) }}>
+                    <label htmlFor="oldpassword">Jelszó:</label><br/>
+                    <input type="password" name="oldpassword" id="oldpassword" onChange={(event) => { setFirstPasswordState(getCurrentPasswordState(event.target.value)) }} /><br/>
+                    <label htmlFor="newpassword" className="my-2">Jelszó újra:</label><br/>
+                    <input type="password" name="newpassword" id="newpassword" onChange={(event) => { setSecondPasswordState(getCurrentPasswordState(event.target.value)) }} />
+                    <div className="check my-3">
+                        <p className={secondPasswordState.isMinLengthReached ? "text-success" : "text-danger"}><i className={secondPasswordState.isMinLengthReached && firstPasswordState.isMinLengthReached ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 6 karakter hosszúnak kell lennie</p>
+                        <p className={secondPasswordState.isOneBigChar && firstPasswordState.isOneBigChar ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneBigChar && firstPasswordState.isOneBigChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 nagybetűs karakter</p>
+                        <p className={secondPasswordState.isOneNumber && firstPasswordState.isOneNumber ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneNumber && firstPasswordState.isOneNumber ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 szám</p>
+                        <p className={secondPasswordState.isOneSpecChar && firstPasswordState.isOneSpecChar ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneSpecChar && firstPasswordState.isOneSpecChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 speciális karakter</p>
+                    </div>
+                    <label htmlFor="newemail">Email:</label>
+                    <input type="email" name="newemail" id="newemail" defaultValue={email} onChange={(event) => { setEmailState({ isEmail: checkEmail(event.target.value), isChanged: emailIsChanged(event.target.value) }) }} />
+                    <p className={emailState.isEmail ? "text-success check" : "text-danger check"}><i className={emailState.isEmail ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Megfelelő formátum</p>
+                    <button type="submit" disabled={checkDataStatus()}>Módosítás</button>
+                </form>
+            </div>
         </>
     )
 

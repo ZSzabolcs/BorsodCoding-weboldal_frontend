@@ -14,12 +14,12 @@ function Statisztika() {
         try {
             setPending(true);
             const tartalom = await axios.get(`https://localhost:7159/api/Save/Statisztika/${username}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${localStorage.getItem("jwt")}`
-                        }
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("jwt")}`
                     }
-                )
+                }
+            )
             setAdatok(tartalom.data)
         } catch (error) {
             catchErrors(error)
@@ -36,7 +36,7 @@ function Statisztika() {
         return (
             <>
                 <Felsoresz />
-                <Betoltes/>
+                <Betoltes />
             </>
         );
     }
@@ -69,15 +69,17 @@ function Statisztika() {
     return (
         <>
             <Felsoresz />
-            <h1>{username}</h1>
-            <h2>A játékot elkezdte: {getDateByOwnStringFormat(regDate)}</h2>
-            <h2>Pontszám: {points}</h2>
-            <h2>{pontAranySzoveg}</h2>
-            <h2>Szint: {level}</h2>
-            <h2>{szintAranySzoveg}</h2>
-            <h2>Nyelv: {nyelv}</h2>
-            <h2>{nyelvAranySzoveg}</h2>
-            <h2>Játékosok száma: {jatekosDb}</h2>
+            <div className="m-4">
+                <h1>{username}</h1>
+                <h2>A játékot elkezdte: {getDateByOwnStringFormat(regDate)}</h2>
+                <h2>Pontszám: {points}</h2>
+                <h2>{pontAranySzoveg}</h2>
+                <h2>Szint: {level}</h2>
+                <h2>{szintAranySzoveg}</h2>
+                <h2>Nyelv: {nyelv}</h2>
+                <h2>{nyelvAranySzoveg}</h2>
+                <h2>Játékosok száma: {jatekosDb}</h2>
+            </div>
         </>
     );
 
