@@ -55,13 +55,13 @@ function AJatekrol() {
                 </h2>
                 <ul>
                     <li>
-                        W - ugrás
+                        <i className="bi bi-arrow-up"></i> - ugrás
                     </li>
                     <li>
-                        A - haladás balra
+                        <i className="bi bi-arrow-left"></i> - haladás balra
                     </li>
                     <li>
-                        D - haladás jobbra
+                        <i className="bi bi-arrow-right"></i> - haladás jobbra
                     </li>
                     <li>
                         ESC - játék megállítása, menü megnyitása
