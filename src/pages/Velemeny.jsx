@@ -174,9 +174,9 @@ function Velemeny() {
                     ))}
                 </div>
                 <input id="comment" type="text" name="megjegyzes" defaultValue={megjegyzes} onChange={(event) => { setMegjegyzesChanged(megjegyzesIsChanged(event.target.value)) }} /><br />
-                <input type="submit" disabled={checkDataStatus()} />
+                <input className="btn btn-primary" type="submit" disabled={checkDataStatus()} />
                 {(vanEVelemeny) ?
-                    <button type="button" onClick={() => { torolVelemeny() }}>Törlés</button>
+                    <button className="btn btn-danger" type="button" onClick={() => { torolVelemeny() }}>Törlés</button>
                     : <></>
                 }
             </form>

@@ -67,7 +67,7 @@ function AJatekrol() {
                         ESC - játék megállítása, menü megnyitása
                     </li>
                 </ul>
-                <button onClick={() => {
+                <button className="btn btn-primary" onClick={() => {
                     jatekSetupLetoltese()
                 }}>Játék letöltése</button>
 

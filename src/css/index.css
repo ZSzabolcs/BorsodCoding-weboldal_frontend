@@ -105,6 +105,12 @@ h3{
     font-family: 'Merriweather Sans', sans-serif;
 }
 
+.adatok h3{
+    margin-top: 10px;
+    padding-bottom: 10px;
+    font-family: 'Merriweather Sans', sans-serif;
+}
+
 li{
     font-family: 'Open Sans', sans-serif;
     font-size: x-large;
