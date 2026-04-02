@@ -14,6 +14,8 @@ function Fiok() {
     const [firstPasswordState, setFirstPasswordState] = useState(new PasswordState())
     const [secondPasswordState, setSecondPasswordState] = useState(new PasswordState())
     const [emailState, setEmailState] = useState({ isEmail: false, isChanged: false })
+    const [firstPasswordText, setFirstPasswordText] = useState("")
+    const [secondPasswordText, setSecondPasswordText] = useState("")
 
 
     const getFiok = async () => {
@@ -118,6 +120,11 @@ function Fiok() {
 
 
     const modositva = (modDate == "0001-01-01T00:00:00" ? "Nem történt módosítás azóta." : `A fiók adatai utoljára módosítva ekkor: ${getDateByOwnStringFormat(modDate)}`)
+    const bothReachedMinLength = secondPasswordState.isMinLengthReached && firstPasswordState.isMinLengthReached && firstPasswordText == secondPasswordText
+    const bothThereIsOneBigChar = secondPasswordState.isOneBigChar && firstPasswordState.isOneBigChar && firstPasswordText == secondPasswordText
+    const bothThereIsOneNumber = secondPasswordState.isOneNumber && firstPasswordState.isOneNumber && firstPasswordText == secondPasswordText
+    const bothThereIsOneSpecChar = secondPasswordState.isOneSpecChar && firstPasswordState.isOneSpecChar && firstPasswordText == secondPasswordText
+
     return (
         <>
             <Felsoresz />
@@ -133,14 +140,14 @@ function Fiok() {
                 <form method="post" onSubmit={(event) => { submitVelemeny(event) }}>
                     <div className="mx-3">
                         <label htmlFor="oldpassword">Jelszó:</label><br />
-                        <input type="password" name="oldpassword" id="oldpassword" onChange={(event) => { setFirstPasswordState(getCurrentPasswordState(event.target.value)) }} /><br />
+                        <input type="password" name="oldpassword" id="oldpassword" onChange={(event) => { setFirstPasswordState(getCurrentPasswordState(event.target.value)); setFirstPasswordText(event.target.value) }} /><br />
                         <label htmlFor="newpassword" className="my-2">Jelszó újra:</label><br />
-                        <input type="password" name="newpassword" id="newpassword" onChange={(event) => { setSecondPasswordState(getCurrentPasswordState(event.target.value)) }} />
+                        <input type="password" name="newpassword" id="newpassword" onChange={(event) => { setSecondPasswordState(getCurrentPasswordState(event.target.value)); setSecondPasswordText(event.target.value) }} />
                         <div className="check my-3">
-                            <p className={secondPasswordState.isMinLengthReached ? "text-success" : "text-danger"}><i className={secondPasswordState.isMinLengthReached && firstPasswordState.isMinLengthReached ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 6 karakter hosszúnak kell lennie</p>
-                            <p className={secondPasswordState.isOneBigChar && firstPasswordState.isOneBigChar ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneBigChar && firstPasswordState.isOneBigChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 nagybetűs karakter</p>
-                            <p className={secondPasswordState.isOneNumber && firstPasswordState.isOneNumber ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneNumber && firstPasswordState.isOneNumber ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 szám</p>
-                            <p className={secondPasswordState.isOneSpecChar && firstPasswordState.isOneSpecChar ? "text-success" : "text-danger"}><i className={secondPasswordState.isOneSpecChar && firstPasswordState.isOneSpecChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 speciális karakter</p>
+                            <p className={bothReachedMinLength ? "text-success" : "text-danger"}><i className={bothReachedMinLength ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 6 karakter hosszúnak kell lennie</p>
+                            <p className={bothThereIsOneBigChar ? "text-success" : "text-danger"}><i className={bothThereIsOneBigChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 nagybetűs karakter</p>
+                            <p className={bothThereIsOneNumber ? "text-success" : "text-danger"}><i className={bothThereIsOneNumber ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 szám</p>
+                            <p className={bothThereIsOneSpecChar ? "text-success" : "text-danger"}><i className={bothThereIsOneSpecChar ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Legalább 1 speciális karakter</p>
                         </div>
                     </div>
 
