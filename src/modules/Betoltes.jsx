@@ -1,7 +1,7 @@
 function Betoltes() {
     return (
         <>
-            <h1>Betöltés <div className="spinner-border text-info"></div></h1>
+            <h1>Betöltés <div style={{color: "purple"}} className="spinner-border"></div></h1>
         </>
     )
 }
