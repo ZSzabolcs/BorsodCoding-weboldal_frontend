@@ -50,7 +50,7 @@ function Fiok() {
             </>
         )
     }
-    const { birthdate, modDate, email } = adatok.value
+
 
     const putFiok = async (frissitettAdatok) => {
         try {
@@ -89,7 +89,6 @@ function Fiok() {
         putFiok(frissitettAdatok)
     }
 
-    const states = { firstPasswordState, secondPasswordState, emailState }
 
     const emailIsChanged = (currentEmail) => {
         if (email != currentEmail) {
@@ -117,14 +116,13 @@ function Fiok() {
 
     }
 
-
-
+    const { birthdate, modDate, email } = adatok.value
+    const states = { firstPasswordState, secondPasswordState, emailState }
     const modositva = (modDate == "0001-01-01T00:00:00" ? "Nem történt módosítás azóta." : `A fiók adatai utoljára módosítva ekkor: ${getDateByOwnStringFormat(modDate)}`)
-    const bothReachedMinLength = secondPasswordState.isMinLengthReached && firstPasswordState.isMinLengthReached && firstPasswordText == secondPasswordText
-    const bothThereIsOneBigChar = secondPasswordState.isOneBigChar && firstPasswordState.isOneBigChar && firstPasswordText == secondPasswordText
-    const bothThereIsOneNumber = secondPasswordState.isOneNumber && firstPasswordState.isOneNumber && firstPasswordText == secondPasswordText
-    const bothThereIsOneSpecChar = secondPasswordState.isOneSpecChar && firstPasswordState.isOneSpecChar && firstPasswordText == secondPasswordText
-
+    const bothReachedMinLength = secondPasswordState.isMinLengthReached && firstPasswordState.isMinLengthReached
+    const bothThereIsOneBigChar = secondPasswordState.isOneBigChar && firstPasswordState.isOneBigChar
+    const bothThereIsOneNumber = secondPasswordState.isOneNumber && firstPasswordState.isOneNumber
+    const bothThereIsOneSpecChar = secondPasswordState.isOneSpecChar && firstPasswordState.isOneSpecChar
     return (
         <>
             <Felsoresz />
