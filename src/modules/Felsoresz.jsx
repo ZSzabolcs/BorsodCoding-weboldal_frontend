@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import Header from "./Header.jsx";
 import Navigation from "./Navigation.jsx";
 
