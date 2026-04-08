@@ -13,6 +13,7 @@ function AJatekrol() {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("jwt")}`
                 },
+                responseType: "blob"
             })
 
             const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -20,7 +21,7 @@ function AJatekrol() {
             const link = document.createElement('a');
             link.href = url;
 
-            link.setAttribute('download', 'For The Potato Demo Setup.exe');
+            link.setAttribute('download', 'For_The_Potato_Demo_SETUP.exe');
 
             document.body.appendChild(link);
             link.click();
