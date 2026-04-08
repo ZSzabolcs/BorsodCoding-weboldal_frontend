@@ -109,7 +109,7 @@ function Fiok() {
         if (states.emailState.isChanged && states.emailState.isEmail) {
             return false;
         }
-        else if (checkIsPasswordCorrect(states.firstPasswordState) && checkIsPasswordCorrect(states.secondPasswordState)) {
+        else if (checkIsPasswordCorrect(states.firstPasswordState) && checkIsPasswordCorrect(states.secondPasswordState) && firstPasswordText === secondPasswordText) {
             return false;
         }
         return true;
@@ -151,7 +151,7 @@ function Fiok() {
 
                     <h2>E-mail-cím megváltoztatása</h2>
                     <div className="mx-3">
-                        <label htmlFor="newemail">Email:</label><br/>
+                        <label htmlFor="newemail">Email:</label><br />
                         <input type="email" name="newemail" id="newemail" defaultValue={email} onChange={(event) => { setEmailState({ isEmail: checkEmail(event.target.value), isChanged: emailIsChanged(event.target.value) }) }} />
                         <p className={emailState.isEmail ? "text-success check my-3" : "text-danger check my-3"}><i className={emailState.isEmail ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Megfelelő formátum</p>
                         <button className="btn btn-primary" type="submit" disabled={checkDataStatus()}>Módosítás</button>
