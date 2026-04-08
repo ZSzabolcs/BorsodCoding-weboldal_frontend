@@ -40,7 +40,7 @@ export const getDateByOwnStringFormat = (date) => {
   return `${givenDate.toLocaleDateString()} ${givenDate.getHours()}:${givenDate.getMinutes()}:${givenDate.getSeconds()}`
 }
 
-export async function catchErrors(error) {
+export async function catchErrors(error, alertIsEnabled=true) {
   let hibatipus;
   if (error.response && error.response.data instanceof Blob) {
         const hibaSzoveg = await error.response.data.text();
@@ -52,7 +52,10 @@ export async function catchErrors(error) {
     hibatipus = "Válasz hiba:"
     if (typeof(error.response.data) === "string") {
       console.error(`${hibatipus} ${error.response.data}`)
-      alert(error.response.data)
+      if (alertIsEnabled) {
+        alert(error.response.data)
+      }
+
     }
     else{
       console.error(`${hibatipus} ${error.response.data.message}`)

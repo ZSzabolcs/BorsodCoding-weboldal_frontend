@@ -22,7 +22,8 @@ function Statisztika() {
             )
             setAdatok(tartalom.data)
         } catch (error) {
-            catchErrors(error)
+            setAdatok(error.response.data)
+            catchErrors(error, false)
         }
         finally {
             setPending(false)
