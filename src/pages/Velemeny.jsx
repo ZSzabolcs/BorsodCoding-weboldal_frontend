@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Felsoresz from "../modules/Felsoresz";
-import { catchErrors, checkUsername, } from "../App";
-import axios from "axios";
+import { catchErrors, throwFetchErrorResponse, checkUsername, } from "../App";
 import { useNavigate } from "react-router-dom";
 
 
@@ -18,13 +17,21 @@ function Velemeny() {
 
     const putErtekeles = async (body) => {
         try {
-            const tartalom = await axios.put("https://localhost:7159/api/Velemeny", body, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("jwt")}`
-                }
-            })
-            alert(tartalom.data.message)
-            navigate(0)
+            const response = await fetch(`https://localhost:7159/api/Velemeny`, {
+            method: 'PUT',
+            body: JSON.stringify(body),
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        if (!response.ok) {
+            throwFetchErrorResponse(await response.text())
+        }
+        const data = await response.json()
+        alert(data.message)
+        navigate(0)
+        
         } catch (error) {
             catchErrors(error)
         }
@@ -32,12 +39,14 @@ function Velemeny() {
 
     const deleteErtekeles = async (username) => {
         try {
-            const tartalom = await axios.delete(`https://localhost:7159/api/Velemeny?username=${username}`, {
+            const tartalom = await fetch(`https://localhost:7159/api/Velemeny?username=${username}`, {
+                method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("jwt")}`
                 }
             })
-            alert(tartalom.data.message)
+            const data = await tartalom.json()
+            alert(data.message)
             navigate(0)
         } catch (error) {
             catchErrors(error)
@@ -47,12 +56,16 @@ function Velemeny() {
 
     const postErtekeles = async (body) => {
         try {
-            const tartalom = await axios.post("https://localhost:7159/api/Velemeny", body, {
+            const tartalom = await fetch("https://localhost:7159/api/Velemeny", {
+                method: 'POST',
+                body: JSON.stringify(body),
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("jwt")}`
+                    'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
+                    'Content-Type': 'application/json'
                 }
             })
-            alert(tartalom.data.message)
+            const data = await tartalom.json()
+            alert(data.message)
             setvanEVelemeny(true)
             navigate(0)
         } catch (error) {
@@ -63,15 +76,20 @@ function Velemeny() {
     const getErtekeles = async () => {
         try {
             setPending(true)
-            const { data } = await axios.get(`https://localhost:7159/api/Velemeny/${username}`, {
+            const response = await fetch(`https://localhost:7159/api/Velemeny/${username}`, {
+                method: 'GET',
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("jwt")}`
+                    'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
+                    'Content-Type': 'application/json'
                 }
             })
-            if (typeof (data) === "string") {
+            const responseText = await response.text()
+            if (!response.ok) {
+                throwFetchErrorResponse(responseText)
                 setvanEVelemeny(false)
             }
             else {
+                const data = JSON.parse(responseText)
                 setErtekelesJelenleg(Number(data.value.ertekeles))
                 setAdat({
                     ertekeles: Number(data.value.ertekeles),
@@ -81,7 +99,7 @@ function Velemeny() {
             }
 
         } catch (error) {
-            catchErrors(error)
+            catchErrors(error, false)
         }
         finally {
             setPending(false)

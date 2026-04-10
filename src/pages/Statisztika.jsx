@@ -1,7 +1,6 @@
 import Felsoresz from "../modules/Felsoresz";
-import { catchErrors, checkUsername, getDateByOwnStringFormat } from "../App";
+import { catchErrors, throwFetchErrorResponse, checkUsername, getDateByOwnStringFormat } from "../App";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import Betoltes from "../modules/Betoltes";
 
 
@@ -11,25 +10,32 @@ function Statisztika() {
     const [pending, setPending] = useState(false);
 
     const getStatisztika = async () => {
-        try {
-            setPending(true);
-            const tartalom = await axios.get(`https://localhost:7159/api/Save/Statisztika/${username}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem("jwt")}`
-                    }
-                }
-            )
-            setAdatok(tartalom.data)
-        } catch (error) {
-            setAdatok(error.response.data)
-            catchErrors(error, false)
+    try {
+        setPending(true);
+        const response = await fetch(`https://localhost:7159/api/Save/Statisztika/${username}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        const responseText = await response.text()
+        if (!response.ok) {
+            setAdatok(responseText)
+            throwFetchErrorResponse(responseText)
         }
-        finally {
-            setPending(false)
+        else{
+            const data = JSON.parse(responseText)
+            setAdatok(data);
         }
 
+
+    } catch (error) {
+        catchErrors(error, false);
+    } finally {
+        setPending(false);
     }
+};
 
     useEffect(() => { getStatisztika(); }, [username]);
 

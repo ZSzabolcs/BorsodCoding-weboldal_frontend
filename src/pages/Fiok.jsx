@@ -1,7 +1,6 @@
 import Felsoresz from "../modules/Felsoresz";
 import { useState, useEffect } from "react";
 import { catchErrors, checkUsername, getDateByOwnStringFormat } from "../App";
-import axios from "axios";
 import { checkEmail, getCurrentPasswordState, PasswordState } from "./RegistrationAndLogin";
 import { useNavigate } from "react-router-dom";
 import Betoltes from "../modules/Betoltes";
@@ -21,14 +20,15 @@ function Fiok() {
     const getFiok = async () => {
         try {
             setPending(true);
-
-            const { data } = await axios.get(`https://localhost:7159/auth/Fiok/${username}`,
+            const response = await fetch(`https://localhost:7159/auth/Fiok/${username}`,
                 {
+                    method: 'GET',
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("jwt")}`
                     }
                 }
             )
+            const data = await response.json()
             setAdatok(data)
             setEmailState({ isEmail: checkEmail(data.value.email), isChanged: false })
         } catch (error) {
@@ -55,14 +55,18 @@ function Fiok() {
     const putFiok = async (frissitettAdatok) => {
         try {
             setPending(true)
-            const tartalom = await axios.put("https://localhost:7159/auth/Modositas", frissitettAdatok,
+            const tartalom = await fetch("https://localhost:7159/auth/Modositas", 
                 {
+                    method: "PUT",
+                    body: JSON.stringify(frissitettAdatok),
                     headers: {
-                        Authorization: `Bearer ${localStorage.getItem("jwt")}`
+                        'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
+                        'Content-Type': 'application/json'
                     }
                 },
             )
-            alert(tartalom.data.message)
+            const data = await tartalom.json()
+            alert(data.message)
             navigate(0)
         } catch (error) {
             catchErrors(error)

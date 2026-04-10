@@ -1,5 +1,5 @@
-import axios from "axios"
-import { catchErrors } from "../App.jsx"
+
+import { catchErrors, throwFetchErrorResponse } from "../App.jsx"
 import Felsoresz from "../modules/Felsoresz.jsx"
 import { useState } from "react"
 
@@ -9,14 +9,19 @@ function AJatekrol() {
     const jatekSetupLetoltese = async () => {
         try {
             setPending(true)
-            const response = await axios.get('https://localhost:7159/api/Setup/download', {
+            const response = await fetch('https://localhost:7159/api/Setup/download', {
+                method: 'GET',
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("jwt")}`
+                    Authorization: `Bearer ${localStorage.getItem("jwt")}`,
                 },
-                responseType: "blob"
             })
+            
+            if (!response.ok) {
+                throwFetchErrorResponse(await response.text())
+            }
 
-            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const blob = await response.blob()
+            const url = window.URL.createObjectURL(blob);
 
             const link = document.createElement('a');
             link.href = url;

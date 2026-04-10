@@ -1,7 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../modules/Header.jsx";
 import { useState } from "react";
-import axios from "axios";
 import { catchErrors } from "../App.jsx";
 
 
@@ -128,9 +127,16 @@ export function RegistrationOrLoginForm() {
 
     const postToMainPage = async (url, adatok) => {
         try {
-            const { status, data } = await axios.post(url, adatok)
+            const response = await fetch(url, {
+                method: "POST",
+                body: JSON.stringify(adatok),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            const data = await response.json()
             alert(data.message)
-            if (status == 200 || status == 201) {
+            if (response.ok) {
                 sessionStorage.setItem("username", data.value)
                 localStorage.removeItem("jwt")
                 localStorage.setItem("jwt", data.token)
@@ -138,7 +144,13 @@ export function RegistrationOrLoginForm() {
                     username: data.value,
                     isLogin: isLogin
                 }
-                await axios.post("https://localhost:7159/api/SendMail/ByUserName", body)
+                await fetch("https://localhost:7159/api/SendMail/ByUserName", {
+                    method: "POST",
+                    body: JSON.stringify(body),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
                 navigate("/fooldal")
             }
         }

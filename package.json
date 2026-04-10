@@ -11,7 +11,6 @@
     "test": "bun test --env browser"
   },
   "dependencies": {
-    "axios": "1.14.0",
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
     "caniuse-lite": "^1.0.30001781",

@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import AJatekrol from './pages/Ajatekrol.jsx'
 import { RegistrationOrLoginForm } from './pages/RegistrationAndLogin.jsx'
 import Rolunk from './pages/Rolunk.jsx'
@@ -40,15 +40,20 @@ export const getDateByOwnStringFormat = (date) => {
   return `${givenDate.toLocaleDateString()} ${givenDate.getHours()}:${givenDate.getMinutes()}:${givenDate.getSeconds()}`
 }
 
-export async function catchErrors(error, alertIsEnabled=true) {
-  let hibatipus;
-  if (error.response && error.response.data instanceof Blob) {
-        const hibaSzoveg = await error.response.data.text();
-        
-        console.error("Szerver hibaüzenete:", hibaSzoveg);
-        alert(hibaSzoveg);
+export function throwFetchErrorResponse(responseText) {
+  let errorData;
+  if (responseText.startsWith("{")) {
+    errorData = JSON.parse(responseText)
+
+  } else {
+    errorData = responseText
   }
-  else if (error.response) {
+  throw { response: { data: errorData } };
+}
+
+export async function catchErrors(error, alertIsEnabled = true) {
+  let hibatipus;
+  if (error.response) {
     hibatipus = "Válasz hiba:"
     if (typeof(error.response.data) === "string") {
       console.error(`${hibatipus} ${error.response.data}`)
@@ -57,7 +62,7 @@ export async function catchErrors(error, alertIsEnabled=true) {
       }
 
     }
-    else{
+    else {
       console.error(`${hibatipus} ${error.response.data.message}`)
       alert(error.response.data.message)
     }
@@ -68,7 +73,7 @@ export async function catchErrors(error, alertIsEnabled=true) {
     console.error(`${hibatipus} ${error.message}`)
   }
   else {
-    console.error(`Hiba történt: ${error.message}` )
+    console.error(`Hiba történt: ${error.message}`)
   }
 }
 
