@@ -1,7 +1,7 @@
 import Felsoresz from "../modules/Felsoresz";
 import { useState, useEffect } from "react";
 import { catchErrors, checkUsername, getDateByOwnStringFormat } from "../App";
-import { checkEmail, getCurrentPasswordState, PasswordState } from "./RegistrationAndLogin";
+import { checkIsEmail, getCurrentPasswordState, PasswordState } from "./RegistrationAndLogin";
 import { useNavigate } from "react-router-dom";
 import Betoltes from "../modules/Betoltes";
 
@@ -30,7 +30,7 @@ function Fiok() {
             )
             const data = await response.json()
             setAdatok(data)
-            setEmailState({ isEmail: checkEmail(data.value.email), isChanged: false })
+            setEmailState({ isEmail: checkIsEmail(data.value.email), isChanged: false })
         } catch (error) {
             catchErrors(error)
         }
@@ -156,7 +156,7 @@ function Fiok() {
                     <h2>E-mail-cím megváltoztatása</h2>
                     <div className="mx-3">
                         <label htmlFor="newemail">Email:</label><br />
-                        <input type="email" name="newemail" id="newemail" defaultValue={email} onChange={(event) => { setEmailState({ isEmail: checkEmail(event.target.value), isChanged: emailIsChanged(event.target.value) }) }} />
+                        <input type="email" name="newemail" id="newemail" defaultValue={email} onChange={(event) => { setEmailState({ isEmail: checkIsEmail(event.target.value), isChanged: emailIsChanged(event.target.value) }) }} />
                         <p className={emailState.isEmail ? "text-success check my-3" : "text-danger check my-3"}><i className={emailState.isEmail ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Megfelelő formátum</p>
                         <button className="btn btn-primary" type="submit" disabled={checkDataStatus()}>Módosítás</button>
                     </div>

@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../modules/Header.jsx";
 import { useState } from "react";
-import { catchErrors } from "../App.jsx";
+import { catchErrors, throwFetchErrorResponse } from "../App.jsx";
 
 
 export class PasswordState {
@@ -28,7 +28,7 @@ export const checkStatesIsContainsFalse = (states) => {
     return false;
 }
 
-export const checkEmail = (email) => {
+export const checkIsEmail = (email) => {
     const typeEmail = /^[a-zA-Z0-9_%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/
     if (email.search(typeEmail) != -1) {
         return true;
@@ -134,9 +134,10 @@ export function RegistrationOrLoginForm() {
                     'Content-Type': 'application/json'
                 }
             })
-            const data = await response.json()
-            alert(data.message)
+
             if (response.ok) {
+                const data = await response.json()
+                alert(data.message)
                 sessionStorage.setItem("username", data.value)
                 localStorage.removeItem("jwt")
                 localStorage.setItem("jwt", data.token)
@@ -153,6 +154,12 @@ export function RegistrationOrLoginForm() {
                 })
                 navigate("/fooldal")
             }
+            else{
+                const responseText = await response.text()
+                throwFetchErrorResponse(responseText)
+            }
+
+
         }
         catch (error) {
             catchErrors(error)
@@ -224,7 +231,7 @@ export function RegistrationOrLoginForm() {
                         {!isLogin ?
                             <>
                                 <label>E-mail-cím</label>
-                                <input className="mb-3 form-control" type="email" placeholder='E-mail-cím' name="email" id="userEmail" onChange={(event) => { setEmailState(checkEmail(event.target.value)) }} />
+                                <input className="mb-3 form-control" type="email" placeholder='E-mail-cím' name="email" id="userEmail" onChange={(event) => { setEmailState(checkIsEmail(event.target.value)) }} />
                                 <p className={emailState ? "text-success check" : "text-danger check"}><i className={emailState ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Megfelelő formátum</p>
                             </> : <></>}
                         <label>Jelszó</label>

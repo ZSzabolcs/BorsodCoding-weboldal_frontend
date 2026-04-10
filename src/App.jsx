@@ -51,7 +51,7 @@ export function throwFetchErrorResponse(responseText) {
   throw { response: { data: errorData } };
 }
 
-export async function catchErrors(error, alertIsEnabled = true) {
+export function catchErrors(error, alertIsEnabled = true) {
   let hibatipus;
   if (error.response) {
     hibatipus = "Válasz hiba:"
