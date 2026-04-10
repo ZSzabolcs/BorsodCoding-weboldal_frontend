@@ -1,11 +1,11 @@
 import Felsoresz from "../modules/Felsoresz";
-import { catchErrors, throwFetchErrorResponse, checkUsername, getDateByOwnStringFormat } from "../App";
+import { catchErrors, throwFetchErrorResponse, getUsername, getDateByOwnStringFormat } from "../App";
 import { useEffect, useState } from "react";
 import Betoltes from "../modules/Betoltes";
 
 
 function Statisztika() {
-    const username = checkUsername()
+    const username = getUsername()
     const [adatok, setAdatok] = useState(null);
     const [pending, setPending] = useState(false);
 

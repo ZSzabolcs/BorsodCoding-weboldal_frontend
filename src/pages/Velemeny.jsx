@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import Felsoresz from "../modules/Felsoresz";
-import { catchErrors, throwFetchErrorResponse, checkUsername, } from "../App";
+import { catchErrors, throwFetchErrorResponse, getUsername, } from "../App";
 import { useNavigate } from "react-router-dom";
 
 
 
 function Velemeny() {
     const navigate = useNavigate()
-    const username = checkUsername()
+    const username = getUsername()
     const [, setPending] = useState(false)
     const [adat, setAdat] = useState({ ertekeles: 0, megjegyzes: "" })
     const [vanEVelemeny, setvanEVelemeny] = useState(false)

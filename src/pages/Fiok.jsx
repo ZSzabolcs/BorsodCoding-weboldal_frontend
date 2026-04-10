@@ -1,13 +1,13 @@
 import Felsoresz from "../modules/Felsoresz";
 import { useState, useEffect } from "react";
-import { catchErrors, checkUsername, getDateByOwnStringFormat } from "../App";
+import { catchErrors, getUsername, getDateByOwnStringFormat } from "../App";
 import { checkIsEmail, getCurrentPasswordState, PasswordState } from "./RegistrationAndLogin";
 import { useNavigate } from "react-router-dom";
 import Betoltes from "../modules/Betoltes";
 
 function Fiok() {
     const navigate = useNavigate()
-    const username = checkUsername()
+    const username = getUsername()
     const [adatok, setAdatok] = useState({});
     const [, setPending] = useState(false);
     const [firstPasswordState, setFirstPasswordState] = useState(new PasswordState())

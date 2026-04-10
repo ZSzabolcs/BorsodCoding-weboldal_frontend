@@ -26,7 +26,7 @@ export const App = () => {
   );
 }
 
-export const checkUsername = () => {
+export const getUsername = () => {
   const username = sessionStorage.getItem("username")
   if (username === "" || username === null || username === undefined) {
     sessionStorage.removeItem("username")
