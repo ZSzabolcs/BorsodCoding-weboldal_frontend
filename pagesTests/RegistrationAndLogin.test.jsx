@@ -1,8 +1,5 @@
 import { describe, test, expect } from "bun:test";
-import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
-import { checkEmail, passwordFormatCheckers } from "../src/pages/RegistrationAndLogin";
-import { App } from "../src/App";
+import { checkIsEmail, passwordFormatCheckers } from "../src/pages/RegistrationAndLogin";
 
 describe('RegistrationOrLogin komponens', () => {
 
@@ -16,12 +13,12 @@ describe('RegistrationOrLogin komponens', () => {
     const jelszoTeszt = "abcdef"
     expect(checkIsMinLengthReached(jelszoTeszt)).toBe(true)
   })
-  test('checkEmail teszt - Ha jó az e-mail-cím', () => {
+  test('checkIsEmail teszt - Ha jó az e-mail-cím', () => {
     const emailTeszt = "valami@gmail.com"
-    expect(checkEmail(emailTeszt)).toBe(true)
+    expect(checkIsEmail(emailTeszt)).toBe(true)
   })
-  test('checkEmail teszt - Ha rossz az e-mail-cím', () => {
+  test('checkIsEmail teszt - Ha rossz az e-mail-cím', () => {
     const emailTeszt = "valamigmail.com"
-    expect(checkEmail(emailTeszt)).toBe(false)
+    expect(checkIsEmail(emailTeszt)).toBe(false)
   })
 });
