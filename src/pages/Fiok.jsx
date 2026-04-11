@@ -85,12 +85,14 @@ function Fiok() {
         const newEmail = event.target.newemail.value
 
         const frissitettAdatok = {
-            username: username,
-            password: newPassword === oldPassword && newPassword.length > 1 ? newPassword : null,
-            email: email !== newEmail ? newEmail : null,
+                username: username,
+                password: checkIsPasswordStateCorrect(firstPasswordState) && checkIsPasswordStateCorrect(secondPasswordState) && oldPassword === newPassword ? newPassword : null,
+                email: checkIsEmail(newEmail) ? newEmail : null
         }
-
+    
         putFiok(frissitettAdatok)
+            
+        
     }
 
 
@@ -101,7 +103,7 @@ function Fiok() {
         return false;
     }
 
-    const checkIsPasswordCorrect = (passwordState) => {
+    const checkIsPasswordStateCorrect = (passwordState) => {
         if (passwordState.isMinLengthReached && passwordState.isOneBigChar && passwordState.isOneNumber && passwordState.isOneSpecChar) {
             return true;
         }
@@ -113,7 +115,7 @@ function Fiok() {
         if (states.emailState.isChanged && states.emailState.isEmail) {
             return false;
         }
-        else if (checkIsPasswordCorrect(states.firstPasswordState) && checkIsPasswordCorrect(states.secondPasswordState) && firstPasswordText === secondPasswordText) {
+        else if (checkIsPasswordStateCorrect(states.firstPasswordState) && checkIsPasswordStateCorrect(states.secondPasswordState) && firstPasswordText === secondPasswordText) {
             return false;
         }
         return true;
