@@ -105,7 +105,7 @@ export function RegistrationOrLoginForm() {
     const [userNameState, setUserNameState] = useState({ isNoSpace: false, isNotEkezetes: false })
     const [emailState, setEmailState] = useState(null)
 
-    const getUsername = (username) => {
+    const checkUsernameState = (username) => {
         const currentUserNameState = {
             isNoSpace: (username.search(typeUserName) == -1 ? true : false),
             isNotEkezetes: (username.search(ekezetes) == -1 ? true : false)
@@ -223,7 +223,7 @@ export function RegistrationOrLoginForm() {
                 <div className="mx-3">
                     <form method="post" id="form" onSubmit={(event) => { submitEvent(event, isLogin) }}>
                         <label>Felhasználónév</label>
-                        <input className="mb-3 form-control" type="text" name="username" placeholder='Felhasználónév' id="username" onChange={(event) => { getUsername(event.target.value) }} />
+                        <input className="mb-3 form-control" type="text" name="username" placeholder='Felhasználónév' id="username" onChange={(event) => { checkUsernameState(event.target.value) }} />
                         <div className="check">
                             <p className={isNoSpace ? "text-success" : "text-danger"}><i className={isNoSpace ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Nem lehet benne szóköz</p>
                             <p className={isNotEkezetes ? "text-success" : "text-danger"}><i className={isNotEkezetes ? "bi bi-check-lg" : "bi bi-x-lg"}></i>Nem lehet benne ékezet</p>
