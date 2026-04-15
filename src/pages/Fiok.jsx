@@ -1,6 +1,6 @@
 import Felsoresz from "../modules/Felsoresz";
 import { useState, useEffect } from "react";
-import { catchErrors, getUsername, getDateByOwnStringFormat } from "../App";
+import { catchErrors, getUsername, getDateByOwnStringFormat, legkisebbSzovegDatum } from "../App";
 import { checkIsEmail, getCurrentPasswordState, PasswordState } from "./RegistrationAndLogin";
 import { useNavigate } from "react-router-dom";
 import Betoltes from "../modules/Betoltes";
@@ -124,7 +124,7 @@ function Fiok() {
 
     const { birthdate, modDate, email } = adatok.value
     const states = { firstPasswordState, secondPasswordState, emailState }
-    const modositva = (modDate == "0001-01-01T00:00:00" ? "Nem történt módosítás azóta." : `A fiók adatai utoljára módosítva ekkor: ${getDateByOwnStringFormat(modDate)}`)
+    const modositva = (modDate == legkisebbSzovegDatum ? "Nem történt módosítás azóta." : `A fiók adatai utoljára módosítva ekkor: ${getDateByOwnStringFormat(modDate)}`)
     const bothReachedMinLength = secondPasswordState.isMinLengthReached && firstPasswordState.isMinLengthReached
     const bothThereIsOneBigChar = secondPasswordState.isOneBigChar && firstPasswordState.isOneBigChar
     const bothThereIsOneNumber = secondPasswordState.isOneNumber && firstPasswordState.isOneNumber

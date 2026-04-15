@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Felsoresz from "../modules/Felsoresz";
-import { catchErrors, throwFetchErrorResponse, getUsername, } from "../App";
+import { catchErrors, throwFetchErrorResponse, getUsername, getDateByOwnStringFormat, legkisebbSzovegDatum, } from "../App";
 import { useNavigate } from "react-router-dom";
 
 
@@ -14,6 +14,8 @@ function Velemeny() {
     const [isMegjegyzesChanged, setMegjegyzesChanged] = useState(false)
     const [isErtekelesChanged, setErtekelesChanged] = useState(false)
     const [ertekelesJelenleg, setErtekelesJelenleg] = useState(0)
+    const [regDate, setRegDate] = useState("")
+    const [modDate, setModDate] = useState("")
 
     const putErtekeles = async (body) => {
         try {
@@ -95,6 +97,8 @@ function Velemeny() {
                     ertekeles: Number(data.value.ertekeles),
                     megjegyzes: data.value.megjegyzes
                 })
+                setRegDate(data.value.regDate)
+                setModDate(data.value.modDate)
                 setvanEVelemeny(true)
             }
 
@@ -173,11 +177,14 @@ function Velemeny() {
     }
 
     const { megjegyzes } = adat;
-
+    let modositottVelemeny = modDate != legkisebbSzovegDatum && modDate !== undefined && modDate !== "" && vanEVelemeny ? <h2>Utoljára frissítve: {getDateByOwnStringFormat(modDate)}</h2> : <></>
+    let regisztraltVelemeny = regDate === undefined || regDate === "" ? <h2>Még nincsen véleménye!</h2> : <h2>Először leadott: {getDateByOwnStringFormat(regDate)}</h2>
     return (
         <>
             <Felsoresz />
             <div className="m-4">
+                {regisztraltVelemeny}
+                {modositottVelemeny}
                 <h2 className="ertekeles">Értékelés</h2>
                 <form method="post" onSubmit={(event) => { submitVelemeny(event); }}>
                     <div className="fs-1">

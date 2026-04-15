@@ -8,6 +8,7 @@ import Statisztika from "./pages/Statisztika.jsx";
 import Fiok from "./pages/Fiok.jsx";
 import Velemeny from "./pages/Velemeny.jsx";
 
+export const legkisebbSzovegDatum = "0001-01-01T00:00:00";
 
 export const App = () => {
   return (
@@ -35,8 +36,8 @@ export const getUsername = () => {
   return username;
 }
 
-export const getDateByOwnStringFormat = (date) => {
-  const givenDate = new Date(date)
+export const getDateByOwnStringFormat = (dateString) => {
+  const givenDate = new Date(dateString)
   return `${givenDate.toLocaleDateString()} ${givenDate.getHours()}:${givenDate.getMinutes()}:${givenDate.getSeconds()}`
 }
 
