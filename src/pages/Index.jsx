@@ -1,4 +1,5 @@
 import { getUsername } from "../App"
+import { Link } from "react-router-dom"
 import Felsoresz from "../modules/Felsoresz"
 
 const Hir = ({ cim, szoveg }) => {
@@ -20,7 +21,7 @@ function Index() {
                 <Hir cim="Kis lépés egy embernek, de hatalmas lépés egy krumplinak" szoveg={
                     <>
                         Elkészült első játékunk, a For The Potato! A róla szóló cikket az alábbi linken tekinthetik meg.<br />
-                        <a href="/ajatekrol">link</a>
+                        <Link href="/ajatekrol">link</Link>
                     </>
                 } />
                 <Hir cim="For The Potato 2?" szoveg={
