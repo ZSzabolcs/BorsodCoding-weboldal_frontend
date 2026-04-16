@@ -177,8 +177,8 @@ function Velemeny() {
     }
 
     const { megjegyzes } = adat;
-    let modositottVelemeny = modDate != legkisebbSzovegDatum && modDate !== undefined && modDate !== "" && vanEVelemeny ? <h2>Utoljára frissítve: {changeDateStringToOwnStringFormat(modDate)}</h2> : <></>
-    let regisztraltVelemeny = regDate === undefined || regDate === "" ? <h2>Még nincsen véleménye!</h2> : <h2>Először leadott: {changeDateStringToOwnStringFormat(regDate)}</h2>
+    const modositottVelemeny = modDate != legkisebbSzovegDatum && modDate !== undefined && modDate !== "" && vanEVelemeny ? <h2>Utoljára frissítve: {changeDateStringToOwnStringFormat(modDate)}</h2> : <></>
+    const regisztraltVelemeny = regDate === undefined || regDate === "" ? <h2>Még nincsen véleménye!</h2> : <h2>Először leadott: {changeDateStringToOwnStringFormat(regDate)}</h2>
     return (
         <>
             <Felsoresz />
