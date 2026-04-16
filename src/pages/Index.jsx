@@ -21,7 +21,7 @@ function Index() {
                 <Hir cim="Kis lépés egy embernek, de hatalmas lépés egy krumplinak" szoveg={
                     <>
                         Elkészült első játékunk, a For The Potato! A róla szóló cikket az alábbi linken tekinthetik meg.<br />
-                        <Link href="/ajatekrol">link</Link>
+                        <Link to="/ajatekrol">link</Link>
                     </>
                 } />
                 <Hir cim="For The Potato 2?" szoveg={
