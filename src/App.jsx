@@ -36,7 +36,7 @@ export const getUsername = () => {
   return username;
 }
 
-export const getDateByOwnStringFormat = (dateString) => {
+export const changeDateStringToOwnStringFormat = (dateString) => {
   const givenDate = new Date(dateString)
   return `${givenDate.toLocaleDateString()} ${givenDate.getHours()}:${givenDate.getMinutes()}:${givenDate.getSeconds()}`
 }

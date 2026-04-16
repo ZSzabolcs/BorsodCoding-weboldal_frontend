@@ -1,5 +1,5 @@
 import Felsoresz from "../modules/Felsoresz";
-import { catchErrors, throwFetchErrorResponse, getUsername, getDateByOwnStringFormat } from "../App";
+import { catchErrors, throwFetchErrorResponse, getUsername, changeDateStringToOwnStringFormat } from "../App";
 import { useEffect, useState } from "react";
 import Betoltes from "../modules/Betoltes";
 
@@ -78,7 +78,7 @@ function Statisztika() {
             <Felsoresz />
             <div className="m-4">
                 <h1>{username}</h1>
-                <h2>A játékot elkezdte: {getDateByOwnStringFormat(regDate)}</h2>
+                <h2>A játékot elkezdte: {changeDateStringToOwnStringFormat(regDate)}</h2>
                 <h2>Pontszám: {points}</h2>
                 <h2>{pontAranySzoveg}</h2>
                 <h2>Szint: {level}</h2>

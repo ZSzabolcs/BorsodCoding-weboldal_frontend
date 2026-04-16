@@ -1,6 +1,6 @@
 import Felsoresz from "../modules/Felsoresz";
 import { useState, useEffect } from "react";
-import { catchErrors, getUsername, getDateByOwnStringFormat, legkisebbSzovegDatum } from "../App";
+import { catchErrors, getUsername, changeDateStringToOwnStringFormat, legkisebbSzovegDatum } from "../App";
 import { checkIsEmail, getCurrentPasswordState, PasswordState } from "./RegistrationAndLogin";
 import { useNavigate } from "react-router-dom";
 import Betoltes from "../modules/Betoltes";
@@ -124,7 +124,7 @@ function Fiok() {
 
     const { birthdate, modDate, email } = adatok.value
     const states = { firstPasswordState, secondPasswordState, emailState }
-    const modositva = (modDate == legkisebbSzovegDatum ? "Nem történt módosítás azóta." : `A fiók adatai utoljára módosítva ekkor: ${getDateByOwnStringFormat(modDate)}`)
+    const modositva = (modDate == legkisebbSzovegDatum ? "Nem történt módosítás azóta." : `A fiók adatai utoljára módosítva ekkor: ${changeDateStringToOwnStringFormat(modDate)}`)
     const bothReachedMinLength = secondPasswordState.isMinLengthReached && firstPasswordState.isMinLengthReached
     const bothThereIsOneBigChar = secondPasswordState.isOneBigChar && firstPasswordState.isOneBigChar
     const bothThereIsOneNumber = secondPasswordState.isOneNumber && firstPasswordState.isOneNumber
@@ -136,7 +136,7 @@ function Fiok() {
                 <h2>Fiókadatok</h2>
                 <div className="adatok mx-3">
                     <h3>{username}</h3>
-                    <h3>A fiók létrejött ekkor: {getDateByOwnStringFormat(birthdate)}</h3>
+                    <h3>A fiók létrejött ekkor: {changeDateStringToOwnStringFormat(birthdate)}</h3>
                     <h3>{modositva}</h3>
                 </div>
                 <h2>Jelszó megváltoztatása</h2>
