@@ -52,7 +52,7 @@ function AJatekrol() {
                     <span className="paragraph">Játékunk</span> egy 2D-s platformer rage game.
                 </p>
                 <p>
-                    <span className="paragraph">A</span> története nagyon egyszerű. Volt egyszer egy troll, akinek a legjobb barátja egy krumpli volt, akit Kolompérnak hívtak. Az orosz katonák ellopták ezt a krumplit, hogy vodkát csináljanak belőle. A troll ezt nem engedhette meg, ezért elindult kiszabadítani.
+                    <span className="paragraph">A</span> története nagyon egyszerű. Volt egyszer egy troll, akinek a legjobb barátja egy krumpli volt, akit Kolompérnak hívtak. Ismeretlen katonák ellopták ezt a krumplit, hogy megegyék. A troll ezt nem engedhette meg, ezért elindult kiszabadítani.
                 </p>
                 <h2>
                     Irányítás
